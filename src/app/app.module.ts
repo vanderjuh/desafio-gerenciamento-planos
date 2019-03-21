@@ -1,26 +1,20 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MenuSuperiorComponent } from './menu-superior/menu-superior.component';
-import { NavBarComponent } from './nav-bar/nav-bar.component';
-import { MainComponent } from './main/main.component';
-import { RegistrosComponent } from './registros/registros.component';
-import { RodapeComponent } from './rodape/rodape.component';
+import { AngularMaterialModule } from './shared/angular-material.module';
+import { ListaModulosComponent } from './menu-superior/lista-modulos/lista-modulos.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MenuSuperiorComponent,
-    NavBarComponent,
-    MainComponent,
-    RegistrosComponent,
-    RodapeComponent
+    ListaModulosComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AngularMaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]
