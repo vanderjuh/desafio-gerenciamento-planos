@@ -1,1 +1,1 @@
-# prototipo-gerenciamento-planos
+# Protótipo de um sistema de Gerenciamento de Planos
