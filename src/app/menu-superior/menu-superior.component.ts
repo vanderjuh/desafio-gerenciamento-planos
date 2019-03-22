@@ -7,9 +7,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuSuperiorComponent implements OnInit {
 
+  onMostrarModulosQualiex = false;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onToggleMostrarModulosQualiex(): void {
+    this.onMostrarModulosQualiex = !this.onMostrarModulosQualiex;
+  }
+
+  onStyleModulosQualiexAberto(): object {
+    if(this.onMostrarModulosQualiex){
+      return {
+        backgroundColor: 'rgba(13, 43, 61, .5)'
+      }
+    }
   }
 
 }

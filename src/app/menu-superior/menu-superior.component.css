@@ -28,7 +28,7 @@ menu {
 }
 
 .menuItens .hover:hover {
-    background-color: rgb(13, 43, 61, .5);
+    background-color: rgba(13, 43, 61, .5);
     cursor: pointer;
 }
 

@@ -16,8 +16,8 @@ export class ListaModulosComponent implements OnInit {
   }
 
   onResponsividade(): void {
+    this.onResize();
     window.onresize = () => { this.onResize(); };
-    window.onload = () => { this.onResize(); };
   }
 
   private onResize(): void {

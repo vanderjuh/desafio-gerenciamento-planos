@@ -1,13 +1,13 @@
 <menu>
   <ul class="menuItens">
-    <li class="menuQualiex hover">
+    <li class="menuQualiex hover" (click)="onToggleMostrarModulosQualiex()" [ngStyle]="onStyleModulosQualiexAberto()">
       <img src="../../assets/img/logo_branco.png" alt="Qualiex">
-      <mat-icon>arrow_drop_down</mat-icon>
+      <mat-icon>{{ onMostrarModulosQualiex ? 'arrow_drop_up' : 'arrow_drop_down'}}</mat-icon>
     </li>
     <li>
       <div class="descModulo">
         <h3>Planos</h3>
-        <p>Gerenciador de planos</p>
+        <p>Gestão de planos</p>
       </div>
     </li>
     <li class="atualizacoes hover">
@@ -25,3 +25,4 @@
     </li>
   </ul>
 </menu>
+<app-lista-modulos *ngIf="onMostrarModulosQualiex"></app-lista-modulos>
