@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatCheckboxModule, MatIconModule} from '@angular/material';
+import {MatButtonModule, MatCheckboxModule, MatIconModule, MatListModule, MatGridListModule} from '@angular/material';
 
 @NgModule({
   declarations: [],
@@ -10,7 +10,9 @@ import {MatButtonModule, MatCheckboxModule, MatIconModule} from '@angular/materi
   ],
   exports: [
     BrowserAnimationsModule,
-    MatIconModule
+    MatIconModule,
+    MatListModule,
+    MatGridListModule
   ]
 })
 export class AngularMaterialModule { }

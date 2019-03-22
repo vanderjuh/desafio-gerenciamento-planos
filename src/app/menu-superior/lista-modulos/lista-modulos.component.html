@@ -1,1 +1,118 @@
-<div class="listaModulos">sdfsdfsdfsd</div>
+<div class="listaModulos">
+    <mat-grid-list class="gridListModulos" [cols]="responsividade ? 2 : 3" rowHeight="60px">
+        <mat-grid-tile>
+            <div class="itemLista hover" [ngStyle]="{borderLeft: '#EC5D01 solid 5px'}">
+                <h3>Tracker</h3>
+                <p>Ocorrências</p>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <div class="itemLista hover" [ngStyle]="{borderLeft: '#B04495 solid 5px'}">
+                <h3>Audit</h3>
+                <p>Auditorias e checklists</p>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <div class="itemLista hover" [ngStyle]="{borderLeft: '#F9D60B solid 5px'}">
+                <h3>Action</h3>
+                <p>Planos de ação</p>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <div class="itemLista hover" [ngStyle]="{borderLeft: '#5A4D93 solid 5px'}">
+                <h3>Supply</h3>
+                <p>Avaliação de fornecedores</p>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <div class="itemLista hover" [ngStyle]="{borderLeft: '#2991BD solid 5px'}">
+                <h3>Docs</h3>
+                <p>Documentos</p>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <div class="itemLista hover" [ngStyle]="{borderLeft: '#83CA33 solid 5px'}">
+                <h3>Tasks</h3>
+                <p>Tarefas</p>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <div class="itemLista hover" [ngStyle]="{borderLeft: '#66A6A5 solid 5px'}">
+                <h3>Meeting</h3>
+                <p>Reuniões</p>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <div class="itemLista hover" [ngStyle]="{borderLeft: '#064F8D solid 5px'}">
+                <h3>Staff</h3>
+                <p>Avaliação de competências</p>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <div class="itemLista hover" [ngStyle]="{borderLeft: '#C30506 solid 5px'}">
+                <h3>Indicators</h3>
+                <p>Indicadores de desempenho</p>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <div class="itemLista hover" [ngStyle]="{borderLeft: '#E6376C solid 5px'}">
+                <h3>Risks</h3>
+                <p>Gestão de riscos</p>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <div class="itemLista hover" [ngStyle]="{borderLeft: '#00adef solid 5px'}">
+                <h3>Planos</h3>
+                <p>Gestão de planos</p>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <div class="itemLista hover" [ngStyle]="{borderLeft: '#8cc74f solid 5px'}">
+                <h3>Metrology</h3>
+                <p>Gestão de instrumentos</p>
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
+    <mat-grid-list class="funcQualiexList" [cols]="responsividade ? 2 : 4" rowHeight="60px">
+        <mat-grid-tile class="hover">
+            <mat-icon>dashboard</mat-icon>
+            <div class="itemLista">
+                <h3>Dashboard</h3>
+                <p>Painéis e resumos do Qualiex</p>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile class="hover">
+            <mat-icon>assignment</mat-icon>
+            <div class="itemLista">
+                <h3>Relatórios</h3>
+                <p>Relatórios do Qualiex</p>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile class="hover">
+            <mat-icon>settings</mat-icon>
+            <div class="itemLista">
+                <h3>Configurações</h3>
+                <p>Parametrização do Qualiex</p>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile class="hover">
+            <mat-icon>feedback</mat-icon>
+            <div class="itemLista">
+                <h3>Sugestões</h3>
+                <p>Melhorias e correções</p>
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
+    <div class="wikiQualiex">
+        <div class="descWikiQualiex">
+            <img src="../../../assets/img/wiki-qualiex-branco.svg" alt="WikiQualiex">
+            <h4>CENTRAL DE AJUDA DO QUALIEX</h4>
+        </div>
+        <div class="duvidaWikiQualiex hide-ss">Tire suas dúvidas sobre o Qualiex por meio de textos, vídeos e chat
+            online!</div>
+        <button class="btnAcessarWikiQualiex">
+            Acessar agora
+            <mat-icon>arrow_right</mat-icon>
+        </button>
+    </div>
+</div>

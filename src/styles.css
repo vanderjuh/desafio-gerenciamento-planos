@@ -5,6 +5,7 @@
 * {
     box-sizing: border-box;
     font-family: 'open-sans', sans-serif;
+    transition: all ease .3s;
 }
 
 html body {

@@ -25,7 +25,6 @@ menu {
     display: flex;
     align-items: center;
     padding: 0 10px;
-    transition: all ease .3s;
 }
 
 .menuItens .hover:hover {
@@ -45,7 +44,7 @@ menu {
     height: 80%;
     display: flex;
     flex-direction: column;
-    border-left: #EC5D01 solid 4px;
+    border-left: #00adef solid 4px;
     padding: 4px 0;
     cursor: default;
 } 
@@ -61,6 +60,10 @@ menu {
     margin: 0;
     padding: 0;
     margin-left: 10px;
+    max-width: 25ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .atualizacoes {
