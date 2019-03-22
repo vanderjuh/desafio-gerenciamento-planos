@@ -8,13 +8,20 @@ menu {
     font-size: 12px;
 }
 
+.btnMenu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
 .menuItens {
     width: 100%;
     height: 100%;
     padding: 0;
     margin: 0;
     display: grid;
-    grid-template-columns: 219px 1fr 150px 190px;
+    grid-template-columns: 50px 219px 1fr 150px 190px;
     color: #FFF;
 }
 

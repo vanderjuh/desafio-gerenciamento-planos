@@ -1,5 +1,8 @@
 <menu>
   <ul class="menuItens">
+    <li class="btnMenu hover" (click)="onToggleMenuLateral()">
+      <mat-icon>menu</mat-icon>
+    </li>
     <li class="menuQualiex hover" (click)="onToggleMostrarModulosQualiex()" [ngStyle]="onStyleModulosQualiexAberto()">
       <img src="../../assets/img/logo_branco.png" alt="Qualiex">
       <mat-icon>{{ onMostrarModulosQualiex ? 'arrow_drop_up' : 'arrow_drop_down'}}</mat-icon>

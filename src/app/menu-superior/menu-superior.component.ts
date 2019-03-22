@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ResponsividadeService } from '../service/responsividade.service';
 
 @Component({
   selector: 'app-menu-superior',
@@ -9,9 +10,12 @@ export class MenuSuperiorComponent implements OnInit {
 
   onMostrarModulosQualiex = false;
 
-  constructor() { }
+  constructor(private responsividadeService: ResponsividadeService) { }
 
-  ngOnInit() {
+  ngOnInit() { }
+
+  onToggleMenuLateral(): void {
+    this.responsividadeService.menuLateral = !this.responsividadeService.menuLateral;
   }
 
   onToggleMostrarModulosQualiex(): void {
