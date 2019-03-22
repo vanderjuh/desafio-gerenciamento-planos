@@ -1,5 +1,5 @@
 <div class="listaModulos">
-    <mat-grid-list class="gridListModulos" [cols]="responsividade ? 2 : 3" rowHeight="60px">
+    <mat-grid-list class="gridListModulos" [cols]="responsividadeService.responsividade ? 2 : 3" rowHeight="60px">
         <mat-grid-tile>
             <div class="itemLista hover" [ngStyle]="{borderLeft: '#EC5D01 solid 5px'}">
                 <h3>Tracker</h3>
@@ -73,7 +73,7 @@
             </div>
         </mat-grid-tile>
     </mat-grid-list>
-    <mat-grid-list class="funcQualiexList" [cols]="responsividade ? 2 : 4" rowHeight="60px">
+    <mat-grid-list class="funcQualiexList" [cols]="responsividadeService.responsividade ? 2 : 4" rowHeight="60px">
         <mat-grid-tile class="hover">
             <mat-icon>dashboard</mat-icon>
             <div class="itemLista">

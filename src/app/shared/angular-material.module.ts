@@ -1,7 +1,12 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatCheckboxModule, MatIconModule, MatListModule, MatGridListModule} from '@angular/material';
+import { NgModule } from '@angular/core';
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatExpansionModule, MatGridListModule, MatIconModule, MatListModule, MatSidenavModule, MatFormFieldModule, MatMenuModule
+} from '@angular/material';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [],
@@ -12,7 +17,15 @@ import {MatButtonModule, MatCheckboxModule, MatIconModule, MatListModule, MatGri
     BrowserAnimationsModule,
     MatIconModule,
     MatListModule,
-    MatGridListModule
+    MatGridListModule,
+    MatSidenavModule,
+    MatCardModule,
+    MatButtonModule,
+    MatListModule,
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatMenuModule,
+    DragDropModule
   ]
 })
 export class AngularMaterialModule { }

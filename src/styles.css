@@ -5,7 +5,10 @@
 * {
     box-sizing: border-box;
     font-family: 'open-sans', sans-serif;
-    transition: all ease .3s;
+}
+
+:root {
+    --menuSuperiorHeight: 50px;
 }
 
 html body {

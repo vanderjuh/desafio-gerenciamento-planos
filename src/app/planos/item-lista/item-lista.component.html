@@ -1,0 +1,46 @@
+<mat-expansion-panel hideToggle="true" class="itemListaPlanos">
+  <mat-expansion-panel-header>
+    <mat-panel-description class="gridItemListaPlanos">
+      <div class="mudarOrdem">
+        <mat-icon>drag_indicator</mat-icon>
+      </div>
+      <div class="infoPlano">
+        <h1>{{value.titulo}}</h1>
+        <h2>{{value.status}}</h2>
+        <p>{{value.prazo}}</p>
+      </div>
+      <div class="infoResponsavel">
+        <div class="info hide-ss">
+          <ul>
+            <li>{{value.responsavel.nome}}</li>
+            <li><a href="mailto:vanderley@forlogic.net">{{value.responsavel.email}}</a></li>
+          </ul>
+        </div>
+        <img src="../../assets/img/vanderley.jpg" alt="Colaborador" title="Vanderley Junior">
+      </div>
+      <div class="acoesPlano">
+        <button mat-button [matMenuTriggerFor]="menu1">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu1="matMenu">
+          <button mat-menu-item>
+            <mat-icon>edit</mat-icon>
+            Editar
+          </button>
+          <button mat-menu-item>
+            <mat-icon>update</mat-icon>
+            Mudar status:
+          </button>
+          <button mat-menu-item>
+            <mat-icon>delete</mat-icon>
+            remover
+          </button>
+        </mat-menu>
+      </div>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+
+  <div cdkDropList (cdkDropListDropped)="drop($event)">
+      <app-item-lista *ngFor="let plano of value.subPlanos" [value]="plano" cdkDrag></app-item-lista>
+  </div>
+</mat-expansion-panel>

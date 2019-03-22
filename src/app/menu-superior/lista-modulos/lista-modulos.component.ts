@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ResponsividadeService } from 'src/app/service/responsividade.service';
 
 @Component({
   selector: 'app-lista-modulos',
@@ -7,23 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListaModulosComponent implements OnInit {
 
-  responsividade = false;
-
-  constructor() { }
+  constructor(private responsividadeService: ResponsividadeService) { }
 
   ngOnInit() {
-    this.onResponsividade();
-  }
-
-  onResponsividade(): void {
-    this.onResize();
-    window.onresize = () => { this.onResize(); };
-  }
-
-  private onResize(): void {
-    if (window.innerWidth < 700) {
-      this.responsividade = true;
-    } else { this.responsividade = false; }
+    this.responsividadeService.onInitResponsividade();
   }
 
 }

@@ -1,0 +1,58 @@
+.centerItemContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 30px 50px 0 50px;
+    box-shadow: 0 2px 1px 1px rgba(0,0,0,.2);
+    background-color: white;
+}
+
+.listaPlanos{
+    width: 98%;
+    box-sizing: border-box;
+    padding-top: 5px;
+}
+
+mat-card {
+    width: 100%;
+}
+
+header{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.btnAdd {
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    border: 0;
+    background-color: greenyellow;
+    color: #FFF;
+    position: absolute;
+    bottom: -25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btnAdd:hover {
+    background-color: rgb(152, 224, 44);
+}
+
+@media( max-width: 700px ) {
+    .centerItemContainer {
+        margin: 30px 20px 0 20px;
+    }
+
+    .hide-ss {
+        display: none;
+    }
+}
+
+@media( max-width: 730px ) {
+    .hide-sm {
+        display: none;
+    }
+}

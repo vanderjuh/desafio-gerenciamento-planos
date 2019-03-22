@@ -19,10 +19,10 @@ export class MenuSuperiorComponent implements OnInit {
   }
 
   onStyleModulosQualiexAberto(): object {
-    if(this.onMostrarModulosQualiex){
+    if (this.onMostrarModulosQualiex) {
       return {
         backgroundColor: 'rgba(13, 43, 61, .5)'
-      }
+      };
     }
   }
 
