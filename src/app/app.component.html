@@ -1,7 +1,7 @@
 <app-menu-superior></app-menu-superior>
 <mat-drawer-container class="container">
-    <mat-drawer class="menuLateral" mode="side" [(opened)]="responsividadeService.menuLateral">
-        Drawer content
+    <mat-drawer class="menuLateral" position="bottom" [(mode)]="responsividadeService.modoMenuLateral" [(opened)]="responsividadeService.menuLateral">
+        {{responsividadeService.modoMenuLateral}}
     </mat-drawer>
     <mat-drawer-content class="conteudoPrincipal">
         <router-outlet>
