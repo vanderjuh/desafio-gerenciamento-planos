@@ -40,7 +40,9 @@
     </mat-panel-description>
   </mat-expansion-panel-header>
 
-  <div cdkDropList (cdkDropListDropped)="drop($event)">
+  <ng-template matExpansionPanelContent>
+    <div cdkDropList (cdkDropListDropped)="drop($event)">
       <app-item-lista *ngFor="let plano of value.subPlanos" [value]="plano" cdkDrag></app-item-lista>
-  </div>
+    </div>
+  </ng-template>
 </mat-expansion-panel>

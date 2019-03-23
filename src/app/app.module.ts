@@ -8,6 +8,7 @@ import { ListaModulosComponent } from './menu-superior/lista-modulos/lista-modul
 import { PlanosComponent } from './planos/planos.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ItemListaComponent } from './planos/item-lista/item-lista.component';
+import { MenuLateralComponent } from './menu-lateral/menu-lateral.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { ItemListaComponent } from './planos/item-lista/item-lista.component';
     MenuSuperiorComponent,
     ListaModulosComponent,
     PlanosComponent,
-    ItemListaComponent
+    ItemListaComponent,
+    MenuLateralComponent
   ],
   imports: [
     BrowserModule,

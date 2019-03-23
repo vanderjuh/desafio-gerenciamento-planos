@@ -18,10 +18,6 @@ mat-expansion-panel-header {
     justify-content: center;
 }
 
-.infoPlano {
-    border-right: rgb(243, 243, 243) 1px solid;
-}
-
 .infoPlano h1, h2, p {
     margin: 0;
     padding: 0;

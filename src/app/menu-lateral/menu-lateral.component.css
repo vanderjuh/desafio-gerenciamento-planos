@@ -1,0 +1,22 @@
+mat-list {
+    padding: 0;
+}
+
+mat-list-item {
+    border-left: 8px rgb(240, 240, 240) solid;
+}
+
+mat-list-item:hover {
+    border-left: 8px #CCC solid;
+    background-color: rgb(240, 240, 240)
+}
+
+.active {
+    border-left: 8px #00adef solid;
+    background-color: rgba(0, 171, 239, 0.068)
+}
+
+.active:hover {
+    border-left: 8px #00adef solid;
+    background-color: rgba(0, 171, 239, 0.171)
+}
