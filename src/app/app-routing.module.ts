@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { AppModule } from './app.module';
+import { PlanosComponent } from './planos/planos.component';
+import { VisaoGeralComponent } from './visao-geral/visao-geral.component';
 
 const routes: Routes = [
-  // { path: '/', component: AppModule }
+  { path: 'planos', component: PlanosComponent },
+  { path: 'visaogeral', component: VisaoGeralComponent},
+  { path: '**', redirectTo: 'planos', pathMatch: 'full' }
 ];
 
 @NgModule({

@@ -3,7 +3,20 @@ import { NgModule } from '@angular/core';
 import {
   MatButtonModule,
   MatCardModule,
-  MatExpansionModule, MatGridListModule, MatIconModule, MatListModule, MatSidenavModule, MatFormFieldModule, MatMenuModule
+  MatExpansionModule,
+  MatGridListModule,
+  MatIconModule,
+  MatListModule,
+  MatSidenavModule,
+  MatFormFieldModule,
+  MatMenuModule,
+  MatDialogModule,
+  MatTabsModule,
+  MatInputModule,
+  MatSelectModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatChipsModule
 } from '@angular/material';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -14,6 +27,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CommonModule
   ],
   exports: [
+    MatInputModule,
     BrowserAnimationsModule,
     MatIconModule,
     MatListModule,
@@ -25,7 +39,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatExpansionModule,
     MatFormFieldModule,
     MatMenuModule,
-    DragDropModule
+    DragDropModule,
+    MatDialogModule,
+    MatTabsModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatChipsModule
   ]
 })
 export class AngularMaterialModule { }

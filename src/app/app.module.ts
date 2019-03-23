@@ -9,6 +9,10 @@ import { PlanosComponent } from './planos/planos.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ItemListaComponent } from './planos/item-lista/item-lista.component';
 import { MenuLateralComponent } from './menu-lateral/menu-lateral.component';
+import { VisaoGeralComponent } from './visao-geral/visao-geral.component';
+import { FooterComponent } from './footer/footer.component';
+import { CriarPlanoComponent } from './planos/criar-plano/criar-plano.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,14 +21,22 @@ import { MenuLateralComponent } from './menu-lateral/menu-lateral.component';
     ListaModulosComponent,
     PlanosComponent,
     ItemListaComponent,
-    MenuLateralComponent
+    MenuLateralComponent,
+    VisaoGeralComponent,
+    FooterComponent,
+    CriarPlanoComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     AngularMaterialModule,
     AppRoutingModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    CriarPlanoComponent
+  ]
 })
 export class AppModule { }

@@ -1,9 +1,15 @@
 <div class="centerItemContainer">
     <mat-card class="header">
         <h1>Planos</h1>
-        <div class="btnAdd">
+        <div class="btnAdd" mat-button (click)="openDialog()">
             <mat-icon>add</mat-icon>
         </div>
+        <mat-chip-list class="opcoesPlanos">
+            <mat-chip color="primary" selected>
+                <mat-icon>list</mat-icon>
+                Tipos de plano
+            </mat-chip>
+        </mat-chip-list>
     </mat-card>
 </div>
 <div class="centerItemContainer">
@@ -11,3 +17,4 @@
         <app-item-lista *ngFor="let plano of planosService.planos" [value]="plano" cdkDrag></app-item-lista>
     </div>
 </div>
+<app-footer></app-footer>

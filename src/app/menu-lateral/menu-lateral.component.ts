@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ResponsividadeService } from '../service/responsividade.service';
 
 @Component({
   selector: 'app-menu-lateral',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuLateralComponent implements OnInit {
 
-  constructor() { }
+  constructor(private responsividadeService: ResponsividadeService) { }
 
   ngOnInit() {
+  }
+
+  onFecharMenuLateral(): void {
+    if (this.responsividadeService.responsividade) {
+      this.responsividadeService.menuLateral = false;
+    }
   }
 
 }

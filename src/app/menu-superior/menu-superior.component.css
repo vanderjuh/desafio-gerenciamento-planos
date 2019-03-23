@@ -1,3 +1,7 @@
+* {
+    transition: all ease-in-out .3s;
+}
+
 menu {
     height: 50px;
     margin: 0;

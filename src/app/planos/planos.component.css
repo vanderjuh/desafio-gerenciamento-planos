@@ -15,10 +15,15 @@ mat-card {
     width: 100%;
 }
 
-header{
+.header{
     display: flex;
     flex-direction: column;
     position: relative;
+    border-left: #999 solid 5px;
+}
+
+.header h1 {
+    font-weight: 100;
 }
 
 .btnAdd {
@@ -26,17 +31,29 @@ header{
     height: 50px;
     border-radius: 25px;
     border: 0;
-    background-color: greenyellow;
+    background-color: rgb(100, 167, 0);
     color: #FFF;
     position: absolute;
     bottom: -25px;
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+    transition: ease all .2s;
+}
+
+.opcoesPlanos {
+    position: absolute;
+    bottom: -16px;
+    left: 80px;
+}
+
+mat-chip {
+    cursor: pointer;
 }
 
 .btnAdd:hover {
-    background-color: rgb(152, 224, 44);
+    background-color: rgb(78, 131, 0);
 }
 
 @media( max-width: 700px ) {

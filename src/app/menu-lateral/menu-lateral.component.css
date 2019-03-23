@@ -4,6 +4,7 @@ mat-list {
 
 mat-list-item {
     border-left: 8px rgb(240, 240, 240) solid;
+    cursor: pointer;
 }
 
 mat-list-item:hover {
@@ -19,4 +20,15 @@ mat-list-item:hover {
 .active:hover {
     border-left: 8px #00adef solid;
     background-color: rgba(0, 171, 239, 0.171)
+}
+
+.itemMenuLateral {
+    display: flex;
+    align-items: center;
+    color: #333;
+}
+
+.itemMenuLateral mat-icon {
+    margin-right: 15px;
+    color: #999;
 }

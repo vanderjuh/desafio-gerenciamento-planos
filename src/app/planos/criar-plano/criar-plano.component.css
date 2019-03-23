@@ -1,0 +1,36 @@
+.formCriarPlano{
+    width: 700px;
+    min-height: 400px;
+}
+
+h2 {
+    margin: 0;
+    padding: 0;
+    text-transform: uppercase;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+.dataPlano {
+    width: 50%;
+}
+
+@media( max-width: 700px ) {
+    .formCriarPlano{
+        width: 332px;
+    }
+}
+
+.btnCancelar {
+    color: rgb(201, 0, 0);
+}
+
+.btnSalvar {
+    color: green;
+}
+
+.requirido {
+    color: red;
+}

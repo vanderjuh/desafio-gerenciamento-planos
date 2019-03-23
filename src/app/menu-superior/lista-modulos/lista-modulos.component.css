@@ -1,8 +1,13 @@
+* {
+    transition: all ease-in-out .3s;
+}
+
 .listaModulos {
     width: 100%;
     height: auto;
     background-color: #0e76bc;
     padding: 20px;
+    z-index: 1000;
 }
 
 .gridListModulos {
