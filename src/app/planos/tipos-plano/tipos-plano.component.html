@@ -1,0 +1,42 @@
+<h2 mat-dialog-title>
+    <mat-icon>list</mat-icon>
+  Tipos de plano
+</h2>
+<mat-dialog-content>
+
+  <mat-form-field appearance="outline" class="formCriarTipo">
+    <mat-label>Cadastrar novo tipo <span class="requerido">*</span> </mat-label>
+    <input matInput placeholder="Nome do tipo">
+    <button matSuffix class="btnCriarTipo" (click)="onInserirTipo()">
+        <mat-icon>check</mat-icon>
+        INSERIR
+    </button>
+    <mat-hint>Hint</mat-hint>
+  </mat-form-field>
+  <table class="tabelaTipos" mat-table [dataSource]="dataSource">
+
+    <ng-container matColumnDef="nome">
+      <th width="70%" mat-header-cell *matHeaderCellDef> Nome do tipo </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="remover">
+      <th mat-header-cell *matHeaderCellDef> Remover tipo </th>
+      <td mat-cell *matCellDef="let element">
+        <button class="btnRemoverTipo" mat-button (click)="removerTipo(element.position)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</mat-dialog-content>
+<mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close class="btnCancelar">
+    <mat-icon>close</mat-icon>
+    FECHAR
+  </button>
+</mat-dialog-actions>

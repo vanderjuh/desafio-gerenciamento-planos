@@ -13,6 +13,8 @@ import { VisaoGeralComponent } from './visao-geral/visao-geral.component';
 import { FooterComponent } from './footer/footer.component';
 import { CriarPlanoComponent } from './planos/criar-plano/criar-plano.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { TiposPlanoComponent } from './planos/tipos-plano/tipos-plano.component';
+import { ResponsaveisComponent } from './planos/responsaveis/responsaveis.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     MenuLateralComponent,
     VisaoGeralComponent,
     FooterComponent,
-    CriarPlanoComponent
+    CriarPlanoComponent,
+    TiposPlanoComponent,
+    ResponsaveisComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +40,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
   providers: [],
   bootstrap: [AppComponent],
   entryComponents: [
-    CriarPlanoComponent
+    CriarPlanoComponent,
+    TiposPlanoComponent,
+    ResponsaveisComponent
   ]
 })
 export class AppModule { }

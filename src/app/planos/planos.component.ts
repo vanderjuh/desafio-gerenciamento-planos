@@ -4,6 +4,8 @@ import {MatDialog} from '@angular/material';
 
 import { PlanosService } from '../service/planos.service';
 import { CriarPlanoComponent } from './criar-plano/criar-plano.component';
+import { TiposPlanoComponent } from './tipos-plano/tipos-plano.component';
+import { ResponsaveisComponent } from './responsaveis/responsaveis.component';
 
 @Component({
   selector: 'app-planos',
@@ -23,8 +25,22 @@ export class PlanosComponent implements OnInit {
     moveItemInArray(this.planosService.getPlanos(), event.previousIndex, event.currentIndex);
   }
 
-  openDialog() {
+  abrirCriarPlanoDialog() {
     const dialogRef = this.dialog.open(CriarPlanoComponent, { disableClose: true });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  abrirTiposPlanoDialog() {
+    const dialogRef = this.dialog.open(TiposPlanoComponent, { disableClose: true });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  abrirResponsaveisDialog(): void {
+    const dialogRef = this.dialog.open(ResponsaveisComponent, { disableClose: true });
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });

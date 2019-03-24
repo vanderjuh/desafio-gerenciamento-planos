@@ -1,13 +1,17 @@
 <div class="centerItemContainer">
     <mat-card class="header">
         <h1>Planos</h1>
-        <div class="btnAdd" mat-button (click)="openDialog()">
+        <div class="btnAdd" mat-button (click)="abrirCriarPlanoDialog()">
             <mat-icon>add</mat-icon>
         </div>
         <mat-chip-list class="opcoesPlanos">
-            <mat-chip color="primary" selected>
+            <mat-chip color="primary" selected="false" (click)="abrirTiposPlanoDialog()">
                 <mat-icon>list</mat-icon>
                 Tipos de plano
+            </mat-chip>
+            <mat-chip color="primary" selected="false" (click)="abrirResponsaveisDialog()">
+                <mat-icon>people</mat-icon>
+                Responsáveis
             </mat-chip>
         </mat-chip-list>
     </mat-card>

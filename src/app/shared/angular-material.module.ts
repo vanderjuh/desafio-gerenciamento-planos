@@ -16,7 +16,10 @@ import {
   MatSelectModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatChipsModule
+  MatChipsModule,
+  MatTableModule,
+  MatPaginatorModule,
+  MatSnackBarModule
 } from '@angular/material';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -45,7 +48,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatChipsModule
+    MatChipsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSnackBarModule
   ]
 })
 export class AngularMaterialModule { }
