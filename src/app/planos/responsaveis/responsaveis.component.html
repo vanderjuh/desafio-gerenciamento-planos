@@ -8,39 +8,37 @@
       <mat-form-field class="formItem">
         <mat-label>Nome completo <span class="requerido">*</span></mat-label>
         <input matInput>
-        <mat-hint>Hint</mat-hint>
+        <mat-hint>Obrigatório</mat-hint>
       </mat-form-field>
       <mat-form-field class="formItem">
         <mat-label>E-mail <span class="requerido">*</span></mat-label>
         <input matInput>
-        <mat-hint>Hint</mat-hint>
+        <mat-hint>Obrigatório</mat-hint>
       </mat-form-field>
       <mat-form-field class="formItem">
         <mat-label>Link da imagem</mat-label>
         <input matInput>
-        <mat-hint>Hint</mat-hint>
+        <mat-hint>Ex: http://www.repositorio.com.br/teste.jpeg</mat-hint>
       </mat-form-field>
     </mat-tab>
     <mat-tab label="Lista de responsáveis">
+      <mat-progress-bar *ngIf="responsavelService.listaResponsaveis === undefined" mode="indeterminate">
+      </mat-progress-bar>
       <table mat-table [dataSource]="dataSource" class="tabelaResponsaveis">
-
         <ng-container matColumnDef="avatar">
           <th width="10%" mat-header-cell *matHeaderCellDef></th>
           <td mat-cell *matCellDef="let element">
             <img class="avatarResponsavel" src="{{element.avatar}}" alt="Responsável">
           </td>
         </ng-container>
-
         <ng-container matColumnDef="nome">
           <th width="40%" mat-header-cell *matHeaderCellDef> Nome </th>
           <td mat-cell *matCellDef="let element"> {{element.nome}} </td>
         </ng-container>
-
         <ng-container matColumnDef="email">
           <th width="40%" mat-header-cell *matHeaderCellDef class="hide-ss"> Email </th>
           <td mat-cell *matCellDef="let element" class="hide-ss"> {{element.email}} </td>
         </ng-container>
-
         <ng-container matColumnDef="id">
           <th width="10%" mat-header-cell *matHeaderCellDef> Remover </th>
           <td mat-cell *matCellDef="let element">
@@ -49,7 +47,6 @@
             </button>
           </td>
         </ng-container>
-
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>

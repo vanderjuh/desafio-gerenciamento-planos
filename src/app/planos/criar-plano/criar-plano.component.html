@@ -3,29 +3,37 @@
   <mat-tab-group>
     <mat-tab label="GERAL">
       <mat-grid-list cols="1" rowHeight="70px">
-        <mat-grid-tile class="itemForm">
+        <mat-grid-tile>
           <mat-form-field>
-            <mat-label>Nome (o que?) <span class="requirido">*</span></mat-label>
+            <mat-label>Título do plano (o que?) <span class="requirido">*</span></mat-label>
             <input matInput>
-            <mat-hint>Hint</mat-hint>
+            <mat-hint>Obrigatório</mat-hint>
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
           <mat-form-field>
-            <mat-label>Tipo do plano  <span class="requirido">*</span></mat-label>
-            <mat-select>
-              <mat-option value="1">--</mat-option>
-              <mat-option value="2">TESTE</mat-option>
+            <mat-label>Tipo do plano <span class="requirido">*</span></mat-label>
+            <mat-select [disabled]="tiposPlanoService.listaTipos === undefined">
+              <mat-option *ngFor="let tipo of tiposPlanoService.listaTipos" value="tipo.id">{{tipo.desc}}</mat-option>
             </mat-select>
             <!-- <mat-error *ngIf="true">Please choose an animal</mat-error> -->
-            <mat-hint>Hint</mat-hint>
+            <mat-hint>
+              {{tiposPlanoService.listaTipos === undefined ? 'Carregando dados do servidor. Aguarde...' : 'Apenas uma seleção é permitida | Obrigatório.'}}
+            </mat-hint>
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
           <mat-form-field>
-            <mat-label>Responsável (quem?)  <span class="requirido">*</span></mat-label>
-            <input matInput>
-            <mat-hint>Hint</mat-hint>
+            <mat-label>Responsável (quem?) <span class="requirido">*</span></mat-label>
+            <input matInput [matAutocomplete]="auto" [disabled]="responsavelService.listaResponsaveis === undefined">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let responsavel of responsavelService.listaResponsaveis" [value]="responsavel.nome">
+                {{responsavel.nome}}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-hint>
+              {{responsavelService.listaResponsaveis === undefined ? 'Carregando dados do servidor. Aguarde...' : 'Digite ou selecione apenas um responsável | Obrigatório'}}
+            </mat-hint>
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
@@ -33,50 +41,58 @@
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dataInicio" placeholder="Início">
             <mat-datepicker-toggle matSuffix [for]="dataInicio"></mat-datepicker-toggle>
             <mat-datepicker #dataInicio></mat-datepicker>
-            <mat-hint>Hint</mat-hint>
+            <mat-hint>Data de início do plano</mat-hint>
           </mat-form-field>
           <mat-form-field class="dataPlano">
             <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dataFinal" placeholder="Término">
             <mat-datepicker-toggle matSuffix [for]="dataFinal"></mat-datepicker-toggle>
             <mat-datepicker #dataFinal></mat-datepicker>
-            <mat-hint>Hint</mat-hint>
+            <mat-hint>Data de término do plano</mat-hint>
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
           <mat-form-field>
             <mat-label>Pertence ao plano</mat-label>
-            <input matInput>
-            <mat-hint>Hint</mat-hint>
+            <mat-select [disabled]="planosService.listaPlanos === undefined">
+              <mat-option *ngFor="let plano of planosService.listaPlanos" value="plano.id">{{plano.titulo}}</mat-option>
+            </mat-select>
+            <mat-hint>
+              {{planosService.listaPlanos === undefined ? 'Carregando dados do servidor. Aguarde...' : 'Apenas uma seleção é permitida.'}}
+            </mat-hint>
           </mat-form-field>
         </mat-grid-tile>
       </mat-grid-list>
     </mat-tab>
     <mat-tab label="DETALHES">
       <mat-grid-list cols="1" rowHeight="70px">
-        <mat-grid-tile class="itemForm">
-          <mat-form-field>
-            <mat-label>Descrição</mat-label>
-            <input matInput>
-            <mat-hint>Hint</mat-hint>
-          </mat-form-field>
-        </mat-grid-tile>
         <mat-grid-tile>
           <mat-form-field>
             <mat-label>Pessoas interessadas</mat-label>
-            <mat-select multiple>
-              <mat-option value="1">TESTE 1</mat-option>
-              <mat-option value="2">TESTE 2</mat-option>
-              <mat-option value="3">TESTE 3</mat-option>
-              <mat-option value="4">TESTE 4</mat-option>
+            <mat-select multiple [disabled]="responsavelService.listaResponsaveis === undefined">
+              <mat-option *ngFor="let responsavel of responsavelService.listaResponsaveis" value="responsavel.id">
+                {{responsavel.nome}}</mat-option>
             </mat-select>
-            <mat-hint>Hint</mat-hint>
+            <mat-hint>
+              {{responsavelService.listaResponsaveis === undefined ? 'Carregando dados do servidor. Aguarde...' : 'Habilitado para seleção múltipla'}}
+            </mat-hint>
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
           <mat-form-field>
             <mat-label>Custo estimado</mat-label>
-            <input matInput>
-            <mat-hint>Hint</mat-hint>
+            <input matInput type="number">
+            <span matPrefix>$&nbsp;</span>
+            <span matSuffix>.00</span>
+            <mat-hint>Apenas números são permitidos.</mat-hint>
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
+      <mat-grid-list cols="1" rowHeight="200px">
+        <mat-grid-tile>
+          <mat-form-field>
+            <mat-label>Descrição</mat-label>
+            <textarea matInput></textarea>
+            <mat-hint>Descreva em detalhes um pouco mais sobre o plano.</mat-hint>
           </mat-form-field>
         </mat-grid-tile>
       </mat-grid-list>
