@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatSnackBar } from '@angular/material';
-import { PlanosService } from 'src/app/service/planos.service';
+import { ResponsavelService } from 'src/app/service/responsavel.service';
+import { Responsavel } from './responsavel';
 
 @Component({
   selector: 'app-responsaveis',
@@ -10,17 +11,33 @@ import { PlanosService } from 'src/app/service/planos.service';
 export class ResponsaveisComponent implements OnInit {
 
   displayedColumns: string[] = ['avatar', 'nome', 'email', 'id'];
-  dataSource = new MatTableDataSource<any>(this.planosService.getResponsaveis());
+  dataSource: MatTableDataSource<Responsavel>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
-    private planosService: PlanosService,
+    private responsavelService: ResponsavelService,
     private snackBar: MatSnackBar
     ) { }
 
   ngOnInit() {
+    if (this.responsavelService.listaResponsaveis === undefined || this.responsavelService.listaResponsaveis.length === 0) {
+      this.getResponsaveisFromServer();
+    } else { this.setTiposPlanoNaTabela(); }
+  }
+
+  setTiposPlanoNaTabela(): void {
+    this.dataSource = new MatTableDataSource<Responsavel>(this.responsavelService.listaResponsaveis);
     this.dataSource.paginator = this.paginator;
+  }
+
+  getResponsaveisFromServer(): void {
+    this.responsavelService.getResponsaveis().subscribe(
+      responsaveis => {
+        this.responsavelService.listaResponsaveis = responsaveis;
+        this.setTiposPlanoNaTabela();
+      }
+    );
   }
 
   abrirSnackBar(message: string, time: number) {

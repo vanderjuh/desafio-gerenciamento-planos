@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, DoCheck } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import {MatDialog} from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { PlanosService } from '../service/planos.service';
 import { CriarPlanoComponent } from './criar-plano/criar-plano.component';
@@ -19,10 +19,18 @@ export class PlanosComponent implements OnInit {
     private dialog: MatDialog
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.getPlanosFromServer();
+  }
+
+  getPlanosFromServer(): void {
+    if (this.planosService.listaPlanos === undefined || this.planosService.listaPlanos.length === 0) {
+      this.planosService.getPlanos().subscribe(planos => this.planosService.listaPlanos = planos);
+    }
+  }
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.planosService.getPlanos(), event.previousIndex, event.currentIndex);
+    moveItemInArray(this.planosService.listaPlanos, event.previousIndex, event.currentIndex);
   }
 
   abrirCriarPlanoDialog() {

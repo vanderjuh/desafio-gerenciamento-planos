@@ -15,6 +15,7 @@ import { CriarPlanoComponent } from './planos/criar-plano/criar-plano.component'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TiposPlanoComponent } from './planos/tipos-plano/tipos-plano.component';
 import { ResponsaveisComponent } from './planos/responsaveis/responsaveis.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ResponsaveisComponent } from './planos/responsaveis/responsaveis.compon
     FormsModule,
     ReactiveFormsModule,
     AngularMaterialModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent],
