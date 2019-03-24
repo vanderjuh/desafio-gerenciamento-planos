@@ -1,60 +1,69 @@
-<h2 mat-dialog-title>Cadastrar plano</h2>
-<mat-dialog-content class="formCriarPlano">
+<h2 mat-dialog-title>
+  <mat-icon>view_day</mat-icon>
+  Cadastrar plano
+</h2>
+<mat-dialog-content class="formCriarPlano" [formGroup]="formulario">
   <mat-tab-group>
     <mat-tab label="GERAL">
       <mat-grid-list cols="1" rowHeight="70px">
         <mat-grid-tile>
           <mat-form-field>
             <mat-label>Título do plano (o que?) <span class="requirido">*</span></mat-label>
-            <input matInput>
+            <input matInput formControlName="titulo">
             <mat-hint>Obrigatório</mat-hint>
+            <mat-error>Atenção, o nome do plano é obrigatório!</mat-error>
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
           <mat-form-field>
             <mat-label>Tipo do plano <span class="requirido">*</span></mat-label>
-            <mat-select [disabled]="tiposPlanoService.listaTipos === undefined">
-              <mat-option *ngFor="let tipo of tiposPlanoService.listaTipos" value="tipo.id">{{tipo.desc}}</mat-option>
+            <mat-select formControlName="tipo">
+              <mat-option *ngFor="let tipo of tiposPlanoService.listaTipos" value="{{tipo.id}}">{{tipo.desc}}</mat-option>
             </mat-select>
-            <!-- <mat-error *ngIf="true">Please choose an animal</mat-error> -->
             <mat-hint>
               {{tiposPlanoService.listaTipos === undefined ? 'Carregando dados do servidor. Aguarde...' : 'Apenas uma seleção é permitida | Obrigatório.'}}
             </mat-hint>
+            <mat-error>Atenção, o tipo do plano é obrigatório!</mat-error>
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
           <mat-form-field>
             <mat-label>Responsável (quem?) <span class="requirido">*</span></mat-label>
-            <input matInput [matAutocomplete]="auto" [disabled]="responsavelService.listaResponsaveis === undefined">
-            <mat-autocomplete #auto="matAutocomplete">
-              <mat-option *ngFor="let responsavel of responsavelService.listaResponsaveis" [value]="responsavel.nome">
-                {{responsavel.nome}}
-              </mat-option>
-            </mat-autocomplete>
+            <mat-select formControlName="responsavel">
+              <mat-option *ngFor="let responsavel of responsavelService.listaResponsaveis" value="{{responsavel.id}}">
+                {{responsavel.nome}}</mat-option>
+            </mat-select>
             <mat-hint>
               {{responsavelService.listaResponsaveis === undefined ? 'Carregando dados do servidor. Aguarde...' : 'Digite ou selecione apenas um responsável | Obrigatório'}}
             </mat-hint>
+            <mat-error>Atenção, é obrigatório selecionar um responsável para o plano!</mat-error>
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
           <mat-form-field class="dataPlano">
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dataInicio" placeholder="Início">
+            <input matInput maxlength="10" [matDatepicker]="dataInicio" placeholder="Início"
+              formControlName="dataInicio" [(value)]="minDate">
             <mat-datepicker-toggle matSuffix [for]="dataInicio"></mat-datepicker-toggle>
-            <mat-datepicker #dataInicio></mat-datepicker>
+            <mat-datepicker #dataInicio disabled="false"></mat-datepicker>
             <mat-hint>Data de início do plano</mat-hint>
+            <mat-error *ngIf="this.formulario.get('dataInicio').hasError('matDatepickerParse')">Atenção, informe uma
+              data válida!</mat-error>
           </mat-form-field>
           <mat-form-field class="dataPlano">
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dataFinal" placeholder="Término">
+            <input matInput [(min)]="this.formulario.get('dataInicio').value" maxlength="10" [matDatepicker]="dataFinal" placeholder="Término"
+              formControlName="dataTermino">
             <mat-datepicker-toggle matSuffix [for]="dataFinal"></mat-datepicker-toggle>
-            <mat-datepicker #dataFinal></mat-datepicker>
+            <mat-datepicker #dataFinal disabled="false"></mat-datepicker>
             <mat-hint>Data de término do plano</mat-hint>
+            <mat-error *ngIf="this.formulario.get('dataTermino').hasError('matDatepickerParse')">Atenção, informe uma
+              data válida!</mat-error>
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
           <mat-form-field>
             <mat-label>Pertence ao plano</mat-label>
-            <mat-select [disabled]="planosService.listaPlanos === undefined">
-              <mat-option *ngFor="let plano of planosService.listaPlanos" value="plano.id">{{plano.titulo}}</mat-option>
+            <mat-select formControlName="pertence">
+              <mat-option *ngFor="let plano of planosService.listaPlanos" value="{{plano.id}}">{{plano.titulo}}</mat-option>
             </mat-select>
             <mat-hint>
               {{planosService.listaPlanos === undefined ? 'Carregando dados do servidor. Aguarde...' : 'Apenas uma seleção é permitida.'}}
@@ -68,8 +77,8 @@
         <mat-grid-tile>
           <mat-form-field>
             <mat-label>Pessoas interessadas</mat-label>
-            <mat-select multiple [disabled]="responsavelService.listaResponsaveis === undefined">
-              <mat-option *ngFor="let responsavel of responsavelService.listaResponsaveis" value="responsavel.id">
+            <mat-select multiple formControlName="interessados">
+              <mat-option *ngFor="let responsavel of responsavelService.listaResponsaveis" value="{{responsavel.id}}">
                 {{responsavel.nome}}</mat-option>
             </mat-select>
             <mat-hint>
@@ -80,7 +89,7 @@
         <mat-grid-tile>
           <mat-form-field>
             <mat-label>Custo estimado</mat-label>
-            <input matInput type="number">
+            <input matInput type="number" formControlName="custo">
             <span matPrefix>$&nbsp;</span>
             <span matSuffix>.00</span>
             <mat-hint>Apenas números são permitidos.</mat-hint>
@@ -91,7 +100,7 @@
         <mat-grid-tile>
           <mat-form-field>
             <mat-label>Descrição</mat-label>
-            <textarea matInput></textarea>
+            <textarea matInput formControlName="descricao"></textarea>
             <mat-hint>Descreva em detalhes um pouco mais sobre o plano.</mat-hint>
           </mat-form-field>
         </mat-grid-tile>
@@ -104,7 +113,7 @@
     <mat-icon>close</mat-icon>
     CANCELAR
   </button>
-  <button mat-button [mat-dialog-close]="true" class="btnSalvar">
+  <button mat-button [mat-dialog-close]="true" class="btnSalvar" (click)="criarPlano()">
     <mat-icon>check</mat-icon>
     SALVAR
   </button>

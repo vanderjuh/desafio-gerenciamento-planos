@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, DoCheck } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 
 import { PlanosService } from '../service/planos.service';
 import { CriarPlanoComponent } from './criar-plano/criar-plano.component';
@@ -16,11 +16,18 @@ export class PlanosComponent implements OnInit {
 
   constructor(
     private planosService: PlanosService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
     this.getPlanosFromServer();
+  }
+
+  abrirSnackBar(message: string, time: number) {
+    this.snackBar.open(message, null, {
+      duration: time,
+    });
   }
 
   getPlanosFromServer(): void {
@@ -34,10 +41,12 @@ export class PlanosComponent implements OnInit {
   }
 
   abrirCriarPlanoDialog() {
-    const dialogRef = this.dialog.open(CriarPlanoComponent, { disableClose: true });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+    if (this.planosService.listaPlanos) {
+      const dialogRef = this.dialog.open(CriarPlanoComponent, { disableClose: true });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog result: ${result}`);
+      });
+    } else { this.abrirSnackBar('Aguarde a lista de planos carregar para poder criar um novo plano!', 5000); }
   }
 
   abrirTiposPlanoDialog() {

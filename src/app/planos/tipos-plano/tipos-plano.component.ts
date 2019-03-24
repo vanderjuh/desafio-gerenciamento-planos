@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatSnackBar } from '@angular/material';
-import { PlanosService } from 'src/app/service/planos.service';
 import { TiposPlanoService } from 'src/app/service/tipos-plano.service';
 import { TiposPlano } from './tipos-plano';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-tipos-plano',
@@ -16,15 +16,25 @@ export class TiposPlanoComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
+  formulario: FormGroup;
+
   constructor(
     private tiposPlanoService: TiposPlanoService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private formBuilder: FormBuilder
   ) { }
 
   ngOnInit() {
+    this.formReativo();
     if (this.tiposPlanoService.listaTipos === undefined || this.tiposPlanoService.listaTipos.length === 0) {
       this.getTiposPlanoFromServer();
     } else { this.setTiposPlanoNaTabela(); }
+  }
+
+  formReativo(): void {
+    this.formulario = this.formBuilder.group({
+      desc: [null, [Validators.required]]
+    });
   }
 
   setTiposPlanoNaTabela(): void {
@@ -53,6 +63,7 @@ export class TiposPlanoComponent implements OnInit {
 
   onInserirTipo(): void {
     this.abrirSnackBar(`Tipo cadastrado com sucesso!`, 2000);
+    console.log(this.formulario.get('desc'));
   }
 
 }

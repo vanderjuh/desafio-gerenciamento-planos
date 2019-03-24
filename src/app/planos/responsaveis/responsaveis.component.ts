@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatSnackBar } from '@angular/material';
 import { ResponsavelService } from 'src/app/service/responsavel.service';
 import { Responsavel } from './responsavel';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-responsaveis',
@@ -15,15 +16,27 @@ export class ResponsaveisComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
+  formulario: FormGroup;
+
   constructor(
     private responsavelService: ResponsavelService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private formBuilder: FormBuilder
     ) { }
 
   ngOnInit() {
+    this.formReativo();
     if (this.responsavelService.listaResponsaveis === undefined || this.responsavelService.listaResponsaveis.length === 0) {
       this.getResponsaveisFromServer();
     } else { this.setTiposPlanoNaTabela(); }
+  }
+
+  formReativo(): void {
+    this.formulario = this.formBuilder.group({
+      nome: [null, [Validators.required]],
+      email: [null, [Validators.required, Validators.email]],
+      avatar: [null]
+    });
   }
 
   setTiposPlanoNaTabela(): void {

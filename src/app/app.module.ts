@@ -16,6 +16,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TiposPlanoComponent } from './planos/tipos-plano/tipos-plano.component';
 import { ResponsaveisComponent } from './planos/responsaveis/responsaveis.component';
 import { HttpClientModule } from '@angular/common/http';
+import { MAT_DATE_LOCALE } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -35,11 +36,14 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    ReactiveFormsModule,
     AngularMaterialModule,
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'}
+  ],
   bootstrap: [AppComponent],
   entryComponents: [
     CriarPlanoComponent,

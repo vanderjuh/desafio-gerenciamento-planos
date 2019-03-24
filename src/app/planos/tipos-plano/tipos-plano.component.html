@@ -3,13 +3,14 @@
   Tipos de plano
 </h2>
 <mat-dialog-content>
-  <mat-form-field appearance="outline" class="formCriarTipo">
+  <mat-form-field [formGroup]="formulario" appearance="outline" class="formCriarTipo">
     <mat-label>Cadastrar novo tipo <span class="requerido">*</span> </mat-label>
-    <input matInput placeholder="Nome do tipo">
+    <input matInput placeholder="Nome do tipo" formControlName="desc">
     <button matSuffix class="btnCriarTipo" (click)="onInserirTipo()">
         <mat-icon>check</mat-icon>
         INSERIR
     </button>
+    <mat-error>Este campo é obrigatório</mat-error>
   </mat-form-field>
   <mat-progress-bar *ngIf="tiposPlanoService.listaTipos === undefined" mode="indeterminate"></mat-progress-bar>
   <table class="tabelaTipos" mat-table [dataSource]="dataSource">
