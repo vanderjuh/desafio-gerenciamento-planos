@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>
   <mat-icon>view_day</mat-icon>
-  Cadastrar plano
+  {{labelDialogPlano}}
 </h2>
 <mat-dialog-content [formGroup]="formulario">
   <mat-tab-group class="formCriarPlano">
@@ -19,7 +19,8 @@
           <mat-form-field>
             <mat-label>Tipo do plano <span class="requirido">*</span></mat-label>
             <mat-select formControlName="tipo">
-              <mat-option *ngFor="let tipo of tiposPlanoService.listaTipos" value="{{tipo.id}}">{{tipo.desc}}</mat-option>
+              <mat-option *ngFor="let tipo of tiposPlanoService.listaTipos" value="{{tipo.id}}">{{tipo.desc}}
+              </mat-option>
             </mat-select>
             <mat-hint>
               {{tiposPlanoService.listaTipos === undefined ? 'Carregando dados do servidor. Aguarde...' : 'Apenas uma seleção é permitida | Obrigatório.'}}
@@ -53,21 +54,22 @@
           </mat-form-field>
 
           <mat-form-field class="dataPlano">
-            <input matInput [(min)]="this.formulario.get('dataInicio').value" maxlength="10" [matDatepicker]="dataFinal" placeholder="Término"
-              formControlName="dataTermino">
+            <input matInput [(min)]="this.formulario.get('dataInicio').value" maxlength="10" [matDatepicker]="dataFinal"
+              placeholder="Término" formControlName="dataTermino">
             <mat-datepicker-toggle matSuffix [for]="dataFinal"></mat-datepicker-toggle>
             <mat-datepicker #dataFinal disabled="false"></mat-datepicker>
             <mat-hint>Data de término do plano</mat-hint>
             <mat-error *ngIf="this.formulario.get('dataTermino').hasError('matDatepickerParse')">Atenção, informe uma
               data válida!</mat-error>
           </mat-form-field>
-          
+
         </mat-grid-tile>
         <mat-grid-tile>
           <mat-form-field>
             <mat-label>Pertence ao plano</mat-label>
             <mat-select formControlName="pertence">
-              <mat-option *ngFor="let plano of planosService.listaPlanos" value="{{plano.id}}">{{plano.titulo}}</mat-option>
+              <mat-option *ngFor="let plano of planosService.listaPlanos" [value]="plano.id">{{plano.titulo}}
+              </mat-option>
             </mat-select>
             <mat-hint>
               {{planosService.listaPlanos === undefined ? 'Carregando dados do servidor. Aguarde...' : 'Apenas uma seleção é permitida.'}}
@@ -112,12 +114,13 @@
     </mat-tab>
   </mat-tab-group>
 </mat-dialog-content>
+<mat-progress-bar *ngIf="statusBarraCarregamento === true" mode="indeterminate"></mat-progress-bar>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close class="btnCancelar">
     <mat-icon>close</mat-icon>
     CANCELAR E FECHAR
   </button>
-  <button mat-button [mat-dialog-close]="true" class="btnSalvar" (click)="criarPlano()">
+  <button #btnSalvarPlano mat-button class="btnSalvar" (click)="onSalvarPlano()">
     <mat-icon>check</mat-icon>
     SALVAR
   </button>

@@ -24,7 +24,7 @@ export class PlanosService {
   }
 
   salvarPlano(plano: Plano): Observable<object> {
-    if (plano.id) {
+    if (!plano.id) {
       return this.http.post(`${environment.apiURL}/planos`, plano);
     } else {
       return this.http.put(`${environment.apiURL}/planos`, plano);

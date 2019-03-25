@@ -41,12 +41,10 @@ export class PlanosComponent implements OnInit {
   }
 
   abrirCriarPlanoDialog() {
-    if (this.planosService.listaPlanos) {
-      const dialogRef = this.dialog.open(CriarPlanoComponent, { disableClose: true });
-      dialogRef.afterClosed().subscribe(result => {
-        console.log(`Dialog result: ${result}`);
-      });
-    } else { this.abrirSnackBar('Aguarde a lista de planos carregar para poder criar um novo plano!', 5000); }
+    const dialogRef = this.dialog.open(CriarPlanoComponent, { disableClose: true });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
   abrirTiposPlanoDialog() {
