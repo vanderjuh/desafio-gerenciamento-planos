@@ -9,6 +9,7 @@
         <mat-grid-tile>
           <mat-form-field>
             <mat-label>Título do plano (o que?) <span class="requirido">*</span></mat-label>
+            <input type="hidden" formControlName="id">
             <input matInput formControlName="titulo">
             <mat-hint>Obrigatório</mat-hint>
             <mat-error>Atenção, o nome do plano é obrigatório!</mat-error>
@@ -40,6 +41,7 @@
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
+
           <mat-form-field class="dataPlano">
             <input matInput maxlength="10" [matDatepicker]="dataInicio" placeholder="Início"
               formControlName="dataInicio" [(value)]="minDate">
@@ -49,6 +51,7 @@
             <mat-error *ngIf="this.formulario.get('dataInicio').hasError('matDatepickerParse')">Atenção, informe uma
               data válida!</mat-error>
           </mat-form-field>
+
           <mat-form-field class="dataPlano">
             <input matInput [(min)]="this.formulario.get('dataInicio').value" maxlength="10" [matDatepicker]="dataFinal" placeholder="Término"
               formControlName="dataTermino">
@@ -58,6 +61,7 @@
             <mat-error *ngIf="this.formulario.get('dataTermino').hasError('matDatepickerParse')">Atenção, informe uma
               data válida!</mat-error>
           </mat-form-field>
+          
         </mat-grid-tile>
         <mat-grid-tile>
           <mat-form-field>

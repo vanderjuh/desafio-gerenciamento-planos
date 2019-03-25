@@ -1,5 +1,5 @@
 .formCriarPlano{
-    width: 100%;
+    width: 600px;
     min-height: 400px;
 }
 
@@ -35,5 +35,9 @@ mat-form-field {
 @media( max-width: 700px ) {
     mat-hint{
         font-size: 10px;
+    }
+    .formCriarPlano{
+        width: 100%;
+        min-height: 400px;
     }
 }

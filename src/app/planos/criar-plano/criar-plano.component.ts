@@ -31,12 +31,13 @@ export class CriarPlanoComponent implements OnInit {
 
   formReactivo(): void {
     this.formulario = this.formBuilder.group({
+      id: [null],
       titulo: [null, [Validators.required]],
       tipo: [{ value: null, disabled: true }, [Validators.required]],
       responsavel: [{ value: null, disabled: true }, [Validators.required]],
       dataInicio: [{value: null, disabled: true}],
       dataTermino: [{value: null, disabled: true}],
-      pertence: [null],
+      pertence: [{value: {}}],
       interessados: [{ value: null, disabled: true }],
       custo: [null],
       descricao: [null]
@@ -44,7 +45,20 @@ export class CriarPlanoComponent implements OnInit {
   }
 
   criarPlano(): void {
-    console.log(this.formulario);
+    const plano = {
+      ...this.formulario.value,
+      dataInicio: this.extrairData(this.formulario.get('dataInicio').value),
+      dataTermino: this.extrairData(this.formulario.get('dataTermino').value)
+    };
+    console.log(plano);
+  }
+
+  extrairData(data: any): string {
+    const timestamp = Date.parse(data);
+    const dia = new Date(timestamp).getDate();
+    const mes = new Date(timestamp).getMonth() + 1;
+    const ano = new Date(timestamp).getFullYear();
+    return `${ano}-${mes}-${dia}`;
   }
 
   getTiposPlanoFromServer(): void {
