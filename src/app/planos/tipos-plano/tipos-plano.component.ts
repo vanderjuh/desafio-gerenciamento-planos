@@ -130,13 +130,13 @@ export class TiposPlanoComponent implements OnInit, OnDestroy {
       try {
         this.tiposPlanoService.deletarTipoPlano(tipo)
           .subscribe(resp => {
+            this.toggleBarraCarregamento();
             this.atualizarListaLocal(tipo, true);
             this.abrirSnackBar(`Tipo removido com sucesso!`, 2000);
           });
       } catch (error) {
         this.abrirSnackBar(error.message, 2000);
       }
-      this.toggleBarraCarregamento();
     }
   }
 

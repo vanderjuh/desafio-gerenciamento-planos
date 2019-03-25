@@ -7,6 +7,7 @@ export interface Plano {
     tipo: number;
     status: string;
     prazo: string;
-    responsavel: number[];
+    responsavel: number;
+    interessados: number[];
     subPlanos: number[];
 }

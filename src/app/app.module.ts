@@ -36,7 +36,6 @@ import { MAT_DATE_LOCALE } from '@angular/material';
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    ReactiveFormsModule,
     AngularMaterialModule,
     AppRoutingModule,
     HttpClientModule

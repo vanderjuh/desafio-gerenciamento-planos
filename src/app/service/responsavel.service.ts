@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Responsavel } from '../planos/responsaveis/responsavel';
+import { PlanosService } from './planos.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,10 @@ export class ResponsavelService {
 
   listaResponsaveis: Responsavel[];
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private planosService: PlanosService
+    ) {
     console.log('Serviço "Responsavel" ON!');
   }
 
@@ -19,15 +23,31 @@ export class ResponsavelService {
     return this.http.get<Responsavel[]>(`${environment.apiURL}/responsaveis`);
   }
 
-  deletarResponsavel(id: number): Observable<object> {
-    return this.http.delete(`${environment.apiURL}/responsaveis/${id}`);
+  deletarResponsavel(responsavel: Responsavel): Observable<object> {
+    if (!this.tipoSendoUsado(responsavel)) {
+      return this.http.delete(`${environment.apiURL}/responsaveis/${responsavel.id}`);
+    } else { throw new Error('Esta pessoa não pode ser removida, pois é responsável por algum plano'); }
   }
 
   salvarResponsavel(responsavel: Responsavel): Observable<object> {
-    if (responsavel.id) {
+    if (!responsavel.id) {
       return this.http.post(`${environment.apiURL}/responsaveis`, responsavel);
     } else {
-      return this.http.put(`${environment.apiURL}/responsaveis`, responsavel);
+      return this.http.put(`${environment.apiURL}/responsaveis/${responsavel.id}`, responsavel);
+    }
+  }
+
+  private tipoSendoUsado(responsavel: Responsavel): boolean | void {
+    if (this.planosService.listaPlanos) {
+      if (this.planosService.listaPlanos.filter(p => p.responsavel === responsavel.id).length > 0) {
+        return true;
+      }
+      return false;
+    } else {
+      this.planosService.getPlanos().subscribe(planos => {
+        this.planosService.listaPlanos = planos;
+        this.tipoSendoUsado(responsavel);
+      });
     }
   }
 

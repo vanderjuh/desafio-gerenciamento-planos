@@ -3,6 +3,10 @@
     min-height: 500px;
 }
 
+.tabelaResponsaveis {
+    width: 100%;
+}
+
 h2 {
     margin: 0;
     padding: 0;
@@ -11,12 +15,20 @@ h2 {
     align-items: center;
 }
 
+.linkEmail {
+    color: #666;
+}
+
 .btnCancelar {
     color: rgb(201, 0, 0);
 }
 
 .btnRemoverResponsavel{
     color: rgba(201, 0, 0, 0.438);
+}
+
+.btnEditarResponsavel{
+    color: rgba(17, 201, 0, 0.438);
 }
 
 .btnSalvar {

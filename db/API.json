@@ -3,7 +3,7 @@
     {
       "id": 1,
       "titulo": "Teste automatizado",
-      "tipo": 1,
+      "tipo": 8,
       "status": "Andamento",
       "prazo": "28/02/2019",
       "responsavel": {
@@ -93,10 +93,6 @@
     {
       "desc": "Teste",
       "id": 10
-    },
-    {
-      "desc": "Teste 2",
-      "id": 11
     },
     {
       "desc": "Teste 3",

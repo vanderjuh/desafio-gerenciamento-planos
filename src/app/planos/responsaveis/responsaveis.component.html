@@ -3,13 +3,14 @@
   RESPONSÁVEIS
 </h2>
 <mat-dialog-content>
-  <mat-tab-group class="responsaveis">
-    <mat-tab label="Cadastrar novo" [formGroup]="formulario">
+  <mat-tab-group class="responsaveis" [(selectedIndex)]="tabAtual">
+    <mat-tab [label]="labelTabFormulario" [formGroup]="formulario">
       <div class="avatarBox">
         <img [(src)]="this.formulario.get('avatar').value" #avatarImg alt="Avatar" (error)="onErrorAvatar(avatarImg)">
       </div>
       <mat-form-field class="formItem">
         <mat-label>Nome completo <span class="requerido">*</span></mat-label>
+        <input type="hidden" formControlName="id">
         <input matInput formControlName="nome">
         <mat-hint>Obrigatório</mat-hint>
         <mat-error>Atenção: este campo é obrigatório!</mat-error>
@@ -20,7 +21,8 @@
         <mat-hint>Obrigatório</mat-hint>
         <mat-error *ngIf="this.formulario.get('email').hasError('required')">Atenção: este campo é obrigatório!
         </mat-error>
-        <mat-error *ngIf="this.formulario.get('email').hasError('email')">Atenção: informe um e-mail válido!</mat-error>
+        <mat-error *ngIf="this.formulario.get('email').hasError('email')">Atenção: informe um e-mail válido!
+        </mat-error>
       </mat-form-field>
       <mat-form-field class="formItem">
         <mat-label>Link da imagem</mat-label>
@@ -29,27 +31,29 @@
       </mat-form-field>
     </mat-tab>
     <mat-tab label="Lista de responsáveis">
-      <mat-progress-bar *ngIf="responsavelService.listaResponsaveis === undefined" mode="indeterminate">
-      </mat-progress-bar>
       <table mat-table [dataSource]="dataSource" class="tabelaResponsaveis">
         <ng-container matColumnDef="avatar">
           <th width="10%" mat-header-cell *matHeaderCellDef></th>
           <td mat-cell *matCellDef="let element">
-            <img class="avatarResponsavel" src="{{element.avatar}}" alt="Responsável">
+            <img #avatarIcon (error)="onErrorAvatar(avatarIcon)" class="avatarResponsavel" src="{{element.avatar}}"
+              alt="Responsável">
           </td>
         </ng-container>
-        <ng-container matColumnDef="nome">
-          <th width="40%" mat-header-cell *matHeaderCellDef> Nome </th>
-          <td mat-cell *matCellDef="let element"> {{element.nome}} </td>
-        </ng-container>
-        <ng-container matColumnDef="email">
-          <th width="40%" mat-header-cell *matHeaderCellDef class="hide-ss"> Email </th>
-          <td mat-cell *matCellDef="let element" class="hide-ss"> {{element.email}} </td>
-        </ng-container>
-        <ng-container matColumnDef="id">
-          <th width="10%" mat-header-cell *matHeaderCellDef> Remover </th>
+        <ng-container matColumnDef="responsaveis">
+          <th width="60%" mat-header-cell *matHeaderCellDef> Responsável </th>
           <td mat-cell *matCellDef="let element">
-            <button mat-button (click)="onRemoverResponsavel(element.id)" class="btnRemoverResponsavel">
+            {{element.nome}}
+            <br>
+            <a class="linkEmail" href="mailto:">{{element.email}}</a>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="acoes">
+          <th width="30%" mat-header-cell *matHeaderCellDef> Ações </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-button (click)="onModoEditar(element)" class="btnEditarResponsavel">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-button (click)="onRemoverResponsavel(element)" class="btnRemoverResponsavel">
               <mat-icon>delete</mat-icon>
             </button>
           </td>
@@ -61,12 +65,13 @@
     </mat-tab>
   </mat-tab-group>
 </mat-dialog-content>
+<mat-progress-bar *ngIf="statusBarraCarregamento == true || responsavelService.listaResponsaveis === undefined"mode="indeterminate"></mat-progress-bar>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close class="btnCancelar">
     <mat-icon>close</mat-icon>
     FECHAR
   </button>
-  <button mat-button class="btnSalvar">
+  <button #btnSalvarResponsavel mat-button class="btnSalvar" (click)="onSalvarResponsavel()">
     <mat-icon>check</mat-icon>
     SALVAR
   </button>
