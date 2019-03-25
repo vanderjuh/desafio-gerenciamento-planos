@@ -19,4 +19,16 @@ export class PlanosService {
     return this.http.get<Plano[]>(`${environment.apiURL}/planos`);
   }
 
+  deletarPlano(id: number): Observable<object> {
+    return this.http.delete(`${environment.apiURL}/planos/${id}`);
+  }
+
+  salvarPlano(plano: Plano): Observable<object> {
+    if (plano.id) {
+      return this.http.post(`${environment.apiURL}/planos`, plano);
+    } else {
+      return this.http.put(`${environment.apiURL}/planos`, plano);
+    }
+  }
+
 }

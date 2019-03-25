@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Plano } from '../planos/plano';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -18,6 +17,18 @@ export class ResponsavelService {
 
   getResponsaveis(): Observable<Responsavel[]> {
     return this.http.get<Responsavel[]>(`${environment.apiURL}/responsaveis`);
+  }
+
+  deletarResponsavel(id: number): Observable<object> {
+    return this.http.delete(`${environment.apiURL}/responsaveis/${id}`);
+  }
+
+  salvarResponsavel(responsavel: Responsavel): Observable<object> {
+    if (responsavel.id) {
+      return this.http.post(`${environment.apiURL}/responsaveis`, responsavel);
+    } else {
+      return this.http.put(`${environment.apiURL}/responsaveis`, responsavel);
+    }
   }
 
 }
