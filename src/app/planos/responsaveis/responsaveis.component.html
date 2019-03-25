@@ -5,6 +5,9 @@
 <mat-dialog-content>
   <mat-tab-group class="responsaveis">
     <mat-tab label="Cadastrar novo" [formGroup]="formulario">
+      <div class="avatarBox">
+        <img [(src)]="this.formulario.get('avatar').value" #avatarImg alt="Avatar" (error)="onErrorAvatar(avatarImg)">
+      </div>
       <mat-form-field class="formItem">
         <mat-label>Nome completo <span class="requerido">*</span></mat-label>
         <input matInput formControlName="nome">
@@ -15,12 +18,13 @@
         <mat-label>E-mail <span class="requerido">*</span></mat-label>
         <input matInput formControlName="email">
         <mat-hint>Obrigatório</mat-hint>
-        <mat-error *ngIf="this.formulario.get('email').hasError('required')">Atenção: este campo é obrigatório!</mat-error>
+        <mat-error *ngIf="this.formulario.get('email').hasError('required')">Atenção: este campo é obrigatório!
+        </mat-error>
         <mat-error *ngIf="this.formulario.get('email').hasError('email')">Atenção: informe um e-mail válido!</mat-error>
       </mat-form-field>
       <mat-form-field class="formItem">
         <mat-label>Link da imagem</mat-label>
-        <input matInput formControlName="avatar">
+        <input matInput formControlName="avatar" [(value)]="this.formulario.get('avatar').value">
         <mat-hint>Ex: http://www.repositorio.com.br/teste.jpeg</mat-hint>
       </mat-form-field>
     </mat-tab>

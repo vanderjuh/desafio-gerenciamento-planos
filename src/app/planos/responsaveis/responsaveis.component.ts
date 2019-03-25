@@ -63,4 +63,8 @@ export class ResponsaveisComponent implements OnInit {
     this.abrirSnackBar(`Contato removido: ${id}`, 2000);
   }
 
+  onErrorAvatar(avatarImg: any): void {
+    avatarImg.src = '../../../assets/img/baseline-account_circle-24px.svg';
+  }
+
 }

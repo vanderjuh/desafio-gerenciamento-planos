@@ -38,6 +38,20 @@ h2 {
     width: 100%;
 }
 
+.avatarBox {
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.avatarBox img {
+    width: 150px;
+    height: 150px;
+    border-radius: 100px;
+   }
+
 .avatarResponsavel{
     width: 30px;
     height: 30px;
