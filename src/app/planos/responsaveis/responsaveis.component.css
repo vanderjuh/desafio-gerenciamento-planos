@@ -67,4 +67,8 @@ h2 {
     .hide-ss {
         display: none;
     }
+
+    td {
+        font-size: 12px;
+    }
 }
