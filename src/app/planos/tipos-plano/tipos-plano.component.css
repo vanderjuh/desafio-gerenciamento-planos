@@ -6,6 +6,15 @@ h2 {
     align-items: center;
 }
 
+.descTipo {
+    transition: all ease .3s;
+}
+
+.descTipo:hover {
+    color: rgba(47, 47, 255, 0.842);
+    cursor: pointer;
+}
+
 .tabelaTipos{
     width: 100%;
 }
@@ -17,6 +26,10 @@ h2 {
 
 .btnRemoverTipo{
     color: rgba(201, 0, 0, 0.438);
+}
+
+.btnEditarTipo{
+    color: rgba(17, 201, 0, 0.438);
 }
 
 .btnCriarTipo {

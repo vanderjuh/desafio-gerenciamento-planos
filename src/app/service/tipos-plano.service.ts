@@ -24,10 +24,10 @@ export class TiposPlanoService {
   }
 
   salvarTipoPlano(tipoPlano: TiposPlano): Observable<object> {
-    if (tipoPlano.id) {
+    if (!tipoPlano.id) {
       return this.http.post(`${environment.apiURL}/tipos`, tipoPlano);
     } else {
-      return this.http.put(`${environment.apiURL}/tipos`, tipoPlano);
+      return this.http.put(`${environment.apiURL}/tipos/${tipoPlano.id}`, tipoPlano);
     }
   }
 
