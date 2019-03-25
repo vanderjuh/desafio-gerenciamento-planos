@@ -11,7 +11,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 })
 export class TiposPlanoComponent implements OnInit, OnDestroy {
 
-  displayedColumns: string[] = ['desc', 'remover'];
+  displayedColumns: string[] = ['desc', 'acoes'];
   dataSource: MatTableDataSource<TiposPlano>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -127,12 +127,16 @@ export class TiposPlanoComponent implements OnInit, OnDestroy {
   onRemoverTipo(tipo: TiposPlano): void {
     if (confirm('Você tem certeza de que deseja remover este tipo de plano?')) {
       this.toggleBarraCarregamento();
-      this.tiposPlanoService.deletarTipoPlano(tipo.id)
-        .subscribe(resp => {
-          this.toggleBarraCarregamento();
-          this.atualizarListaLocal(tipo, true);
-          this.abrirSnackBar(`Tipo removido com sucesso!`, 2000);
-        });
+      try {
+        this.tiposPlanoService.deletarTipoPlano(tipo)
+          .subscribe(resp => {
+            this.atualizarListaLocal(tipo, true);
+            this.abrirSnackBar(`Tipo removido com sucesso!`, 2000);
+          });
+      } catch (error) {
+        this.abrirSnackBar(error.message, 2000);
+      }
+      this.toggleBarraCarregamento();
     }
   }
 

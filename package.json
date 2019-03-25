@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "api": "json-server ./db/API.json --delay 2000"
+    "api": "json-server ./db/API.json --delay 2000 --watch"
   },
   "private": true,
   "dependencies": {

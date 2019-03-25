@@ -16,7 +16,7 @@
         {
           "id": 567567,
           "titulo": "Etapa 1",
-          "tipo": 1,
+          "tipo": 8,
           "status": "Aguardando",
           "prazo": "28/02/2019",
           "responsavel": {
