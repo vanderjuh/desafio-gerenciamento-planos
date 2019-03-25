@@ -136,6 +136,7 @@ export class TiposPlanoComponent implements OnInit, OnDestroy {
           });
       } catch (error) {
         this.abrirSnackBar(error.message, 2000);
+        this.toggleBarraCarregamento();
       }
     }
   }

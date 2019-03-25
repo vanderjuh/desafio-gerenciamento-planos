@@ -10,7 +10,9 @@ export class ItemListaComponent implements OnInit {
 
   @Input() value: any;
 
-  constructor() { }
+  constructor() {
+    console.log('Instancia de item-lista');
+  }
 
   ngOnInit() {
   }

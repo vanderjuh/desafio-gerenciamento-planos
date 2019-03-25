@@ -39,7 +39,7 @@ export class TiposPlanoService {
 
   private tipoSendoUsado(tipo: TiposPlano): boolean | void {
     if (this.planosService.listaPlanos) {
-      if (this.planosService.listaPlanos.filter(p => p.tipo === tipo.id).length > 0) {
+      if (this.planosService.listaPlanos.filter(p => +p.tipo === tipo.id).length > 0) {
         return true;
       }
       return false;

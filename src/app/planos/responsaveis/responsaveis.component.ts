@@ -98,6 +98,7 @@ export class ResponsaveisComponent implements OnInit {
           });
       } catch (error) {
         this.abrirSnackBar(error.message, 2000);
+        this.toggleBarraCarregamento();
       }
     }
   }

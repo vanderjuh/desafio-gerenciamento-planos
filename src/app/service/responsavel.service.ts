@@ -24,7 +24,7 @@ export class ResponsavelService {
   }
 
   deletarResponsavel(responsavel: Responsavel): Observable<object> {
-    if (!this.tipoSendoUsado(responsavel)) {
+    if (!this.responsavelSendoUsado(responsavel)) {
       return this.http.delete(`${environment.apiURL}/responsaveis/${responsavel.id}`);
     } else { throw new Error('Esta pessoa não pode ser removida, pois é responsável por algum plano'); }
   }
@@ -37,16 +37,16 @@ export class ResponsavelService {
     }
   }
 
-  private tipoSendoUsado(responsavel: Responsavel): boolean | void {
+  private responsavelSendoUsado(responsavel: Responsavel): boolean | void {
     if (this.planosService.listaPlanos) {
-      if (this.planosService.listaPlanos.filter(p => p.responsavel === responsavel.id).length > 0) {
+      if (this.planosService.listaPlanos.filter(p => +p.responsavel === responsavel.id).length > 0) {
         return true;
       }
       return false;
     } else {
       this.planosService.getPlanos().subscribe(planos => {
         this.planosService.listaPlanos = planos;
-        this.tipoSendoUsado(responsavel);
+        this.responsavelSendoUsado(responsavel);
       });
     }
   }

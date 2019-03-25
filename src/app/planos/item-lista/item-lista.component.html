@@ -6,8 +6,8 @@
       </div>
       <div class="infoPlano">
         <h1>{{value.titulo}}</h1>
-        <h2>{{value.status}}</h2>
-        <p>{{value.prazo}}</p>
+        <h2>{{value.statusAndamento ? value.statusAndamento : 'Aguardando início.'}}</h2>
+        <p>{{value.dataInicio ? value.dataInicio : 'Inderteminado'}} até {{value.dataInicio ? value.dataInicio : 'Inderteminado.'}}</p>
       </div>
       <div class="infoResponsavel">
         <div class="info hide-ss">
