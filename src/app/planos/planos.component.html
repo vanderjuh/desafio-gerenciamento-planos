@@ -18,8 +18,16 @@
 </div>
 <div class="centerItemContainer">
     <div cdkDropList class="listaPlanos" (cdkDropListDropped)="drop($event)">
-        <mat-progress-bar *ngIf="statusBarraCarregamento === true || planosService.listaPlanos === undefined" mode="indeterminate"></mat-progress-bar>
+        <mat-progress-bar *ngIf="statusBarraCarregamento === true || planosService.listaPlanos === undefined"
+            mode="indeterminate"></mat-progress-bar>
         <app-item-lista *ngFor="let plano of listaPlanos" [value]="plano" cdkDrag></app-item-lista>
+    </div>
+</div>
+<div class="centerItemContainer">
+    <div cdkDropListGroup>
+        <div cdkDropList [cdkDropListData]="listaPlanos" (cdkDropListDropped)="drop2($event)">
+            <app-item-lista *ngFor="let plano of listaPlanos" [value]="plano" cdkDrag></app-item-lista>
+        </div>
     </div>
 </div>
 <app-footer></app-footer>

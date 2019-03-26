@@ -15,6 +15,12 @@ export class PlanosService {
     console.log('Serviço "Planos" ON!');
   }
 
+  getPlanosParent(): Plano[] {
+    if (this.listaPlanos) {
+      return this.listaPlanos.filter(p => p.pertence === null);
+    }
+  }
+
   getPlanos(): Observable<Plano[]> {
     return this.http.get<Plano[]>(`${environment.apiURL}/planos`);
   }

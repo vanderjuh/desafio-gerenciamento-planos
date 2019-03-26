@@ -9,6 +9,7 @@ import { ResponsaveisComponent } from './responsaveis/responsaveis.component';
 import { Plano } from './plano';
 import { Subscription } from 'rxjs';
 import { EventosService } from '../service/eventos.service';
+import { TesteService } from '../service/teste.service';
 
 @Component({
   selector: 'app-planos',
@@ -27,6 +28,7 @@ export class PlanosComponent implements OnInit, OnDestroy {
 
   constructor(
     private planosService: PlanosService,
+    private testeService: TesteService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private eventosService: EventosService
@@ -44,6 +46,18 @@ export class PlanosComponent implements OnInit, OnDestroy {
     if (this.inscriBarraCarregamento) { this.inscriBarraCarregamento.unsubscribe(); }
     if (this.inscriAtualizarLista) { this.inscriAtualizarLista.unsubscribe(); }
   }
+
+  drop2(event: CdkDragDrop<Plano[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(event.previousContainer.data,
+                        event.container.data,
+                        event.previousIndex,
+                        event.currentIndex);
+    }
+  }
+
 
   inscricaoEditarPlanoModal(): void {
     this.inscriEditarPlanoModal = this.eventosService.emitirEditarPlano.subscribe(plano => {
