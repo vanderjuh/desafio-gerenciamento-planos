@@ -25,9 +25,16 @@
 </div>
 <div class="centerItemContainer">
     <div cdkDropListGroup>
-        <div cdkDropList [cdkDropListData]="listaPlanos" (cdkDropListDropped)="drop2($event)">
-            <app-item-lista *ngFor="let plano of listaPlanos" [value]="plano" cdkDrag></app-item-lista>
+        <div cdkDropList [cdkDropListData]="testeService.listaPlanos" (cdkDropListDropped)="drop2($event)">
+            <ul *ngFor="let plano of testeService.listaPlanos">
+                <li cdkDrag>{{plano.titulo}}</li>
+                <div cdkDropList [cdkDropListData]="plano.subPlanos" (cdkDropListDropped)="drop2($event)">
+                    <ul *ngFor="let subplano of plano.subPlanos">
+                        <li cdkDrag>{{subplano.titulo}}</li>
+                    </ul>
+                </div>
+            </ul>
         </div>
     </div>
 </div>
-<app-footer></app-footer>
+<!-- <app-footer></app-footer> -->

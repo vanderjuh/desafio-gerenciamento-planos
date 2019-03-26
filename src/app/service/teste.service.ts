@@ -16,7 +16,7 @@ export class TesteService {
   }
 
   getPlanos(): Observable<Plano[]> {
-    return this.http.get<Plano[]>(`${environment.apiURL}/planos`);
+    return this.http.get<Plano[]>(`${environment.apiURL}/testeplanos`);
   }
 
 }

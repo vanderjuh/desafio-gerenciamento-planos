@@ -39,6 +39,7 @@ export class PlanosComponent implements OnInit, OnDestroy {
     this.inscricaoEditarPlanoModal();
     this.inscricaoBarraCarregamento();
     this.inscricaoAtualizarLista();
+    this.getPlanosFromServerTeste();
   }
 
   ngOnDestroy() {
@@ -56,6 +57,7 @@ export class PlanosComponent implements OnInit, OnDestroy {
                         event.previousIndex,
                         event.currentIndex);
     }
+    console.log(this.testeService.listaPlanos);
   }
 
 
@@ -100,6 +102,12 @@ export class PlanosComponent implements OnInit, OnDestroy {
         this.toggleBarraCarregamento();
       });
     }
+  }
+
+  getPlanosFromServerTeste(): void {
+    this.testeService.getPlanos().subscribe(planos => {
+      this.testeService.listaPlanos = planos;
+    });
   }
 
   drop(event: CdkDragDrop<string[]>) {
