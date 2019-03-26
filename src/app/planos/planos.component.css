@@ -56,6 +56,14 @@ mat-chip {
     background-color: rgb(78, 131, 0);
 }
 
+.cdk-drop-list-dragging .cdk-drag {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+  
+.cdk-drag-animating {
+    transition: transform 300ms cubic-bezier(0, 0, 0.2, 1);
+}
+
 @media( max-width: 700px ) {
     .centerItemContainer {
         margin: 30px 20px 0 20px;

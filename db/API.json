@@ -5,7 +5,7 @@
       "titulo": "23423423423",
       "tipo": "2",
       "responsavel": "2",
-      "pertence": 3,
+      "pertence": 2,
       "interessados": null,
       "custo": null,
       "descricao": null,
@@ -31,7 +31,7 @@
       "titulo": "sdfsdfsdf",
       "tipo": "2",
       "responsavel": "2",
-      "pertence": null,
+      "pertence": 2,
       "interessados": null,
       "custo": null,
       "descricao": null,
@@ -87,7 +87,8 @@
           "descricao": null,
           "dataInicio": null,
           "dataTermino": null,
-          "statusAndamento": null
+          "statusAndamento": null,
+          "subPlanos": []
         },
         {
           "id": 3,
@@ -99,7 +100,8 @@
           "descricao": null,
           "dataInicio": null,
           "dataTermino": null,
-          "statusAndamento": null
+          "statusAndamento": null,
+          "subPlanos": []
         }
       ]
     },
@@ -125,7 +127,8 @@
           "descricao": null,
           "dataInicio": null,
           "dataTermino": null,
-          "statusAndamento": null
+          "statusAndamento": null,
+          "subPlanos": []
         }
       ]
     }
