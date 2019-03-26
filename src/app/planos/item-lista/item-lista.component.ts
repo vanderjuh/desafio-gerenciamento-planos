@@ -1,26 +1,29 @@
-import { Component, OnInit, Input, ɵConsole } from '@angular/core';
+import { Component, OnInit, Input, ɵConsole, OnDestroy } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ResponsavelService } from 'src/app/service/responsavel.service';
 import { Responsavel } from '../responsaveis/responsavel';
 import { Plano } from '../plano';
 import { PlanosService } from 'src/app/service/planos.service';
-import { EventEmitter } from '@angular/core';
 import { EventosService } from 'src/app/service/eventos.service';
 import { MatSnackBar } from '@angular/material';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-item-lista',
   templateUrl: './item-lista.component.html',
   styleUrls: ['./item-lista.component.css']
 })
-export class ItemListaComponent implements OnInit {
+export class ItemListaComponent implements OnInit, OnDestroy {
 
   @Input() value: Plano;
   responsavel: Responsavel;
 
   subPlanos: Plano[];
 
-  listaRemover: Plano[] = [];
+  dataInicio: Date;
+  dataTermino: Date;
+
+  inscriAtualizarLista: Subscription;
 
   constructor(
     private responsaveisService: ResponsavelService,
@@ -32,6 +35,30 @@ export class ItemListaComponent implements OnInit {
   ngOnInit() {
     this.onGetResponsavel();
     this.getSubplanos();
+    this.setPeriodo();
+    this.inscricaoAtualizarLista();
+  }
+
+  ngOnDestroy() {
+    if (this.inscriAtualizarLista) { this.inscriAtualizarLista.unsubscribe(); }
+  }
+
+  inscricaoAtualizarLista(): void {
+    this.inscriAtualizarLista = this.eventosService.emitirAtualizarListaPlanos.subscribe(() => {
+      this.getSubplanos();
+    });
+  }
+
+  setPeriodo(): void {
+    if (this.value.dataInicio) {
+      const timestampInicio = Date.parse(this.value.dataInicio);
+      this.dataInicio = new Date(timestampInicio);
+    }
+
+    if (this.value.dataTermino) {
+      const timestampTermino = Date.parse(this.value.dataTermino);
+      this.dataTermino = new Date(timestampTermino);
+    }
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -56,42 +83,42 @@ export class ItemListaComponent implements OnInit {
     this.eventosService.emitirEditarPlano.emit(this.value);
   }
 
-  atualizarListaLocal(plano: Plano): void {
-    this.planosService.listaPlanos = this.planosService.listaPlanos.filter(p => p.id !== plano.id);
-  }
-
-  onRemoverPlano(): void {
-    let msg = 'Deseja realmente excluir este plano?';
-    this.listaRemover = this.planosService.listaPlanos.filter(p => +p.pertence === this.value.id);
-    const qtdSubPlanos = this.listaRemover.length;
-    if (qtdSubPlanos > 0) { msg = `Existem ${qtdSubPlanos} sub-plano(s) neste plano. Deseja realmente excluir?`; }
-    if (confirm(msg)) {
-      this.eventosService.emitirBarraCarregamento.emit(true);
-      this.planosService.listaPlanos.forEach(p => {
-        if (p.id === this.value.id) {
-          this.planosService.deletarPlano(p).subscribe(resp => {
-            this.abrirSnackBar(`Evento: "${p.titulo}" removido!`, 2000);
-            this.listaRemover = this.listaRemover.filter(pr => pr.id !== p.id);
-            this.atualizarListaLocal(p);
-            this.verificarStatusProcesso();
-          });
-        }
-        if (p.pertence === this.value.id) {
-          this.planosService.deletarPlano(p).subscribe(resp => {
-            this.abrirSnackBar(`Sub-evento: "${p.titulo}" removido!`, 2000);
-            this.listaRemover = this.listaRemover.filter(pr => pr.id !== p.id);
-            this.atualizarListaLocal(p);
-            this.verificarStatusProcesso();
-          });
-        }
+  atualizarListaLocal(plano: Plano, remover: boolean = false): void {
+    if (remover) {
+      this.planosService.listaPlanos = this.planosService.listaPlanos.filter(p => p.id !== plano.id);
+    } else {
+      this.planosService.listaPlanos = this.planosService.listaPlanos.map(p => {
+        if (p.id === +plano.id) { p = { ...plano }; }
+        return p;
       });
     }
   }
 
-  private verificarStatusProcesso(): void {
-    if (this.listaRemover.length === 0) {
-      this.eventosService.emitirBarraCarregamento.emit(false);
-      this.eventosService.emitirAtualizarListaPlanos.emit();
+  onAlterarStatusPlano(status: number): void {
+    if (status >= 1 && status <= 4) {
+      const plano = this.value;
+      plano.statusAndamento = status;
+      this.eventosService.emitirBarraCarregamento.emit(true);
+      this.planosService.salvarPlano(plano).subscribe(resp => {
+        this.atualizarListaLocal(plano);
+        this.eventosService.emitirBarraCarregamento.emit(false);
+        this.eventosService.emitirAtualizarListaPlanos.emit();
+      });
+    }
+  }
+
+  onRemoverPlano(): void {
+    if (confirm('Deseja realmente excluir este plano?')) {
+      this.eventosService.emitirBarraCarregamento.emit(true);
+      this.planosService.listaPlanos.forEach(p => {
+        if (p.id === this.value.id) {
+          this.planosService.deletarPlano(p).subscribe(resp => {
+            this.atualizarListaLocal(p, true);
+            this.eventosService.emitirBarraCarregamento.emit(false);
+            this.eventosService.emitirAtualizarListaPlanos.emit();
+          });
+        }
+      });
     }
   }
 

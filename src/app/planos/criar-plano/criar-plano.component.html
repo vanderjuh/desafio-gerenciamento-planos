@@ -44,20 +44,20 @@
         <mat-grid-tile>
 
           <mat-form-field class="dataPlano">
-            <input matInput maxlength="10" [matDatepicker]="dataInicio" placeholder="Início"
-              formControlName="dataInicio" [(value)]="minDate">
-            <mat-datepicker-toggle matSuffix [for]="dataInicio"></mat-datepicker-toggle>
-            <mat-datepicker #dataInicio disabled="false"></mat-datepicker>
+            <input matInput maxlength="10" [matDatepicker]="dataInicioPicker" placeholder="Início"
+              formControlName="dataInicio" [(value)]="dataInicio">
+            <mat-datepicker-toggle matSuffix [for]="dataInicioPicker"></mat-datepicker-toggle>
+            <mat-datepicker #dataInicioPicker disabled="false"></mat-datepicker>
             <mat-hint>Data de início do plano</mat-hint>
             <mat-error *ngIf="this.formulario.get('dataInicio').hasError('matDatepickerParse')">Atenção, informe uma
               data válida!</mat-error>
           </mat-form-field>
 
           <mat-form-field class="dataPlano">
-            <input matInput [(min)]="this.formulario.get('dataInicio').value" maxlength="10" [matDatepicker]="dataFinal"
-              placeholder="Término" formControlName="dataTermino" [(value)]="maxDate">
-            <mat-datepicker-toggle matSuffix [for]="dataFinal"></mat-datepicker-toggle>
-            <mat-datepicker #dataFinal disabled="false"></mat-datepicker>
+            <input matInput [(min)]="this.formulario.get('dataInicio').value" maxlength="10" [matDatepicker]="dataTerminoPicker"
+              placeholder="Término" formControlName="dataTermino" [(value)]="dataTermino">
+            <mat-datepicker-toggle matSuffix [for]="dataTerminoPicker"></mat-datepicker-toggle>
+            <mat-datepicker #dataTerminoPicker disabled="false"></mat-datepicker>
             <mat-hint>Data de término do plano</mat-hint>
             <mat-error *ngIf="this.formulario.get('dataTermino').hasError('matDatepickerParse')">Atenção, informe uma
               data válida!</mat-error>
@@ -68,8 +68,8 @@
           <mat-form-field>
             <mat-label>Pertence ao plano</mat-label>
             <mat-select formControlName="pertence">
-              <mat-option *ngFor="let plano of listaPlanos" [value]="plano.id">{{plano.titulo}}
-              </mat-option>
+              <mat-option value="null">[Nenhum]</mat-option>
+              <mat-option *ngFor="let plano of listaPlanos" [value]="plano.id">{{plano.titulo}}</mat-option>
             </mat-select>
             <mat-hint>
               {{planosService.listaPlanos === undefined ? 'Carregando dados do servidor. Aguarde...' : 'Apenas uma seleção é permitida.'}}

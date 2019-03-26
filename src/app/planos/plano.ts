@@ -5,7 +5,7 @@ export interface Plano {
     id: number;
     titulo: string;
     tipo: number;
-    statusAndamento: string;
+    statusAndamento: number;
     dataInicio: string;
     dataTermino: string;
     custo: number;

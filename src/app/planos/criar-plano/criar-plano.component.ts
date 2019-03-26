@@ -17,8 +17,8 @@ export class CriarPlanoComponent implements OnInit {
 
   listaPlanos: Plano[];
 
-  minDate: Date;
-  maxDate: Date;
+  dataInicio: Date;
+  dataTermino: Date;
 
   formulario: FormGroup;
   @ViewChild('btnSalvarPlano') btnSalvarPlano: MatButton;
@@ -67,24 +67,34 @@ export class CriarPlanoComponent implements OnInit {
 
   verificarModo(): void {
     if (this.editarResgistro) {
-      this.minDate = new Date(this.editarResgistro.dataInicio);
-      this.maxDate = new Date(this.editarResgistro.dataTermino);
+      this.dataInicio = new Date(this.editarResgistro.dataInicio);
+      this.dataTermino = new Date(this.editarResgistro.dataTermino);
       this.onModoEditar(this.editarResgistro);
     }
   }
 
   listaPlanosFiltrado(): void {
-    this.listaPlanos = this.planosService.listaPlanos.filter(p => p.pertence === null);
+    if (this.planosService.listaPlanos) {
+      this.listaPlanos = this.planosService.listaPlanos.filter(p => p.pertence === null);
+    }
   }
 
   onFecharModal(): void {
-    if (this.formulario.touched && confirm('Deseja realmente sair?')) { this.dialogRef.close(false); }
-    if (!this.formulario.touched) { this.dialogRef.close(false); }
+    if (this.formulario.touched) {
+      if (confirm('Deseja realmente sair?')) {
+        this.dialogRef.close(true);
+      }
+    } else {
+      this.dialogRef.close(true);
+    }
   }
 
   onSalvarPlano(): void {
     if (this.formulario.valid) {
-      if (typeof this.formulario.get('pertence').value === 'object') {
+      if (
+        typeof this.formulario.get('pertence').value === 'object'
+        || this.formulario.get('pertence').value === 'null'
+      ) {
         this.formulario.get('pertence').setValue(null);
       }
       const plano: Plano = {
@@ -98,10 +108,10 @@ export class CriarPlanoComponent implements OnInit {
       this.planosService.salvarPlano(plano)
         .subscribe(
           resp => {
-            this.getPlanosFromServer();
+            if (!plano.id) { this.getPlanosFromServer(); }
             if (plano.id) { this.atualizarListaLocal(plano); }
             this.abrirSnackBar(`Plano salvo com sucesso!`, 2000);
-            this.dialogRef.close(true);
+            this.dialogRef.close(plano.id);
           }
         );
     } else {
@@ -172,9 +182,23 @@ export class CriarPlanoComponent implements OnInit {
     });
   }
 
-  onModoEditar(element: Plano): void {
+  setPeriodo(plano: Plano): void {
+    if (plano.dataInicio) {
+      const timestampInicio = Date.parse(plano.dataInicio);
+      this.dataInicio = new Date(timestampInicio);
+    } else { this.dataInicio = null; }
+
+    if (plano.dataTermino) {
+      const timestampTermino = Date.parse(plano.dataTermino);
+      this.dataTermino = new Date(timestampTermino);
+    } else { this.dataTermino = null; }
+  }
+
+  onModoEditar(plano: Plano): void {
     this.labelDialogPlano = 'EDITAR PLANO';
-    this.formulario.patchValue(element);
+    this.formulario.patchValue(plano);
+    this.setPeriodo(plano);
+    this.listaPlanos = this.listaPlanos.filter(p => p.id !== plano.id);
   }
 
   onModoOriginal(): void {

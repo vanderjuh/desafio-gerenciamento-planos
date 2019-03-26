@@ -6,14 +6,17 @@
       </div>
       <div class="infoPlano">
         <div class="tituloPlano">{{value.titulo}}</div>
-        <div class="statusPlano">
+        <div class="statusPlano" [ngSwitch]="value.statusAndamento">
           <mat-icon>history</mat-icon>
-          {{value.statusAndamento ? value.statusAndamento : 'Aguardando início...'}}
+          <span *ngSwitchCase="1">Iniciado</span>
+          <span *ngSwitchCase="2">Concluido</span>
+          <span *ngSwitchCase="3">Suspendido</span>
+          <span *ngSwitchCase="4">Finalizado</span>
+          <span *ngSwitchDefault>Aguardando início</span>
         </div>
         <div class="periodoPlano">
           <mat-icon>date_range</mat-icon>
-          {{value.dataInicio ? value.dataInicio : 'Inderteminado'}} até
-          {{value.dataTermino ? value.dataTermino : 'Inderteminado.'}}
+          {{dataInicio | date:'dd/MM/yyyy'}} | {{dataTermino | date:'dd/MM/yyyy'}}
         </div>
       </div>
       <div class="infoResponsavel">
@@ -49,19 +52,19 @@
         </mat-menu>
 
         <mat-menu #menuStatus="matMenu">
-          <button mat-menu-item>
+          <button mat-menu-item (click)="onAlterarStatusPlano(1)">
             <mat-icon>play_circle_outline</mat-icon>
             Iníciar
           </button>
-          <button mat-menu-item>
+          <button mat-menu-item (click)="onAlterarStatusPlano(2)">
             <mat-icon>done</mat-icon>
             Concluir
           </button>
-          <button mat-menu-item>
+          <button mat-menu-item (click)="onAlterarStatusPlano(3)">
             <mat-icon>pause_circle_outline</mat-icon>
             Suspender
           </button>
-          <button mat-menu-item>
+          <button mat-menu-item (click)="onAlterarStatusPlano(4)">
             <mat-icon>cancel</mat-icon>
             Cancelar
           </button>

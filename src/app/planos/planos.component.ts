@@ -98,8 +98,11 @@ export class PlanosComponent implements OnInit, OnDestroy {
       data: { ...plano }
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+      if (!result) {
+        this.getPlanosFromServer(true);
+      } else {
         this.listaPlanosFiltrado();
+        this.eventosService.emitirAtualizarListaPlanos.emit();
       }
     });
   }
