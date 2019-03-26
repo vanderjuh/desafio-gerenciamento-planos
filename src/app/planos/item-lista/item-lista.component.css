@@ -1,5 +1,6 @@
 .itemListaPlanos {
     margin-bottom: 5px;
+    padding: 5px;
 }
 
 mat-expansion-panel-header {
@@ -8,7 +9,7 @@ mat-expansion-panel-header {
 
 .gridItemListaPlanos {
     display: grid;
-    grid-template-columns: 25px 40% 1fr 70px;
+    grid-template-columns: 25px 50% 1fr 70px;
     margin-bottom: 5px;
 }
 
@@ -18,25 +19,32 @@ mat-expansion-panel-header {
     justify-content: center;
 }
 
-.infoPlano h1, h2, p {
+.infoPlano mat-icon {
+    color: rgba(59, 140, 233, 0.329);
+}
+
+.tituloPlano,
+.statusPlano,
+.periodoPlano {
     margin: 0;
     padding: 0;
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
 }
 
-.infoPlano h1 {
-    font-size: 15px;
-    font-weight: 200;
+.tituloPlano {
+    border-bottom: #CCC solid 1px;
+    font-size: 18px;
+    color: #666;
 }
 
-.infoPlano h2 {
-    font-size: 14px;
-    font-weight: 100;
+.statusPlano {
+    font-size: 12px;
 }
 
-.infoPlano p {
-    font-size: 14px;
-    font-weight: 100;
-    color: #666
+.periodoPlano {
+    font-size: 12px;
 }
 
 .infoResponsavel {

@@ -5,29 +5,40 @@
         <mat-icon>drag_indicator</mat-icon>
       </div>
       <div class="infoPlano">
-        <h1>{{value.titulo}}</h1>
-        <h2>{{value.statusAndamento ? value.statusAndamento : 'Aguardando início.'}}</h2>
-        <p>{{value.dataInicio ? value.dataInicio : 'Inderteminado'}} até {{value.dataTermino ? value.dataTermino : 'Inderteminado.'}}</p>
+        <div class="tituloPlano">{{value.titulo}}</div>
+        <div class="statusPlano">
+          <mat-icon>history</mat-icon>
+          {{value.statusAndamento ? value.statusAndamento : 'Aguardando início...'}}
+        </div>
+        <div class="periodoPlano">
+          <mat-icon>date_range</mat-icon>
+          {{value.dataInicio ? value.dataInicio : 'Inderteminado'}} até
+          {{value.dataTermino ? value.dataTermino : 'Inderteminado.'}}
+        </div>
       </div>
       <div class="infoResponsavel">
         <div class="info hide-ss">
           <ul>
             <li>{{responsavel === undefined ? 'Carregando dado...' : responsavel.nome}}</li>
-            <li><a href="mailto:{{responsavel === undefined ? '#' : responsavel.email}}">{{responsavel === undefined ? 'Carregando dado...' : responsavel.email}}</a></li>
+            <li><a
+                href="mailto:{{responsavel === undefined ? '#' : responsavel.email}}">{{responsavel === undefined ? 'Carregando dado...' : responsavel.email}}</a>
+            </li>
           </ul>
         </div>
-        <img #avatarResponsavel src="{{responsavel === undefined ? '#' : responsavel.avatar}}" alt="Colaborador" title="Vanderley Junior" (error)="onErrorAvatar(avatarResponsavel)">
+        <img #avatarResponsavel src="{{responsavel === undefined ? '#' : responsavel.avatar}}" alt="Colaborador"
+          title="Vanderley Junior" (error)="onErrorAvatar(avatarResponsavel)">
       </div>
       <div class="acoesPlano">
-        <button mat-button [matMenuTriggerFor]="menu1">
+        <button mat-button [matMenuTriggerFor]="menuOpcoes">
           <mat-icon>more_vert</mat-icon>
         </button>
-        <mat-menu #menu1="matMenu">
+
+        <mat-menu #menuOpcoes="matMenu">
           <button mat-menu-item (click)="onEditarPlano()">
             <mat-icon>edit</mat-icon>
             Editar
           </button>
-          <button mat-menu-item>
+          <button mat-menu-item [matMenuTriggerFor]="menuStatus">
             <mat-icon>update</mat-icon>
             Mudar status:
           </button>
@@ -36,6 +47,26 @@
             remover
           </button>
         </mat-menu>
+
+        <mat-menu #menuStatus="matMenu">
+          <button mat-menu-item>
+            <mat-icon>play_circle_outline</mat-icon>
+            Iníciar
+          </button>
+          <button mat-menu-item>
+            <mat-icon>done</mat-icon>
+            Concluir
+          </button>
+          <button mat-menu-item>
+            <mat-icon>pause_circle_outline</mat-icon>
+            Suspender
+          </button>
+          <button mat-menu-item>
+            <mat-icon>cancel</mat-icon>
+            Cancelar
+          </button>
+        </mat-menu>
+
       </div>
     </mat-panel-description>
   </mat-expansion-panel-header>

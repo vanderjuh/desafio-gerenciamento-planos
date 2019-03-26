@@ -71,7 +71,7 @@ export class PlanosComponent implements OnInit, OnDestroy {
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.planosService.listaPlanos, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.listaPlanos, event.previousIndex, event.currentIndex);
   }
 
   abrirCriarPlanoDialog(plano: Plano = null) {
