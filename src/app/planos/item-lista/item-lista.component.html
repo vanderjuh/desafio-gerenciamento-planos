@@ -7,16 +7,16 @@
       <div class="infoPlano">
         <h1>{{value.titulo}}</h1>
         <h2>{{value.statusAndamento ? value.statusAndamento : 'Aguardando início.'}}</h2>
-        <p>{{value.dataInicio ? value.dataInicio : 'Inderteminado'}} até {{value.dataInicio ? value.dataInicio : 'Inderteminado.'}}</p>
+        <p>{{value.dataInicio ? value.dataInicio : 'Inderteminado'}} até {{value.dataTermino ? value.dataTermino : 'Inderteminado.'}}</p>
       </div>
       <div class="infoResponsavel">
         <div class="info hide-ss">
           <ul>
-            <li>{{value.responsavel.nome}}</li>
-            <li><a href="mailto:vanderley@forlogic.net">{{value.responsavel.email}}</a></li>
+            <li>{{responsavel === undefined ? 'Carregando dado...' : responsavel.nome}}</li>
+            <li><a href="mailto:{{responsavel === undefined ? '#' : responsavel.email}}">{{responsavel === undefined ? 'Carregando dado...' : responsavel.email}}</a></li>
           </ul>
         </div>
-        <img src="../../assets/img/vanderley.jpg" alt="Colaborador" title="Vanderley Junior">
+        <img #avatarResponsavel src="{{responsavel === undefined ? '#' : responsavel.avatar}}" alt="Colaborador" title="Vanderley Junior" (error)="onErrorAvatar(avatarResponsavel)">
       </div>
       <div class="acoesPlano">
         <button mat-button [matMenuTriggerFor]="menu1">
@@ -42,7 +42,7 @@
 
   <ng-template matExpansionPanelContent>
     <div cdkDropList (cdkDropListDropped)="drop($event)">
-      <app-item-lista *ngFor="let plano of value.subPlanos" [value]="plano" cdkDrag></app-item-lista>
+      <app-item-lista *ngFor="let plano of subPlanos" [value]="plano" cdkDrag></app-item-lista>
     </div>
   </ng-template>
 </mat-expansion-panel>

@@ -5,3 +5,7 @@
 .menuLateral{
     width: 269px;
 }
+
+.conteudoPrincipal{
+    position: relative;
+}

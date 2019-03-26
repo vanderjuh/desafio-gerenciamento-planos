@@ -5,9 +5,12 @@ export interface Plano {
     id: number;
     titulo: string;
     tipo: number;
-    status: string;
-    prazo: string;
+    statusAndamento: string;
+    dataInicio: string;
+    dataTermino: string;
+    custo: number;
     responsavel: number;
     interessados: number[];
-    subPlanos: number[];
+    pertence: number;
+    descricao: string;
 }

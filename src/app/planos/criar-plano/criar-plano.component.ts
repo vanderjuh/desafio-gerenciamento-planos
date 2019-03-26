@@ -82,7 +82,7 @@ export class CriarPlanoComponent implements OnInit {
             } else { this.atualizarListaLocal(this.formulario.value); }
             this.onModoOriginal();
             this.abrirSnackBar(`Plano salvo com sucesso!`, 2000);
-            this.dialogRef.close();
+            this.dialogRef.close(true);
           }
         );
     } else {

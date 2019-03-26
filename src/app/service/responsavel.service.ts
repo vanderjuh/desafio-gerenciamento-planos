@@ -19,6 +19,10 @@ export class ResponsavelService {
     console.log('Serviço "Responsavel" ON!');
   }
 
+  getResponsavel(id: number): Observable<Responsavel> {
+    return this.http.get<Responsavel>(`${environment.apiURL}/responsaveis/${id}`);
+  }
+
   getResponsaveis(): Observable<Responsavel[]> {
     return this.http.get<Responsavel[]>(`${environment.apiURL}/responsaveis`);
   }

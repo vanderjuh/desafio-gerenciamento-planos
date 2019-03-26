@@ -6,6 +6,7 @@ import { PlanosService } from '../service/planos.service';
 import { CriarPlanoComponent } from './criar-plano/criar-plano.component';
 import { TiposPlanoComponent } from './tipos-plano/tipos-plano.component';
 import { ResponsaveisComponent } from './responsaveis/responsaveis.component';
+import { Plano } from './plano';
 
 @Component({
   selector: 'app-planos',
@@ -13,6 +14,10 @@ import { ResponsaveisComponent } from './responsaveis/responsaveis.component';
   styleUrls: ['./planos.component.css']
 })
 export class PlanosComponent implements OnInit {
+
+  statusBarraCarregamento: boolean;
+
+  listaPlanos: Plano[];
 
   constructor(
     private planosService: PlanosService,
@@ -24,15 +29,28 @@ export class PlanosComponent implements OnInit {
     this.getPlanosFromServer();
   }
 
+  listaPlanosFiltrado(): void {
+    this.listaPlanos = this.planosService.listaPlanos.filter(p => p.pertence === null);
+  }
+
   abrirSnackBar(message: string, time: number) {
     this.snackBar.open(message, null, {
       duration: time,
     });
   }
 
-  getPlanosFromServer(): void {
-    if (this.planosService.listaPlanos === undefined || this.planosService.listaPlanos.length === 0) {
-      this.planosService.getPlanos().subscribe(planos => this.planosService.listaPlanos = planos);
+  getPlanosFromServer(force: boolean = false): void {
+    if (
+      force === true
+      || this.planosService.listaPlanos === undefined
+      || this.planosService.listaPlanos.length === 0
+    ) {
+      this.toggleBarraCarregamento();
+      this.planosService.getPlanos().subscribe(planos => {
+        this.planosService.listaPlanos = planos;
+        this.listaPlanosFiltrado();
+        this.toggleBarraCarregamento();
+      });
     }
   }
 
@@ -43,7 +61,9 @@ export class PlanosComponent implements OnInit {
   abrirCriarPlanoDialog() {
     const dialogRef = this.dialog.open(CriarPlanoComponent, { disableClose: true });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      if (result) {
+        this.getPlanosFromServer(true);
+      }
     });
   }
 
@@ -59,6 +79,10 @@ export class PlanosComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
+  }
+
+  toggleBarraCarregamento(): void {
+    this.statusBarraCarregamento = !this.statusBarraCarregamento;
   }
 
 }
