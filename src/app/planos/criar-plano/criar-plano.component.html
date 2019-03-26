@@ -55,7 +55,7 @@
 
           <mat-form-field class="dataPlano">
             <input matInput [(min)]="this.formulario.get('dataInicio').value" maxlength="10" [matDatepicker]="dataFinal"
-              placeholder="Término" formControlName="dataTermino">
+              placeholder="Término" formControlName="dataTermino" [(value)]="maxDate">
             <mat-datepicker-toggle matSuffix [for]="dataFinal"></mat-datepicker-toggle>
             <mat-datepicker #dataFinal disabled="false"></mat-datepicker>
             <mat-hint>Data de término do plano</mat-hint>
@@ -68,7 +68,7 @@
           <mat-form-field>
             <mat-label>Pertence ao plano</mat-label>
             <mat-select formControlName="pertence">
-              <mat-option *ngFor="let plano of planosService.listaPlanos" [value]="plano.id">{{plano.titulo}}
+              <mat-option *ngFor="let plano of listaPlanos" [value]="plano.id">{{plano.titulo}}
               </mat-option>
             </mat-select>
             <mat-hint>
@@ -116,7 +116,7 @@
 </mat-dialog-content>
 <mat-progress-bar *ngIf="statusBarraCarregamento === true" mode="indeterminate"></mat-progress-bar>
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close class="btnCancelar">
+  <button mat-button class="btnCancelar" (click)="onFecharModal()">
     <mat-icon>close</mat-icon>
     CANCELAR E FECHAR
   </button>

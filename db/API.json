@@ -2,15 +2,18 @@
   "planos": [
     {
       "id": 1,
-      "titulo": "Teste de plano",
+      "titulo": "Teste 1",
       "tipo": "1",
       "responsavel": "2",
       "pertence": null,
-      "interessados": null,
-      "custo": null,
-      "descricao": null,
-      "dataInicio": "2019-3-27",
-      "dataTermino": null,
+      "interessados": [
+        "1",
+        "2"
+      ],
+      "custo": 1500,
+      "descricao": "Bla bla de teste",
+      "dataInicio": "2019-3-25",
+      "dataTermino": "2019-3-29",
       "statusAndamento": null
     },
     {
@@ -24,6 +27,35 @@
       "descricao": null,
       "dataInicio": "2019-3-26",
       "dataTermino": "2019-3-28",
+      "statusAndamento": null
+    },
+    {
+      "id": 3,
+      "titulo": "Teste 2",
+      "tipo": "1",
+      "responsavel": "1",
+      "pertence": null,
+      "interessados": [
+        "1",
+        "2"
+      ],
+      "custo": 1540,
+      "descricao": "bla bla teste",
+      "dataInicio": "2019-3-14",
+      "dataTermino": "2019-3-29",
+      "statusAndamento": null
+    },
+    {
+      "id": 4,
+      "titulo": "Etapa 2",
+      "tipo": "1",
+      "responsavel": "2",
+      "pertence": 1,
+      "interessados": null,
+      "custo": null,
+      "descricao": null,
+      "dataInicio": null,
+      "dataTermino": null,
       "statusAndamento": null
     }
   ],

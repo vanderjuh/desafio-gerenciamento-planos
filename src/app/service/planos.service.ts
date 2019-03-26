@@ -27,7 +27,7 @@ export class PlanosService {
     if (!plano.id) {
       return this.http.post(`${environment.apiURL}/planos`, plano);
     } else {
-      return this.http.put(`${environment.apiURL}/planos`, plano);
+      return this.http.put(`${environment.apiURL}/planos/${plano.id}`, plano);
     }
   }
 

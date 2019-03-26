@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { ResponsavelService } from 'src/app/service/responsavel.service';
 import { TiposPlanoService } from 'src/app/service/tipos-plano.service';
 import { PlanosService } from 'src/app/service/planos.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatSnackBar, MatButton, MatDialogRef } from '@angular/material';
+import { MatSnackBar, MatButton, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Plano } from '../plano';
 
 @Component({
@@ -15,7 +15,10 @@ export class CriarPlanoComponent implements OnInit {
 
   labelDialogPlano = 'CADASTRAR PLANO';
 
-  minDat: DateConstructor;
+  listaPlanos: Plano[];
+
+  minDate: Date;
+  maxDate: Date;
 
   formulario: FormGroup;
   @ViewChild('btnSalvarPlano') btnSalvarPlano: MatButton;
@@ -28,7 +31,8 @@ export class CriarPlanoComponent implements OnInit {
     private planosService: PlanosService,
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
-    private dialogRef: MatDialogRef<CriarPlanoComponent>
+    private dialogRef: MatDialogRef<CriarPlanoComponent>,
+    @Inject(MAT_DIALOG_DATA) private editarResgistro: Plano
   ) { }
 
   ngOnInit() {
@@ -36,6 +40,8 @@ export class CriarPlanoComponent implements OnInit {
     this.getTiposPlanoFromServer();
     this.getResponsaveisFromServer();
     this.getPlanosFromServer();
+    this.listaPlanosFiltrado();
+    this.verificarModo();
   }
 
   abrirSnackBar(message: string, time: number) {
@@ -57,6 +63,23 @@ export class CriarPlanoComponent implements OnInit {
       custo: [null],
       descricao: [null]
     });
+  }
+
+  verificarModo(): void {
+    if (this.editarResgistro) {
+      this.minDate = new Date(this.editarResgistro.dataInicio);
+      this.maxDate = new Date(this.editarResgistro.dataTermino);
+      this.onModoEditar(this.editarResgistro);
+    }
+  }
+
+  listaPlanosFiltrado(): void {
+    this.listaPlanos = this.planosService.listaPlanos.filter(p => p.pertence === null);
+  }
+
+  onFecharModal(): void {
+    if (this.formulario.touched && confirm('Deseja realmente sair?')) { this.dialogRef.close(false); }
+    if (!this.formulario.touched) { this.dialogRef.close(false); }
   }
 
   onSalvarPlano(): void {
@@ -123,7 +146,10 @@ export class CriarPlanoComponent implements OnInit {
 
   getPlanosFromServer(): void {
     if (this.planosService.listaPlanos === undefined || this.planosService.listaPlanos.length === 0) {
-      this.planosService.getPlanos().subscribe(planos => this.planosService.listaPlanos = planos);
+      this.planosService.getPlanos().subscribe(planos => {
+        this.planosService.listaPlanos = planos;
+        this.listaPlanosFiltrado();
+      });
       this.formulario.get('pertence').enable();
     }
   }

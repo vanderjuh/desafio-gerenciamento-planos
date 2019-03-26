@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, DoCheck } from '@angular/core';
+import { Component, OnInit, AfterViewInit, DoCheck, OnDestroy } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { MatDialog, MatSnackBar } from '@angular/material';
 
@@ -7,26 +7,42 @@ import { CriarPlanoComponent } from './criar-plano/criar-plano.component';
 import { TiposPlanoComponent } from './tipos-plano/tipos-plano.component';
 import { ResponsaveisComponent } from './responsaveis/responsaveis.component';
 import { Plano } from './plano';
+import { Subscription } from 'rxjs';
+import { EventosService } from '../service/eventos.service';
 
 @Component({
   selector: 'app-planos',
   templateUrl: './planos.component.html',
   styleUrls: ['./planos.component.css']
 })
-export class PlanosComponent implements OnInit {
+export class PlanosComponent implements OnInit, OnDestroy {
 
   statusBarraCarregamento: boolean;
 
   listaPlanos: Plano[];
 
+  inscriEditarPlanoModal: Subscription;
+
   constructor(
     private planosService: PlanosService,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private eventosService: EventosService
   ) { }
 
   ngOnInit() {
     this.getPlanosFromServer();
+    this.inscricaoEditarPlanoModal();
+  }
+
+  ngOnDestroy() {
+    if (this.inscriEditarPlanoModal) { this.inscriEditarPlanoModal.unsubscribe(); }
+  }
+
+  inscricaoEditarPlanoModal(): void {
+    this.inscriEditarPlanoModal = this.eventosService.emitirEditarPlano.subscribe(plano => {
+      this.abrirCriarPlanoDialog(plano);
+    });
   }
 
   listaPlanosFiltrado(): void {
@@ -58,8 +74,11 @@ export class PlanosComponent implements OnInit {
     moveItemInArray(this.planosService.listaPlanos, event.previousIndex, event.currentIndex);
   }
 
-  abrirCriarPlanoDialog() {
-    const dialogRef = this.dialog.open(CriarPlanoComponent, { disableClose: true });
+  abrirCriarPlanoDialog(plano: Plano = null) {
+    const dialogRef = this.dialog.open(CriarPlanoComponent, {
+      disableClose: true,
+      data: { ...plano }
+    });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.getPlanosFromServer(true);
