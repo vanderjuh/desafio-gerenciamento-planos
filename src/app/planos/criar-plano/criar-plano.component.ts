@@ -87,7 +87,7 @@ export class CriarPlanoComponent implements OnInit {
       if (typeof this.formulario.get('pertence').value === 'object') {
         this.formulario.get('pertence').setValue(null);
       }
-      const plano = {
+      const plano: Plano = {
         ...this.formulario.value,
         dataInicio: this.extrairData(this.formulario.get('dataInicio').value),
         dataTermino: this.extrairData(this.formulario.get('dataTermino').value),
@@ -98,12 +98,8 @@ export class CriarPlanoComponent implements OnInit {
       this.planosService.salvarPlano(plano)
         .subscribe(
           resp => {
-            this.toggleBarraCarregamento();
-            this.toggleBloquearFormulario();
-            if (!this.formulario.get('id').value) {
-              this.getPlanosFromServer();
-            } else { this.atualizarListaLocal(this.formulario.value); }
-            this.onModoOriginal();
+            this.getPlanosFromServer();
+            if (plano.id) { this.atualizarListaLocal(plano); }
             this.abrirSnackBar(`Plano salvo com sucesso!`, 2000);
             this.dialogRef.close(true);
           }
@@ -169,19 +165,11 @@ export class CriarPlanoComponent implements OnInit {
     this.statusBarraCarregamento = !this.statusBarraCarregamento;
   }
 
-  atualizarListaLocal(plano: Plano, remover: boolean = false): void {
-    if (remover) {
-      this.planosService.listaPlanos = this.planosService.listaPlanos.filter(p => p.id !== plano.id);
-      console.log('Teste:', plano);
-      console.log('Teste:', this.planosService.listaPlanos);
-    } else {
-      this.planosService.listaPlanos.forEach(p => {
-        if (p.id === plano.id) {
-          p = { ...plano };
-          return;
-        }
-      });
-    }
+  atualizarListaLocal(plano: Plano): void {
+    this.planosService.listaPlanos = this.planosService.listaPlanos.map(p => {
+      if (p.id === +plano.id) { p = { ...plano }; }
+      return p;
+    });
   }
 
   onModoEditar(element: Plano): void {

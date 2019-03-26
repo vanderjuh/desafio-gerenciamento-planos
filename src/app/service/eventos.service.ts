@@ -7,6 +7,8 @@ import { Plano } from '../planos/plano';
 export class EventosService {
 
   emitirEditarPlano = new EventEmitter<Plano>();
+  emitirBarraCarregamento = new EventEmitter<boolean>();
+  emitirAtualizarListaPlanos = new EventEmitter<object | null>();
 
   constructor() { }
 }

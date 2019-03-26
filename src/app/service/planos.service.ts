@@ -19,8 +19,8 @@ export class PlanosService {
     return this.http.get<Plano[]>(`${environment.apiURL}/planos`);
   }
 
-  deletarPlano(id: number): Observable<object> {
-    return this.http.delete(`${environment.apiURL}/planos/${id}`);
+  deletarPlano(plano: Plano): Observable<object> {
+    return this.http.delete(`${environment.apiURL}/planos/${plano.id}`);
   }
 
   salvarPlano(plano: Plano): Observable<object> {

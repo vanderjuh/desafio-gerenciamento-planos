@@ -22,6 +22,8 @@ export class PlanosComponent implements OnInit, OnDestroy {
   listaPlanos: Plano[];
 
   inscriEditarPlanoModal: Subscription;
+  inscriBarraCarregamento: Subscription;
+  inscriAtualizarLista: Subscription;
 
   constructor(
     private planosService: PlanosService,
@@ -33,15 +35,31 @@ export class PlanosComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getPlanosFromServer();
     this.inscricaoEditarPlanoModal();
+    this.inscricaoBarraCarregamento();
+    this.inscricaoAtualizarLista();
   }
 
   ngOnDestroy() {
     if (this.inscriEditarPlanoModal) { this.inscriEditarPlanoModal.unsubscribe(); }
+    if (this.inscriBarraCarregamento) { this.inscriBarraCarregamento.unsubscribe(); }
+    if (this.inscriAtualizarLista) { this.inscriAtualizarLista.unsubscribe(); }
   }
 
   inscricaoEditarPlanoModal(): void {
     this.inscriEditarPlanoModal = this.eventosService.emitirEditarPlano.subscribe(plano => {
       this.abrirCriarPlanoDialog(plano);
+    });
+  }
+
+  inscricaoBarraCarregamento(): void {
+    this.inscriBarraCarregamento = this.eventosService.emitirBarraCarregamento.subscribe((flag: boolean) => {
+      this.statusBarraCarregamento = flag;
+    });
+  }
+
+  inscricaoAtualizarLista(): void {
+    this.inscriAtualizarLista = this.eventosService.emitirAtualizarListaPlanos.subscribe(() => {
+      this.listaPlanosFiltrado();
     });
   }
 
@@ -81,7 +99,7 @@ export class PlanosComponent implements OnInit, OnDestroy {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.getPlanosFromServer(true);
+        this.listaPlanosFiltrado();
       }
     });
   }
