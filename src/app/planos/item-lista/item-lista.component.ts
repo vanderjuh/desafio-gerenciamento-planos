@@ -77,13 +77,15 @@ export class ItemListaComponent implements OnInit, OnDestroy {
   }
 
   getSubplanos(): void {
-    const subPlanosTemp = this.planosService.listaPlanos.filter(p => p.pertence === this.value.id);
+    let subPlanosTemp = this.planosService.listaPlanos.filter(p => p.pertence === this.value.id);
     const listaOrdenada: Plano[] = [];
     this.value.ordemSubPlanos.forEach(
       (ordem: number) => {
         listaOrdenada.push(subPlanosTemp.filter(p => p.id === ordem)[0]);
+        subPlanosTemp = subPlanosTemp.filter(p => p.id !== ordem);
       }
     );
+    subPlanosTemp.forEach(p => listaOrdenada.push(p));
     this.subPlanos = listaOrdenada;
   }
 
