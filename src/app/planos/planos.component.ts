@@ -22,17 +22,6 @@ export class PlanosComponent implements OnInit, OnDestroy {
 
   listaPlanos: Plano[];
 
-  movies = [
-    'Episode I - The Phantom Menace',
-    'Episode II - Attack of the Clones',
-    'Episode III - Revenge of the Sith',
-    'Episode IV - A New Hope',
-    'Episode V - The Empire Strikes Back',
-    'Episode VI - Return of the Jedi',
-    'Episode VII - The Force Awakens',
-    'Episode VIII - The Last Jedi'
-  ];
-
   inscriEditarPlanoModal: Subscription;
   inscriBarraCarregamento: Subscription;
   inscriAtualizarLista: Subscription;
@@ -102,8 +91,10 @@ export class PlanosComponent implements OnInit, OnDestroy {
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.listaPlanos, event.previousIndex, event.currentIndex);
-    this.ordenarPlanos({ planos: this.listaPlanos.map(p => p.id) });
+    if (confirm('Deseja realmente mudar o plano de possível?')) {
+      moveItemInArray(this.listaPlanos, event.previousIndex, event.currentIndex);
+      this.ordenarPlanos({ planos: this.listaPlanos.map(p => p.id) });
+    }
   }
 
   ordenarPlanos(ordenacao: { planos: number[] }): void {
@@ -112,7 +103,7 @@ export class PlanosComponent implements OnInit, OnDestroy {
       .subscribe(resp => {
         this.ordenacaoPlanosService.listaOrdenacao = ordenacao;
         this.toggleBarraCarregamento();
-        this.utilService.abrirSnackBar('Lista de planos reordenada com sucesso', 2000);
+        this.utilService.abrirSnackBar('Lista de planos reordenada com sucesso!', 2000);
       });
   }
 

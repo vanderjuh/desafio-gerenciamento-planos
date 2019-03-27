@@ -70,8 +70,10 @@ export class ItemListaComponent implements OnInit, OnDestroy {
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.subPlanos, event.previousIndex, event.currentIndex);
-    this.ordenarSubPlanos(this.subPlanos.map(p => p.id));
+    if (confirm('Deseja realmente mudar o sub-plano de possição?')) {
+      moveItemInArray(this.subPlanos, event.previousIndex, event.currentIndex);
+      this.ordenarSubPlanos(this.subPlanos.map(p => p.id));
+    }
   }
 
   getSubplanos(): void {

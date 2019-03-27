@@ -2,9 +2,9 @@
   "ordenacao": {
     "planos": [
       2,
-      4,
+      5,
       3,
-      5
+      4
     ]
   },
   "planos": [
@@ -35,8 +35,8 @@
       "dataTermino": null,
       "statusAndamento": null,
       "ordemSubPlanos": [
-        1,
-        6
+        6,
+        1
       ]
     },
     {
@@ -55,7 +55,7 @@
     },
     {
       "id": 4,
-      "titulo": "Teeste 4",
+      "titulo": "Teste 4",
       "tipo": "2",
       "responsavel": "1",
       "pertence": null,
