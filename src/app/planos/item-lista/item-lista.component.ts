@@ -63,10 +63,12 @@ export class ItemListaComponent implements OnInit, OnDestroy {
   }
 
   setSemaforo(): object {
-    if (this.dataInicio === new Date()) { return { borderLeft: 'orange 5px solid' }; }
-    if (this.dataInicio > new Date()) { return { borderLeft: 'green 5px solid' }; }
-    if (this.dataInicio < new Date()) { return { borderLeft: 'red 5px solid' }; }
-    if (!this.dataInicio) { return { borderLeft: '#CCC 5px solid' }; }
+    if (this.dataInicio && this.value.statusAndamento !== 2) {
+      if (new Date().getDate() === this.dataInicio.getDate()) { return { borderLeft: 'orange 5px solid' }; }
+      if (this.dataInicio > new Date()) { return { borderLeft: 'green 5px solid' }; }
+      if (this.dataInicio < new Date()) { return { borderLeft: 'red 5px solid' }; }
+    }
+    return { borderLeft: '#CCC 5px solid' };
   }
 
   drop(event: CdkDragDrop<string[]>) {
