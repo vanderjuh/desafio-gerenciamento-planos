@@ -1,4 +1,5 @@
-import { CommonModule } from '@angular/common';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import {
   MatButtonModule,
@@ -23,14 +24,10 @@ import {
   MatProgressBarModule,
   MatAutocompleteModule
 } from '@angular/material';
-import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
-  declarations: [],
-  imports: [
-    CommonModule
-  ],
   exports: [
+    BrowserAnimationsModule,
     MatInputModule,
     MatIconModule,
     MatListModule,

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { PlanosService } from '../service/planos.service';
 import { CriarPlanoComponent } from './criar-plano/criar-plano.component';
 import { TiposPlanoComponent } from './tipos-plano/tipos-plano.component';
@@ -21,6 +21,17 @@ export class PlanosComponent implements OnInit, OnDestroy {
   statusBarraCarregamento: boolean;
 
   listaPlanos: Plano[];
+
+  movies = [
+    'Episode I - The Phantom Menace',
+    'Episode II - Attack of the Clones',
+    'Episode III - Revenge of the Sith',
+    'Episode IV - A New Hope',
+    'Episode V - The Empire Strikes Back',
+    'Episode VI - Return of the Jedi',
+    'Episode VII - The Force Awakens',
+    'Episode VIII - The Last Jedi'
+  ];
 
   inscriEditarPlanoModal: Subscription;
   inscriBarraCarregamento: Subscription;

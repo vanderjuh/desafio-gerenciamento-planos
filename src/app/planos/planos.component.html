@@ -16,10 +16,14 @@
         </mat-chip-list>
     </mat-card>
 </div>
-<div class="centerItemContainer">
-    <div cdkDropList class="listaPlanos" (cdkDropListDropped)="drop($event)">
-        <mat-progress-bar *ngIf="statusBarraCarregamento === true || planosService.listaPlanos === undefined" mode="indeterminate"></mat-progress-bar>
-        <app-item-lista *ngFor="let plano of listaPlanos" [value]="plano" cdkDragBoundary=".listaPlanos" cdkDragLockAxis="y" cdkDrag></app-item-lista>
+<div class="centerItemContainer" cdkDropList (cdkDropListDropped)="drop($event)">
+    <mat-progress-bar *ngIf="statusBarraCarregamento === true || planosService.listaPlanos === undefined"
+        mode="indeterminate"></mat-progress-bar>
+</div>
+<div class="centerItemContainer" cdkDropList (cdkDropListDropped)="drop($event)">
+    <div class="itemListaPlanos" *ngFor="let plano of listaPlanos" cdkDragBoundary=".centerItemContainer"
+        cdkDragLockAxis="y" cdkDrag>
+        <app-item-lista [value]="plano"></app-item-lista>
     </div>
 </div>
-<app-footer></app-footer>
+<app-footer *ngIf="listaPlanos"></app-footer>
