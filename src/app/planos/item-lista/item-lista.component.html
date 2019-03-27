@@ -84,8 +84,8 @@
   </mat-expansion-panel-header>
 
   <ng-template matExpansionPanelContent>
-    <div cdkDropList (cdkDropListDropped)="drop($event)">
-      <app-item-lista *ngFor="let plano of subPlanos" [value]="plano" cdkDrag></app-item-lista>
+    <div class="listaPlanos" cdkDropList (cdkDropListDropped)="drop($event)">
+      <app-item-lista *ngFor="let plano of subPlanos" [value]="plano" cdkDragBoundary=".listaPlanos" cdkDragLockAxis="y"  cdkDrag></app-item-lista>
       {{subPlanos.length === 0 ? 'Nenhum sub-evento para este evento!' : ''}}
     </div>
   </ng-template>

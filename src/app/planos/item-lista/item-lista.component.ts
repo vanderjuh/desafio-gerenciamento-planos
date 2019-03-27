@@ -6,6 +6,8 @@ import { Plano } from '../../core/plano';
 import { PlanosService } from 'src/app/service/planos.service';
 import { EventosService } from 'src/app/service/eventos.service';
 import { Subscription } from 'rxjs';
+import { OrdenacaoPlanosService } from 'src/app/service/ordenacao-planos.service';
+import { UtilService } from 'src/app/service/util.service';
 
 @Component({
   selector: 'app-item-lista',
@@ -27,7 +29,8 @@ export class ItemListaComponent implements OnInit, OnDestroy {
   constructor(
     private responsaveisService: ResponsavelService,
     private planosService: PlanosService,
-    private eventosService: EventosService
+    private eventosService: EventosService,
+    private utilService: UtilService
   ) { }
 
   ngOnInit() {
@@ -60,26 +63,37 @@ export class ItemListaComponent implements OnInit, OnDestroy {
   }
 
   setSemaforo(): object {
-    if (this.dataInicio === new Date()) {
-      return { borderLeft: 'orange 5px solid' };
-    }
-    if (this.dataInicio > new Date()) {
-      return { borderLeft: 'green 5px solid' };
-    }
-    if (this.dataInicio < new Date()) {
-      return { borderLeft: 'red 5px solid' };
-    }
-    if (!this.dataInicio) {
-      return { borderLeft: '#CCC 5px solid' };
-    }
+    if (this.dataInicio === new Date()) { return { borderLeft: 'orange 5px solid' }; }
+    if (this.dataInicio > new Date()) { return { borderLeft: 'green 5px solid' }; }
+    if (this.dataInicio < new Date()) { return { borderLeft: 'red 5px solid' }; }
+    if (!this.dataInicio) { return { borderLeft: '#CCC 5px solid' }; }
   }
 
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.subPlanos, event.previousIndex, event.currentIndex);
+    this.ordenarSubPlanos(this.subPlanos.map(p => p.id));
   }
 
   getSubplanos(): void {
-    this.subPlanos = this.planosService.listaPlanos.filter(p => p.pertence === this.value.id);
+    const subPlanosTemp = this.planosService.listaPlanos.filter(p => p.pertence === this.value.id);
+    const listaOrdenada: Plano[] = [];
+    this.value.ordemSubPlanos.forEach(
+      (ordem: number) => {
+        listaOrdenada.push(subPlanosTemp.filter(p => p.id === ordem)[0]);
+      }
+    );
+    this.subPlanos = listaOrdenada;
+  }
+
+  ordenarSubPlanos(ordenacao: number[]): void {
+    this.eventosService.emitirBarraCarregamento.emit(true);
+    const planoTemp: Plano = { ...this.value, ordemSubPlanos: ordenacao };
+    this.planosService.salvarPlano(planoTemp)
+      .subscribe(resp => {
+        this.value = planoTemp;
+        this.eventosService.emitirBarraCarregamento.emit(false);
+        this.utilService.abrirSnackBar('Lista de sub-planos reordenada com sucesso', 2000);
+      });
   }
 
   onErrorAvatar(avatarImg: any): void {

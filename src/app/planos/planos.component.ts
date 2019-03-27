@@ -8,6 +8,8 @@ import { ResponsaveisComponent } from './responsaveis/responsaveis.component';
 import { Plano } from '../core/plano';
 import { Subscription } from 'rxjs';
 import { EventosService } from '../service/eventos.service';
+import { OrdenacaoPlanosService } from '../service/ordenacao-planos.service';
+import { UtilService } from '../service/util.service';
 
 @Component({
   selector: 'app-planos',
@@ -27,8 +29,9 @@ export class PlanosComponent implements OnInit, OnDestroy {
   constructor(
     private planosService: PlanosService,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar,
-    private eventosService: EventosService
+    private ordenacaoPlanosService: OrdenacaoPlanosService,
+    private eventosService: EventosService,
+    private utilService: UtilService
   ) { }
 
   ngOnInit() {
@@ -61,7 +64,14 @@ export class PlanosComponent implements OnInit, OnDestroy {
 
   listaPlanosFiltrado(): void {
     if (this.planosService.listaPlanos) {
-      this.listaPlanos = this.planosService.listaPlanos.filter(p => p.pertence === null);
+      const listaPlanosTemp = this.planosService.listaPlanos.filter(p => p.pertence === null);
+      const listaOrdenada: Plano[] = [];
+      this.ordenacaoPlanosService.listaOrdenacao.planos.forEach(
+        (ordem: number) => {
+          listaOrdenada.push(listaPlanosTemp.filter(p => p.id === ordem)[0]);
+        }
+      );
+      this.listaPlanos = listaOrdenada;
     }
   }
 
@@ -82,6 +92,17 @@ export class PlanosComponent implements OnInit, OnDestroy {
 
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.listaPlanos, event.previousIndex, event.currentIndex);
+    this.ordenarPlanos({ planos: this.listaPlanos.map(p => p.id) });
+  }
+
+  ordenarPlanos(ordenacao: { planos: number[] }): void {
+    this.toggleBarraCarregamento();
+    this.ordenacaoPlanosService.ordenarPlanos(ordenacao)
+      .subscribe(resp => {
+        this.ordenacaoPlanosService.listaOrdenacao = ordenacao;
+        this.toggleBarraCarregamento();
+        this.utilService.abrirSnackBar('Lista de planos reordenada com sucesso', 2000);
+      });
   }
 
   abrirCriarPlanoDialog(plano: Plano = null) {

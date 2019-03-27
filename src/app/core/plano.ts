@@ -10,4 +10,5 @@ export interface Plano {
     interessados: number[];
     pertence: number;
     descricao: string;
+    ordemSubPlanos: number[];
 }

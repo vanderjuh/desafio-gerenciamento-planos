@@ -17,6 +17,7 @@ import { TiposPlanoComponent } from './planos/tipos-plano/tipos-plano.component'
 import { ResponsaveisComponent } from './planos/responsaveis/responsaveis.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MAT_DATE_LOCALE } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { MAT_DATE_LOCALE } from '@angular/material';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     AngularMaterialModule,

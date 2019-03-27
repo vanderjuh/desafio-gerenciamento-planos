@@ -24,7 +24,6 @@ import {
   MatAutocompleteModule
 } from '@angular/material';
 import {DragDropModule} from '@angular/cdk/drag-drop';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [],
@@ -33,7 +32,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   ],
   exports: [
     MatInputModule,
-    BrowserAnimationsModule,
     MatIconModule,
     MatListModule,
     MatGridListModule,

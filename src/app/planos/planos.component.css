@@ -4,11 +4,13 @@
     justify-content: center;
     margin: 30px 50px 0 50px;
 }
-
+  
 .listaPlanos{
     width: 100%;
+    min-height: 480px;
     box-sizing: border-box;
     padding-top: 5px;
+    overflow: hidden;
 }
 
 mat-card {
@@ -54,6 +56,16 @@ mat-chip {
 
 .btnAdd:hover {
     background-color: rgb(78, 131, 0);
+}
+
+/* Animate items as they're being sorted. */
+.cdk-drop-list-dragging .cdk-drag {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+  
+/* Animate an item that has been dropped. */
+.cdk-drag-animating {
+    transition: transform 300ms cubic-bezier(0, 0, 0.2, 1);
 }
 
 @media( max-width: 700px ) {

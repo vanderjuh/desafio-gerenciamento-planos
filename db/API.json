@@ -1,8 +1,16 @@
 {
+  "ordenacao": {
+    "planos": [
+      5,
+      3,
+      4,
+      2
+    ]
+  },
   "planos": [
     {
       "id": 1,
-      "titulo": "23423423423",
+      "titulo": "Etapa 1",
       "tipo": "2",
       "responsavel": "2",
       "pertence": 2,
@@ -11,11 +19,12 @@
       "descricao": null,
       "dataInicio": "2019-3-30",
       "dataTermino": "2019-3-31",
-      "statusAndamento": null
+      "statusAndamento": null,
+      "ordemSubPlanos": []
     },
     {
       "id": 2,
-      "titulo": "sdfsdf",
+      "titulo": "Teste 1",
       "tipo": "2",
       "responsavel": "2",
       "pertence": null,
@@ -24,11 +33,15 @@
       "descricao": null,
       "dataInicio": "2019-3-23",
       "dataTermino": null,
-      "statusAndamento": null
+      "statusAndamento": null,
+      "ordemSubPlanos": [
+        1,
+        6
+      ]
     },
     {
       "id": 3,
-      "titulo": "sdfsdfsdf",
+      "titulo": "Teste 3",
       "tipo": "2",
       "responsavel": "2",
       "pertence": null,
@@ -37,20 +50,64 @@
       "descricao": null,
       "dataInicio": "2019-3-27",
       "dataTermino": "2019-3-28",
-      "statusAndamento": 1
+      "statusAndamento": null,
+      "ordemSubPlanos": []
     },
     {
       "id": 4,
-      "titulo": "Teeste 3",
+      "titulo": "Teeste 4",
       "tipo": "2",
-      "responsavel": "2",
+      "responsavel": "1",
       "pertence": null,
       "interessados": null,
       "custo": null,
       "descricao": null,
       "dataInicio": "2019-3-30",
       "dataTermino": null,
-      "statusAndamento": null
+      "statusAndamento": null,
+      "ordemSubPlanos": []
+    },
+    {
+      "id": 5,
+      "titulo": "Teste 2",
+      "tipo": "1",
+      "responsavel": "1",
+      "pertence": null,
+      "interessados": null,
+      "custo": null,
+      "descricao": null,
+      "dataInicio": "2019-3-28",
+      "dataTermino": "2019-3-30",
+      "statusAndamento": null,
+      "ordemSubPlanos": []
+    },
+    {
+      "id": 6,
+      "titulo": "Etapa 2",
+      "tipo": "2",
+      "responsavel": "2",
+      "pertence": 2,
+      "interessados": null,
+      "custo": null,
+      "descricao": null,
+      "dataInicio": "2019-3-27",
+      "dataTermino": "2019-3-28",
+      "statusAndamento": null,
+      "ordemSubPlanos": []
+    },
+    {
+      "id": 7,
+      "titulo": "Etapa 3",
+      "tipo": "2",
+      "responsavel": "1",
+      "pertence": 2,
+      "interessados": null,
+      "custo": null,
+      "descricao": null,
+      "dataInicio": null,
+      "dataTermino": null,
+      "statusAndamento": null,
+      "ordemSubPlanos": []
     }
   ],
   "tipos": [

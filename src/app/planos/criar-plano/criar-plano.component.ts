@@ -3,7 +3,7 @@ import { ResponsavelService } from 'src/app/service/responsavel.service';
 import { TiposPlanoService } from 'src/app/service/tipos-plano.service';
 import { PlanosService } from 'src/app/service/planos.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatSnackBar, MatButton, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatButton, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Plano } from '../../core/plano';
 import { UtilService } from 'src/app/service/util.service';
 
@@ -96,7 +96,8 @@ export class CriarPlanoComponent implements OnInit {
         ...this.formulario.value,
         dataInicio: this.extrairData(this.formulario.get('dataInicio').value),
         dataTermino: this.extrairData(this.formulario.get('dataTermino').value),
-        statusAndamento: null
+        statusAndamento: null,
+        ordemSubPlanos: []
       };
       this.toggleBarraCarregamento();
       this.toggleBloquearFormulario();
