@@ -1,4 +1,4 @@
-<mat-expansion-panel hideToggle="true" class="itemListaPlanos">
+<mat-expansion-panel hideToggle="true" class="itemListaPlanos" [ngStyle]="setSemaforo()">
   <mat-expansion-panel-header>
     <mat-panel-description class="gridItemListaPlanos">
       <div class="mudarOrdem">
@@ -14,9 +14,18 @@
           <span *ngSwitchCase="4">Finalizado</span>
           <span *ngSwitchDefault>Aguardando início</span>
         </div>
-        <div class="periodoPlano">
+        <div *ngIf="dataInicio && dataTermino" class="periodoPlano">
           <mat-icon>date_range</mat-icon>
-          {{dataInicio | date:'dd/MM/yyyy'}} | {{dataTermino | date:'dd/MM/yyyy'}}
+          De {{dataInicio | date:'dd/MM/yyyy'}} até {{dataTermino | date:'dd/MM/yyyy'}}.
+        </div>
+        <div *ngIf="!dataInicio && !dataTermino" class="periodoPlano">
+          <mat-icon>date_range</mat-icon> Sem prazo definido.
+        </div>
+        <div *ngIf="dataInicio && !dataTermino" class="periodoPlano">
+          <mat-icon>date_range</mat-icon> Iniciar em {{dataInicio | date:'dd/MM/yyyy'}}.
+        </div>
+        <div *ngIf="!dataInicio && dataTermino" class="periodoPlano">
+          <mat-icon>date_range</mat-icon> Concluir até {{dataTermino | date:'dd/MM/yyyy'}}.
         </div>
       </div>
       <div class="infoResponsavel">

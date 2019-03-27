@@ -34,7 +34,7 @@ mat-expansion-panel-header {
 }
 
 .tituloPlano {
-    border-bottom: #CCC solid 1px;
+    border-bottom: #999 solid 1px;
     font-size: 18px;
     color: #666;
 }
@@ -45,6 +45,7 @@ mat-expansion-panel-header {
 
 .periodoPlano {
     font-size: 12px;
+    text-transform: initial;
 }
 
 .infoResponsavel {
