@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { TiposPlano } from '../planos/tipos-plano/tipos-plano';
+import { TiposPlano } from '../core/tipos-plano';
 import { PlanosService } from './planos.service';
 
 @Injectable({

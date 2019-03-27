@@ -1,15 +1,16 @@
-import { Component, OnInit, ViewChild, OnDestroy, ElementRef } from '@angular/core';
-import { MatPaginator, MatTableDataSource, MatSnackBar } from '@angular/material';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { TiposPlanoService } from 'src/app/service/tipos-plano.service';
-import { TiposPlano } from './tipos-plano';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { TiposPlano } from '../../core/tipos-plano';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UtilService } from 'src/app/service/util.service';
 
 @Component({
   selector: 'app-tipos-plano',
   templateUrl: './tipos-plano.component.html',
   styleUrls: ['./tipos-plano.component.css']
 })
-export class TiposPlanoComponent implements OnInit, OnDestroy {
+export class TiposPlanoComponent implements OnInit {
 
   displayedColumns: string[] = ['desc', 'acoes'];
   dataSource: MatTableDataSource<TiposPlano>;
@@ -24,19 +25,18 @@ export class TiposPlanoComponent implements OnInit, OnDestroy {
 
   constructor(
     private tiposPlanoService: TiposPlanoService,
-    private snackBar: MatSnackBar,
+    private utilService: UtilService,
     private formBuilder: FormBuilder
   ) { }
 
   ngOnInit() {
     this.formReativo();
-    if (this.tiposPlanoService.listaTipos === undefined || this.tiposPlanoService.listaTipos.length === 0) {
+    if (
+      this.tiposPlanoService.listaTipos === undefined
+      || this.tiposPlanoService.listaTipos.length === 0
+    ) {
       this.getTiposPlanoFromServer();
     } else { this.setTiposPlanoNaTabela(); }
-  }
-
-  ngOnDestroy() {
-    console.log('Componente de tipos destruido!');
   }
 
   formReativo(): void {
@@ -52,18 +52,11 @@ export class TiposPlanoComponent implements OnInit, OnDestroy {
   }
 
   getTiposPlanoFromServer(): void {
-    this.tiposPlanoService.getTiposPlano().subscribe(
-      tiposPlano => {
+    this.tiposPlanoService.getTiposPlano().subscribe(tiposPlano => {
         this.tiposPlanoService.listaTipos = tiposPlano;
         this.setTiposPlanoNaTabela();
       }
     );
-  }
-
-  abrirSnackBar(message: string, time: number) {
-    this.snackBar.open(message, null, {
-      duration: time,
-    });
   }
 
   toggleBloquearFormulario(): void {
@@ -84,8 +77,6 @@ export class TiposPlanoComponent implements OnInit, OnDestroy {
   atualizarListaLocal(tipo: TiposPlano, remover: boolean = false): void {
     if (remover) {
       this.tiposPlanoService.listaTipos = this.tiposPlanoService.listaTipos.filter(t => t.id !== tipo.id);
-      console.log('Teste:', tipo);
-      console.log('Teste:', this.tiposPlanoService.listaTipos);
       this.setTiposPlanoNaTabela();
     } else {
       this.tiposPlanoService.listaTipos.forEach(t => {
@@ -119,9 +110,9 @@ export class TiposPlanoComponent implements OnInit, OnDestroy {
             this.getTiposPlanoFromServer();
           } else { this.atualizarListaLocal(this.formulario.value); }
           this.onModoOriginal();
-          this.abrirSnackBar(`Tipo salvo com sucesso!`, 2000);
+          this.utilService.abrirSnackBar(`Tipo salvo com sucesso!`, 2000);
         });
-    } else { this.abrirSnackBar('É necessário informar o nome do tipo!', 3500); }
+    } else { this.utilService.abrirSnackBar('É necessário informar o nome do tipo!', 3500); }
   }
 
   onRemoverTipo(tipo: TiposPlano): void {
@@ -132,10 +123,10 @@ export class TiposPlanoComponent implements OnInit, OnDestroy {
           .subscribe(resp => {
             this.toggleBarraCarregamento();
             this.atualizarListaLocal(tipo, true);
-            this.abrirSnackBar(`Tipo removido com sucesso!`, 2000);
+            this.utilService.abrirSnackBar(`Tipo removido com sucesso!`, 2000);
           });
       } catch (error) {
-        this.abrirSnackBar(error.message, 2000);
+        this.utilService.abrirSnackBar(error.message, 2000);
         this.toggleBarraCarregamento();
       }
     }

@@ -1,5 +1,5 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { Plano } from '../planos/plano';
+import { Plano } from '../core/plano';
 
 @Injectable({
   providedIn: 'root'

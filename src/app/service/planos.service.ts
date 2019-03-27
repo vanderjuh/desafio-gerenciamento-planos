@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Plano } from '../planos/plano';
+import { Plano } from '../core/plano';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 

@@ -1,12 +1,11 @@
-import { Component, OnInit, AfterViewInit, DoCheck, OnDestroy } from '@angular/core';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatDialog, MatSnackBar } from '@angular/material';
-
 import { PlanosService } from '../service/planos.service';
 import { CriarPlanoComponent } from './criar-plano/criar-plano.component';
 import { TiposPlanoComponent } from './tipos-plano/tipos-plano.component';
 import { ResponsaveisComponent } from './responsaveis/responsaveis.component';
-import { Plano } from './plano';
+import { Plano } from '../core/plano';
 import { Subscription } from 'rxjs';
 import { EventosService } from '../service/eventos.service';
 
@@ -33,7 +32,7 @@ export class PlanosComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.getPlanosFromServer();
+    this.getPlanos(true);
     this.inscricaoEditarPlanoModal();
     this.inscricaoBarraCarregamento();
     this.inscricaoAtualizarLista();
@@ -46,36 +45,29 @@ export class PlanosComponent implements OnInit, OnDestroy {
   }
 
   inscricaoEditarPlanoModal(): void {
-    this.inscriEditarPlanoModal = this.eventosService.emitirEditarPlano.subscribe(plano => {
-      this.abrirCriarPlanoDialog(plano);
-    });
+    this.inscriEditarPlanoModal = this.eventosService.emitirEditarPlano
+      .subscribe((plano: Plano) => this.abrirCriarPlanoDialog(plano));
   }
 
   inscricaoBarraCarregamento(): void {
-    this.inscriBarraCarregamento = this.eventosService.emitirBarraCarregamento.subscribe((flag: boolean) => {
-      this.statusBarraCarregamento = flag;
-    });
+    this.inscriBarraCarregamento = this.eventosService.emitirBarraCarregamento
+      .subscribe((flag: boolean) => this.statusBarraCarregamento = flag);
   }
 
   inscricaoAtualizarLista(): void {
-    this.inscriAtualizarLista = this.eventosService.emitirAtualizarListaPlanos.subscribe(() => {
-      this.listaPlanosFiltrado();
-    });
+    this.inscriAtualizarLista = this.eventosService.emitirAtualizarListaPlanos
+      .subscribe(() => this.listaPlanosFiltrado());
   }
 
   listaPlanosFiltrado(): void {
-    this.listaPlanos = this.planosService.listaPlanos.filter(p => p.pertence === null);
+    if (this.planosService.listaPlanos) {
+      this.listaPlanos = this.planosService.listaPlanos.filter(p => p.pertence === null);
+    }
   }
 
-  abrirSnackBar(message: string, time: number) {
-    this.snackBar.open(message, null, {
-      duration: time,
-    });
-  }
-
-  getPlanosFromServer(force: boolean = false): void {
+  getPlanos(forceServidor: boolean = false): void {
     if (
-      force === true
+      forceServidor === true
       || this.planosService.listaPlanos === undefined
       || this.planosService.listaPlanos.length === 0
     ) {
@@ -99,7 +91,7 @@ export class PlanosComponent implements OnInit, OnDestroy {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (!result) {
-        this.getPlanosFromServer(true);
+        this.getPlanos(true);
       } else {
         this.listaPlanosFiltrado();
         this.eventosService.emitirAtualizarListaPlanos.emit();
@@ -108,17 +100,11 @@ export class PlanosComponent implements OnInit, OnDestroy {
   }
 
   abrirTiposPlanoDialog() {
-    const dialogRef = this.dialog.open(TiposPlanoComponent, { disableClose: true });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+    this.dialog.open(TiposPlanoComponent, { disableClose: true });
   }
 
   abrirResponsaveisDialog(): void {
-    const dialogRef = this.dialog.open(ResponsaveisComponent, { disableClose: true });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+    this.dialog.open(ResponsaveisComponent, { disableClose: true });
   }
 
   toggleBarraCarregamento(): void {

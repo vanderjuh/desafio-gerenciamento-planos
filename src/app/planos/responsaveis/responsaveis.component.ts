@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { MatPaginator, MatTableDataSource, MatSnackBar, MatButton } from '@angular/material';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator, MatTableDataSource, MatButton } from '@angular/material';
 import { ResponsavelService } from 'src/app/service/responsavel.service';
-import { Responsavel } from './responsavel';
+import { Responsavel } from '../../core/responsavel';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UtilService } from 'src/app/service/util.service';
 
 @Component({
   selector: 'app-responsaveis',
@@ -26,7 +27,7 @@ export class ResponsaveisComponent implements OnInit {
 
   constructor(
     private responsavelService: ResponsavelService,
-    private snackBar: MatSnackBar,
+    private utilService: UtilService,
     private formBuilder: FormBuilder
   ) { }
 
@@ -52,18 +53,11 @@ export class ResponsaveisComponent implements OnInit {
   }
 
   getResponsaveisFromServer(): void {
-    this.responsavelService.getResponsaveis().subscribe(
-      responsaveis => {
-        this.responsavelService.listaResponsaveis = responsaveis;
-        this.setResponsaveisNaTabela();
-      }
+    this.responsavelService.getResponsaveis().subscribe(responsaveis => {
+      this.responsavelService.listaResponsaveis = responsaveis;
+      this.setResponsaveisNaTabela();
+    }
     );
-  }
-
-  abrirSnackBar(message: string, time: number) {
-    this.snackBar.open(message, null, {
-      duration: time,
-    });
   }
 
   onSalvarResponsavel(): void {
@@ -78,11 +72,11 @@ export class ResponsaveisComponent implements OnInit {
             this.getResponsaveisFromServer();
           } else { this.atualizarListaLocal(this.formulario.value); }
           this.onModoOriginal();
-          this.abrirSnackBar(`Responsável salvo com sucesso!`, 2000);
+          this.utilService.abrirSnackBar(`Responsável salvo com sucesso!`, 2000);
         });
     } else {
       Object.keys(this.formulario.controls).forEach(c => this.formulario.get(c).markAsTouched());
-      this.abrirSnackBar('Existem campos no formulário que requerem atenção!', 3000);
+      this.utilService.abrirSnackBar('Existem campos no formulário que requerem atenção!', 3000);
     }
   }
 
@@ -94,10 +88,10 @@ export class ResponsaveisComponent implements OnInit {
           .subscribe(resp => {
             this.atualizarListaLocal(responsavel, true);
             this.toggleBarraCarregamento();
-            this.abrirSnackBar(`Pessoa removida com sucesso!`, 2000);
+            this.utilService.abrirSnackBar(`Pessoa removida com sucesso!`, 2000);
           });
       } catch (error) {
-        this.abrirSnackBar(error.message, 2000);
+        this.utilService.abrirSnackBar(error.message, 2000);
         this.toggleBarraCarregamento();
       }
     }
@@ -106,7 +100,6 @@ export class ResponsaveisComponent implements OnInit {
   toggleBloquearFormulario(): void {
     if (this.formulario.enabled) {
       this.formulario.disable();
-      console.log(this.btnSalvarResponsavel);
       this.btnSalvarResponsavel.disabled = true;
     } else {
       this.formulario.enable();
@@ -132,9 +125,8 @@ export class ResponsaveisComponent implements OnInit {
 
   atualizarListaLocal(responsavel: Responsavel, remover: boolean = false): void {
     if (remover) {
-      this.responsavelService.listaResponsaveis = this.responsavelService.listaResponsaveis.filter(r => r.id !== responsavel.id);
-      console.log('Teste:', responsavel);
-      console.log('Teste:', this.responsavelService.listaResponsaveis);
+      this.responsavelService.listaResponsaveis = this.responsavelService.listaResponsaveis
+        .filter(r => r.id !== responsavel.id);
       this.setResponsaveisNaTabela();
     } else {
       this.responsavelService.listaResponsaveis.forEach(r => {

@@ -4,7 +4,8 @@ import { TiposPlanoService } from 'src/app/service/tipos-plano.service';
 import { PlanosService } from 'src/app/service/planos.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar, MatButton, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { Plano } from '../plano';
+import { Plano } from '../../core/plano';
+import { UtilService } from 'src/app/service/util.service';
 
 @Component({
   selector: 'app-criar-plano',
@@ -30,7 +31,7 @@ export class CriarPlanoComponent implements OnInit {
     private responsavelService: ResponsavelService,
     private planosService: PlanosService,
     private formBuilder: FormBuilder,
-    private snackBar: MatSnackBar,
+    private utilService: UtilService,
     private dialogRef: MatDialogRef<CriarPlanoComponent>,
     @Inject(MAT_DIALOG_DATA) private editarResgistro: Plano
   ) { }
@@ -42,12 +43,6 @@ export class CriarPlanoComponent implements OnInit {
     this.getPlanosFromServer();
     this.listaPlanosFiltrado();
     this.verificarModo();
-  }
-
-  abrirSnackBar(message: string, time: number) {
-    this.snackBar.open(message, null, {
-      duration: time,
-    });
   }
 
   formReactivo(): void {
@@ -106,17 +101,16 @@ export class CriarPlanoComponent implements OnInit {
       this.toggleBarraCarregamento();
       this.toggleBloquearFormulario();
       this.planosService.salvarPlano(plano)
-        .subscribe(
-          resp => {
-            if (!plano.id) { this.getPlanosFromServer(); }
-            if (plano.id) { this.atualizarListaLocal(plano); }
-            this.abrirSnackBar(`Plano salvo com sucesso!`, 2000);
-            this.dialogRef.close(plano.id);
-          }
+        .subscribe(resp => {
+          if (!plano.id) { this.getPlanosFromServer(); }
+          if (plano.id) { this.atualizarListaLocal(plano); }
+          this.utilService.abrirSnackBar(`Plano salvo com sucesso!`, 2000);
+          this.dialogRef.close(plano.id);
+        }
         );
     } else {
       Object.keys(this.formulario.controls).forEach(c => this.formulario.get(c).markAsTouched());
-      this.abrirSnackBar(`Existem campos que requerem atenção!`, 2000);
+      this.utilService.abrirSnackBar(`Existem campos que requerem atenção!`, 2000);
     }
   }
 

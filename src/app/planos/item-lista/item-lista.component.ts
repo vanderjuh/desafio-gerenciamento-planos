@@ -1,11 +1,10 @@
-import { Component, OnInit, Input, ɵConsole, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ResponsavelService } from 'src/app/service/responsavel.service';
-import { Responsavel } from '../responsaveis/responsavel';
-import { Plano } from '../plano';
+import { Responsavel } from '../../core/responsavel';
+import { Plano } from '../../core/plano';
 import { PlanosService } from 'src/app/service/planos.service';
 import { EventosService } from 'src/app/service/eventos.service';
-import { MatSnackBar } from '@angular/material';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -28,8 +27,7 @@ export class ItemListaComponent implements OnInit, OnDestroy {
   constructor(
     private responsaveisService: ResponsavelService,
     private planosService: PlanosService,
-    private eventosService: EventosService,
-    private snackBar: MatSnackBar
+    private eventosService: EventosService
   ) { }
 
   ngOnInit() {
@@ -63,12 +61,6 @@ export class ItemListaComponent implements OnInit, OnDestroy {
 
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.subPlanos, event.previousIndex, event.currentIndex);
-  }
-
-  abrirSnackBar(message: string, time: number) {
-    this.snackBar.open(message, null, {
-      duration: time,
-    });
   }
 
   getSubplanos(): void {
