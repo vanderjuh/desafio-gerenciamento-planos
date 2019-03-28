@@ -33,11 +33,11 @@
       "interessados": null,
       "custo": null,
       "descricao": null,
-      "statusAndamento": 1,
+      "statusAndamento": 4,
       "ordemSubPlanos": [
+        7,
         1,
-        6,
-        7
+        6
       ]
     },
     {
@@ -93,7 +93,7 @@
       "descricao": null,
       "dataInicio": "2019-3-27",
       "dataTermino": "2019-3-28",
-      "statusAndamento": 4,
+      "statusAndamento": 1,
       "ordemSubPlanos": []
     },
     {

@@ -4,6 +4,7 @@ import { ResponsavelService } from '../service/responsavel.service';
 import { Responsavel } from '../core/responsavel';
 import { PlanosService } from '../service/planos.service';
 import { OrdenacaoPlanosService } from '../service/ordenacao-planos.service';
+import { ResponsividadeService } from '../service/responsividade.service';
 
 @Component({
   selector: 'app-visao-geral',
@@ -14,7 +15,7 @@ export class VisaoGeralComponent implements OnInit {
 
   statusBarraCarregamento: boolean;
 
-  listaPlanoPorresponsaveis: any[];
+  listaQtdPlanosPorStatus: object;
 
   displayedColumns: string[] = ['avatar', 'responsaveis', 'andamento', 'concluidos', 'suspensos', 'cancelados'];
   dataSource: MatTableDataSource<Responsavel>;
@@ -24,7 +25,8 @@ export class VisaoGeralComponent implements OnInit {
   constructor(
     private ordenacaoPlanosService: OrdenacaoPlanosService,
     private responsavelService: ResponsavelService,
-    private planosService: PlanosService
+    private planosService: PlanosService,
+    private responsividadeService: ResponsividadeService
   ) { }
 
   ngOnInit() {
@@ -39,10 +41,12 @@ export class VisaoGeralComponent implements OnInit {
       this.toggleBarraCarregamento();
       this.planosService.getPlanos().subscribe(planos => {
         this.planosService.listaPlanos = planos;
+        this.setQtdPlanosPorStatus();
         this.toggleBarraCarregamento();
         this.getResponsaveisFromServer();
       });
     } else {
+      this.setQtdPlanosPorStatus();
       this.getResponsaveisFromServer();
     }
   }
@@ -69,10 +73,10 @@ export class VisaoGeralComponent implements OnInit {
       (r) => {
         responsaveis.push({
           ...r,
-          andamento: this.qtdPlanoPorFiltro(r.id, 1),
-          concluidos: this.qtdPlanoPorFiltro(r.id, 2),
-          suspensos: this.qtdPlanoPorFiltro(r.id, 3),
-          cancelados: this.qtdPlanoPorFiltro(r.id, 4)
+          andamento: this.qtdPlanoPorResponsavelFiltro(r.id, 1),
+          concluidos: this.qtdPlanoPorResponsavelFiltro(r.id, 2),
+          suspensos: this.qtdPlanoPorResponsavelFiltro(r.id, 3),
+          cancelados: this.qtdPlanoPorResponsavelFiltro(r.id, 4)
         });
       }
     );
@@ -80,7 +84,7 @@ export class VisaoGeralComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  qtdPlanoPorFiltro(idResponsavel: number, filtro): number {
+  qtdPlanoPorResponsavelFiltro(idResponsavel: number, filtro: number): number {
     if (this.planosService.listaPlanos) {
       switch (filtro) {
         case 1:
@@ -99,6 +103,34 @@ export class VisaoGeralComponent implements OnInit {
         case 4:
           return this.planosService.listaPlanos
             .filter(p => +p.responsavel === idResponsavel && p.statusAndamento === 4).length;
+      }
+    }
+  }
+
+  setQtdPlanosPorStatus(): void {
+    this.listaQtdPlanosPorStatus = {
+      andamento: this.qtdPlanoPorStatus(1),
+      concluidos: this.qtdPlanoPorStatus(2),
+      suspensos: this.qtdPlanoPorStatus(3),
+      cancelados: this.qtdPlanoPorStatus(4)
+    };
+    console.log(this.listaQtdPlanosPorStatus)
+  }
+
+  qtdPlanoPorStatus(filtro: number): number {
+    if (this.planosService.listaPlanos) {
+      switch (filtro) {
+        case 1:
+          return this.planosService.listaPlanos.filter(p => p.statusAndamento === null || p.statusAndamento === 1).length;
+        case 2:
+          return this.planosService.listaPlanos
+            .filter(p => p.statusAndamento === 2).length;
+        case 3:
+          return this.planosService.listaPlanos
+            .filter(p => p.statusAndamento === 3).length;
+        case 4:
+          return this.planosService.listaPlanos
+            .filter(p => p.statusAndamento === 4).length;
       }
     }
   }

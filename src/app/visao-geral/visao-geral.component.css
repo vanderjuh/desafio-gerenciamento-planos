@@ -6,6 +6,10 @@
     flex-direction: column;
 }
 
+mat-expansion-panel {
+    width: 100%;
+}
+
 .tituloContainer{
     width: 100%;
     margin: 0;
@@ -117,5 +121,9 @@
 
     .hide-ss {
         display: none;
+    }
+
+    .font-ss{
+        font-size: 12px;
     }
 }
