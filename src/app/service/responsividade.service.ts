@@ -17,7 +17,7 @@ export class ResponsividadeService {
   }
 
   private onResize(): void {
-    if (window.innerWidth < 700) {
+    if (window.innerWidth < 744) {
       this.responsividade = true;
       this.menuLateral = false;
       this.modoMenuLateral = 'over';
