@@ -35,7 +35,8 @@ export class PlanosComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.getPlanos(true);
+    this.getPlanosFromServer();
+    this.listaPlanosFiltrado();
     this.inscricaoEditarPlanoModal();
     this.inscricaoBarraCarregamento();
     this.inscricaoAtualizarLista();
@@ -77,10 +78,9 @@ export class PlanosComponent implements OnInit, OnDestroy {
     }
   }
 
-  getPlanos(forceServidor: boolean = false): void {
+  getPlanosFromServer(): void {
     if (
-      forceServidor === true
-      || this.planosService.listaPlanos === undefined
+      this.planosService.listaPlanos === undefined
       || this.planosService.listaPlanos.length === 0
     ) {
       this.toggleBarraCarregamento();
@@ -110,13 +110,15 @@ export class PlanosComponent implements OnInit, OnDestroy {
   }
 
   abrirCriarPlanoDialog(plano: Plano = null) {
-    const dialogRef = this.dialog.open(CriarPlanoComponent, {
-      disableClose: true,
-      data: { ...plano }
-    });
+    const dialogRef = this.dialog.open(CriarPlanoComponent, { disableClose: true, data: { ...plano } });
     dialogRef.afterClosed().subscribe(result => {
       if (!result) {
-        this.getPlanos(true);
+        this.toggleBarraCarregamento();
+        this.planosService.getPlanos().subscribe(planos => {
+          this.planosService.listaPlanos = planos;
+          this.listaPlanosFiltrado();
+          this.toggleBarraCarregamento();
+        });
       } else {
         this.listaPlanosFiltrado();
         this.eventosService.emitirAtualizarListaPlanos.emit();

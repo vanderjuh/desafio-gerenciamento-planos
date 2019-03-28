@@ -16,17 +16,17 @@
           <span *ngSwitchDefault>Aguardando início</span>
         </div>
         <div *ngIf="dataInicio && dataTermino" class="periodoPlano">
-          <mat-icon>date_range</mat-icon>
+          <mat-icon class="mat-iconPeriodo">date_range</mat-icon>
           De {{dataInicio | date:'dd/MM/yyyy'}} até {{dataTermino | date:'dd/MM/yyyy'}}.
         </div>
         <div *ngIf="!dataInicio && !dataTermino" class="periodoPlano">
-          <mat-icon>date_range</mat-icon> Sem prazo definido.
+          <mat-icon class="mat-iconPeriodo">date_range</mat-icon> Sem prazo definido.
         </div>
         <div *ngIf="dataInicio && !dataTermino" class="periodoPlano">
-          <mat-icon>date_range</mat-icon> Iniciar em {{dataInicio | date:'dd/MM/yyyy'}}.
+          <mat-icon class="mat-iconPeriodo">date_range</mat-icon> Iniciar em {{dataInicio | date:'dd/MM/yyyy'}}.
         </div>
         <div *ngIf="!dataInicio && dataTermino" class="periodoPlano">
-          <mat-icon>date_range</mat-icon> Concluir até {{dataTermino | date:'dd/MM/yyyy'}}.
+          <mat-icon class="mat-iconPeriodo">date_range</mat-icon> Concluir até {{dataTermino | date:'dd/MM/yyyy'}}.
         </div>
       </div>
       <div class="infoResponsavel">
