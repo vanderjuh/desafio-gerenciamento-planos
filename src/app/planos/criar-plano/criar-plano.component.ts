@@ -6,6 +6,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatButton, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Plano } from '../../core/plano';
 import { UtilService } from 'src/app/service/util.service';
+import { OrdenacaoPlanosService } from 'src/app/service/ordenacao-planos.service';
 
 @Component({
   selector: 'app-criar-plano',
@@ -33,6 +34,7 @@ export class CriarPlanoComponent implements OnInit {
     private formBuilder: FormBuilder,
     private utilService: UtilService,
     private dialogRef: MatDialogRef<CriarPlanoComponent>,
+    private ordenacaoPlanosService: OrdenacaoPlanosService,
     @Inject(MAT_DIALOG_DATA) private editarResgistro: Plano
   ) { }
 
@@ -86,34 +88,62 @@ export class CriarPlanoComponent implements OnInit {
 
   onSalvarPlano(): void {
     if (this.formulario.valid) {
-      if (
-        typeof this.formulario.get('pertence').value === 'object'
-        || this.formulario.get('pertence').value === 'null'
-      ) {
-        this.formulario.get('pertence').setValue(null);
-      }
-      let plano: Plano = {
-        ...this.formulario.value,
-        dataInicio: this.extrairData(this.formulario.get('dataInicio').value),
-        dataTermino: this.extrairData(this.formulario.get('dataTermino').value),
-        statusAndamento: this.editarResgistro.statusAndamento,
-        ordemSubPlanos: this.editarResgistro.ordemSubPlanos
-      };
-      if (!plano.id) { plano = { ...plano, statusAndamento: null, ordemSubPlanos: [] }; }
+      this.corrigirCampoPertencer();
+      const plano = this.montarObjetoPlano();
       this.toggleBarraCarregamento();
       this.toggleBloquearFormulario();
       this.planosService.salvarPlano(plano)
         .subscribe(resp => {
           if (!plano.id) { this.getPlanosFromServer(); }
+          this.corrigirOrdenacao(plano);
           if (plano.id) { this.atualizarListaLocal(plano); }
           this.utilService.abrirSnackBar(`Plano salvo com sucesso!`, 2000);
           this.dialogRef.close(plano.id);
         }
         );
-    } else {
-      Object.keys(this.formulario.controls).forEach(c => this.formulario.get(c).markAsTouched());
-      this.utilService.abrirSnackBar(`Existem campos que requerem atenção!`, 2000);
+    } else { this.mostrarCamposInvalidos(); }
+  }
+
+  montarObjetoPlano(): Plano {
+    let plano: Plano = {
+      ...this.formulario.value,
+      dataInicio: this.extrairData(this.formulario.get('dataInicio').value),
+      dataTermino: this.extrairData(this.formulario.get('dataTermino').value),
+      statusAndamento: this.editarResgistro.statusAndamento,
+      ordemSubPlanos: this.editarResgistro.ordemSubPlanos
+    };
+    if (!plano.id) { plano = { ...plano, statusAndamento: null, ordemSubPlanos: [] }; }
+    return plano;
+  }
+
+  corrigirCampoPertencer(): void {
+    if (
+      typeof this.formulario.get('pertence').value === 'object'
+      || this.formulario.get('pertence').value === 'null'
+    ) {
+      this.formulario.get('pertence').setValue(null);
     }
+  }
+
+  corrigirOrdenacao(plano: Plano): void {
+    if (plano.id && (plano.pertence !== this.editarResgistro.pertence)) {
+      switch (this.editarResgistro.pertence) {
+        case null:
+          this.ordenacaoPlanosService.listaOrdenacao.planos
+            = this.ordenacaoPlanosService.listaOrdenacao.planos
+              .filter(o => o !== plano.id);
+          this.ordenacaoPlanosService.ordenarPlanos(this.ordenacaoPlanosService.listaOrdenacao)
+            .subscribe();
+          break;
+        default:
+          // TODO
+      }
+    }
+  }
+
+  mostrarCamposInvalidos(): void {
+    Object.keys(this.formulario.controls).forEach(c => this.formulario.get(c).markAsTouched());
+    this.utilService.abrirSnackBar(`Existem campos que requerem atenção!`, 2000);
   }
 
   extrairData(data: any): string {
