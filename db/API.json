@@ -2,7 +2,6 @@
   "ordenacao": {
     "planos": [
       2,
-      5,
       3,
       4
     ]
@@ -35,7 +34,6 @@
       "descricao": null,
       "statusAndamento": 4,
       "ordemSubPlanos": [
-        7,
         1,
         6
       ]
@@ -70,15 +68,15 @@
     },
     {
       "id": 5,
-      "titulo": "Teste 2",
+      "titulo": "Etapa 1",
       "tipo": "1",
       "responsavel": "1",
-      "pertence": null,
+      "dataInicio": "2019-3-28",
+      "dataTermino": "2019-3-30",
+      "pertence": 3,
       "interessados": null,
       "custo": null,
       "descricao": null,
-      "dataInicio": "2019-3-28",
-      "dataTermino": "2019-3-30",
       "statusAndamento": 3,
       "ordemSubPlanos": []
     },
@@ -101,12 +99,12 @@
       "titulo": "Etapa 3",
       "tipo": "2",
       "responsavel": "1",
+      "dataInicio": null,
+      "dataTermino": null,
       "pertence": 2,
       "interessados": null,
       "custo": null,
       "descricao": null,
-      "dataInicio": null,
-      "dataTermino": null,
       "statusAndamento": 2,
       "ordemSubPlanos": []
     },

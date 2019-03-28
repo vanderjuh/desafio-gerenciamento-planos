@@ -129,16 +129,27 @@ export class CriarPlanoComponent implements OnInit {
     if (plano.id && (plano.pertence !== this.editarResgistro.pertence)) {
       switch (this.editarResgistro.pertence) {
         case null:
-          this.ordenacaoPlanosService.listaOrdenacao.planos
-            = this.ordenacaoPlanosService.listaOrdenacao.planos
-              .filter(o => o !== plano.id);
-          this.ordenacaoPlanosService.ordenarPlanos(this.ordenacaoPlanosService.listaOrdenacao)
-            .subscribe();
+          this.reordenarListaServidor(plano);
           break;
         default:
-          // TODO
+          this.planosService.listaPlanos.forEach(p => {
+            if (p.id === +this.editarResgistro.pertence) {
+              console.log('Achi...', p)
+              p.ordemSubPlanos = p.ordemSubPlanos.filter(o => o !== plano.id);
+              this.planosService.salvarPlano(p).subscribe()
+              return;
+            }
+          })
       }
     }
+  }
+
+  reordenarListaServidor(plano: Plano): void {
+    this.ordenacaoPlanosService.listaOrdenacao.planos
+      = this.ordenacaoPlanosService.listaOrdenacao.planos
+        .filter(o => o !== plano.id);
+    this.ordenacaoPlanosService.ordenarPlanos(this.ordenacaoPlanosService.listaOrdenacao)
+      .subscribe();
   }
 
   mostrarCamposInvalidos(): void {
