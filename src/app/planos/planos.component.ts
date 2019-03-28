@@ -64,13 +64,15 @@ export class PlanosComponent implements OnInit, OnDestroy {
 
   listaPlanosFiltrado(): void {
     if (this.planosService.listaPlanos) {
-      const listaPlanosTemp = this.planosService.listaPlanos.filter(p => p.pertence === null);
+      let listaPlanosTemp = this.planosService.listaPlanos.filter(p => p.pertence === null);
       const listaOrdenada: Plano[] = [];
       this.ordenacaoPlanosService.listaOrdenacao.planos.forEach(
         (ordem: number) => {
           listaOrdenada.push(listaPlanosTemp.filter(p => p.id === ordem)[0]);
+          listaPlanosTemp = listaPlanosTemp.filter(p => p.id !== ordem);
         }
       );
+      listaPlanosTemp.forEach(p => listaOrdenada.push(p));
       this.listaPlanos = listaOrdenada;
     }
   }

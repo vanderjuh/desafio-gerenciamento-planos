@@ -51,8 +51,8 @@ export class CriarPlanoComponent implements OnInit {
       titulo: [null, [Validators.required]],
       tipo: [{ value: null, disabled: true }, [Validators.required]],
       responsavel: [{ value: null, disabled: true }, [Validators.required]],
-      dataInicio: [{ value: null, disabled: true }],
-      dataTermino: [{ value: null, disabled: true }],
+      dataInicio: [{ value: null, disabled: false }],
+      dataTermino: [{ value: null, disabled: false }],
       pertence: [{ value: {} }],
       interessados: [{ value: null, disabled: true }],
       custo: [null],
@@ -92,13 +92,14 @@ export class CriarPlanoComponent implements OnInit {
       ) {
         this.formulario.get('pertence').setValue(null);
       }
-      const plano: Plano = {
+      let plano: Plano = {
         ...this.formulario.value,
         dataInicio: this.extrairData(this.formulario.get('dataInicio').value),
         dataTermino: this.extrairData(this.formulario.get('dataTermino').value),
-        statusAndamento: null,
-        ordemSubPlanos: []
+        statusAndamento: this.editarResgistro.statusAndamento,
+        ordemSubPlanos: this.editarResgistro.ordemSubPlanos
       };
+      if (!plano.id) { plano = { ...plano, statusAndamento: null, ordemSubPlanos: [] }; }
       this.toggleBarraCarregamento();
       this.toggleBloquearFormulario();
       this.planosService.salvarPlano(plano)
@@ -181,11 +182,13 @@ export class CriarPlanoComponent implements OnInit {
     if (plano.dataInicio) {
       const timestampInicio = Date.parse(plano.dataInicio);
       this.dataInicio = new Date(timestampInicio);
+      this.formulario.get('dataInicio').setValue(this.dataInicio);
     } else { this.dataInicio = null; }
 
     if (plano.dataTermino) {
       const timestampTermino = Date.parse(plano.dataTermino);
       this.dataTermino = new Date(timestampTermino);
+      this.formulario.get('dataTermino').setValue(this.dataTermino);
     } else { this.dataTermino = null; }
   }
 
@@ -199,6 +202,11 @@ export class CriarPlanoComponent implements OnInit {
   onModoOriginal(): void {
     this.labelDialogPlano = 'CADASTRAR PLANO';
     this.formulario.reset();
+  }
+
+  onDesativarBtnSalvar(): boolean {
+    return this.responsavelService.listaResponsaveis === undefined
+      && this.tiposPlanoService.listaTipos === undefined;
   }
 
 }

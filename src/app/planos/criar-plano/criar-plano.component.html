@@ -45,7 +45,7 @@
 
           <mat-form-field class="dataPlano">
             <input matInput maxlength="10" [matDatepicker]="dataInicioPicker" placeholder="Início"
-              formControlName="dataInicio" [(value)]="dataInicio">
+              formControlName="dataInicio">
             <mat-datepicker-toggle matSuffix [for]="dataInicioPicker"></mat-datepicker-toggle>
             <mat-datepicker #dataInicioPicker disabled="false"></mat-datepicker>
             <mat-hint>Data de início do plano</mat-hint>
@@ -55,7 +55,7 @@
 
           <mat-form-field class="dataPlano">
             <input matInput [(min)]="this.formulario.get('dataInicio').value" maxlength="10" [matDatepicker]="dataTerminoPicker"
-              placeholder="Término" formControlName="dataTermino" [(value)]="dataTermino">
+              placeholder="Término" formControlName="dataTermino">
             <mat-datepicker-toggle matSuffix [for]="dataTerminoPicker"></mat-datepicker-toggle>
             <mat-datepicker #dataTerminoPicker disabled="false"></mat-datepicker>
             <mat-hint>Data de término do plano</mat-hint>
@@ -120,7 +120,7 @@
     <mat-icon>close</mat-icon>
     CANCELAR E FECHAR
   </button>
-  <button #btnSalvarPlano mat-button class="btnSalvar" (click)="onSalvarPlano()">
+  <button #btnSalvarPlano mat-button class="btnSalvar" (click)="onSalvarPlano()" [disabled]="onDesativarBtnSalvar()">
     <mat-icon>check</mat-icon>
     SALVAR
   </button>
