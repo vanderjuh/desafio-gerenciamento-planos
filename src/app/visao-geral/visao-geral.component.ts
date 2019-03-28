@@ -114,7 +114,6 @@ export class VisaoGeralComponent implements OnInit {
       suspensos: this.qtdPlanoPorStatus(3),
       cancelados: this.qtdPlanoPorStatus(4)
     };
-    console.log(this.listaQtdPlanosPorStatus)
   }
 
   qtdPlanoPorStatus(filtro: number): number {
