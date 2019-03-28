@@ -56,8 +56,7 @@ export class ResponsaveisComponent implements OnInit {
     this.responsavelService.getResponsaveis().subscribe(responsaveis => {
       this.responsavelService.listaResponsaveis = responsaveis;
       this.setResponsaveisNaTabela();
-    }
-    );
+    });
   }
 
   onSalvarResponsavel(): void {

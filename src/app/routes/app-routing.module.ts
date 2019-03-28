@@ -7,7 +7,7 @@ import { VisaoGeralComponent } from '../visao-geral/visao-geral.component';
 const routes: Routes = [
   { path: 'planos', component: PlanosComponent },
   { path: 'visaogeral', component: VisaoGeralComponent},
-  { path: '**', redirectTo: 'planos', pathMatch: 'full' }
+  { path: '**', redirectTo: 'visaogeral', pathMatch: 'full' }
 ];
 
 @NgModule({

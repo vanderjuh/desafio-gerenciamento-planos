@@ -27,17 +27,17 @@
       "titulo": "Teste 1",
       "tipo": "2",
       "responsavel": "2",
+      "dataInicio": "2019-3-23",
+      "dataTermino": null,
       "pertence": null,
       "interessados": null,
       "custo": null,
       "descricao": null,
-      "dataInicio": "2019-3-23",
-      "dataTermino": null,
-      "statusAndamento": 2,
+      "statusAndamento": 1,
       "ordemSubPlanos": [
+        1,
         6,
-        7,
-        1
+        7
       ]
     },
     {
@@ -51,7 +51,7 @@
       "descricao": null,
       "dataInicio": "2019-3-27",
       "dataTermino": "2019-3-28",
-      "statusAndamento": null,
+      "statusAndamento": 1,
       "ordemSubPlanos": []
     },
     {
@@ -79,7 +79,7 @@
       "descricao": null,
       "dataInicio": "2019-3-28",
       "dataTermino": "2019-3-30",
-      "statusAndamento": null,
+      "statusAndamento": 3,
       "ordemSubPlanos": []
     },
     {
@@ -93,7 +93,7 @@
       "descricao": null,
       "dataInicio": "2019-3-27",
       "dataTermino": "2019-3-28",
-      "statusAndamento": 2,
+      "statusAndamento": 4,
       "ordemSubPlanos": []
     },
     {
