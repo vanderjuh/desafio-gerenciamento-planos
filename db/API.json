@@ -19,7 +19,7 @@
       "descricao": null,
       "dataInicio": "2019-3-30",
       "dataTermino": "2019-3-31",
-      "statusAndamento": null,
+      "statusAndamento": 2,
       "ordemSubPlanos": []
     },
     {
@@ -33,7 +33,7 @@
       "descricao": null,
       "dataInicio": "2019-3-23",
       "dataTermino": null,
-      "statusAndamento": null,
+      "statusAndamento": 2,
       "ordemSubPlanos": [
         6,
         7,
@@ -93,7 +93,7 @@
       "descricao": null,
       "dataInicio": "2019-3-27",
       "dataTermino": "2019-3-28",
-      "statusAndamento": null,
+      "statusAndamento": 2,
       "ordemSubPlanos": []
     },
     {
@@ -107,6 +107,20 @@
       "descricao": null,
       "dataInicio": null,
       "dataTermino": null,
+      "statusAndamento": 2,
+      "ordemSubPlanos": []
+    },
+    {
+      "id": 8,
+      "titulo": "Teste 5",
+      "tipo": "2",
+      "responsavel": "2",
+      "dataInicio": "2019-3-28",
+      "dataTermino": "2019-3-31",
+      "pertence": null,
+      "interessados": null,
+      "custo": null,
+      "descricao": null,
       "statusAndamento": null,
       "ordemSubPlanos": []
     }

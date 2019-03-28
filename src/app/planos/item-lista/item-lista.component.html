@@ -1,4 +1,5 @@
-<mat-expansion-panel hideToggle="true" class="itemListaPlanos" [ngStyle]="setSemaforo()" [disabled]="subPlanos.length === 0">
+<mat-expansion-panel hideToggle="true" class="itemListaPlanos" [ngStyle]="setSemaforo()"
+  [disabled]="subPlanos.length === 0">
   <mat-expansion-panel-header>
     <mat-panel-description class="gridItemListaPlanos">
       <div class="mudarOrdem">
@@ -7,11 +8,11 @@
       <div class="infoPlano">
         <div class="tituloPlano">{{value.titulo}}</div>
         <div class="statusPlano" [ngSwitch]="value.statusAndamento">
-          <mat-icon>history</mat-icon>
+          <mat-icon class="mat-iconStatus">history</mat-icon>
           <span *ngSwitchCase="1">Iniciado</span>
-          <span *ngSwitchCase="2">Concluido</span>
-          <span *ngSwitchCase="3">Suspendido</span>
-          <span *ngSwitchCase="4">Finalizado</span>
+          <span class="semaforoVerde" *ngSwitchCase="2">Concluido</span>
+          <span class="semaforoLaranja" *ngSwitchCase="3">Suspendido</span>
+          <span class="semaforoVermelho" *ngSwitchCase="4">Cancelado</span>
           <span *ngSwitchDefault>Aguardando início</span>
         </div>
         <div *ngIf="dataInicio && dataTermino" class="periodoPlano">
@@ -37,8 +38,10 @@
             </li>
           </ul>
         </div>
-        <img #avatarResponsavel src="{{responsavel === undefined ? '#' : responsavel.avatar}}" alt="Colaborador"
-          title="Vanderley Junior" (error)="onErrorAvatar(avatarResponsavel)">
+        <a href="mailto:{{responsavel === undefined ? '#' : responsavel.email}}">
+          <img #avatarResponsavel src="{{responsavel === undefined ? '#' : responsavel.avatar}}" alt="Colaborador"
+            (error)="onErrorAvatar(avatarResponsavel)">
+        </a>
       </div>
       <div class="acoesPlano">
         <button mat-button [matMenuTriggerFor]="menuOpcoes">
@@ -47,15 +50,15 @@
 
         <mat-menu #menuOpcoes="matMenu">
           <button mat-menu-item (click)="onEditarPlano()">
-            <mat-icon>edit</mat-icon>
+            <mat-icon class="btnEditar">edit</mat-icon>
             Editar
           </button>
           <button mat-menu-item [matMenuTriggerFor]="menuStatus">
-            <mat-icon>update</mat-icon>
+            <mat-icon class="mat-iconStatus">history</mat-icon>
             Mudar status:
           </button>
           <button mat-menu-item (click)="onRemoverPlano()">
-            <mat-icon>delete</mat-icon>
+            <mat-icon class="btnRemover">delete</mat-icon>
             Remover
           </button>
         </mat-menu>
@@ -66,15 +69,15 @@
             Iníciar
           </button>
           <button mat-menu-item (click)="onAlterarStatusPlano(2)">
-            <mat-icon>done</mat-icon>
+            <mat-icon class="semaforoVerde">done</mat-icon>
             Concluir
           </button>
           <button mat-menu-item (click)="onAlterarStatusPlano(3)">
-            <mat-icon>pause_circle_outline</mat-icon>
+            <mat-icon class="semaforoLaranja">pause_circle_outline</mat-icon>
             Suspender
           </button>
           <button mat-menu-item (click)="onAlterarStatusPlano(4)">
-            <mat-icon>cancel</mat-icon>
+            <mat-icon class="semaforoVermelho">cancel</mat-icon>
             Cancelar
           </button>
         </mat-menu>
@@ -85,9 +88,9 @@
 
   <ng-template matExpansionPanelContent>
     <div class="containerSubPlanos" cdkDropList (cdkDropListDropped)="drop($event)">
-        <div *ngFor="let plano of subPlanos" cdkDragBoundary=".containerSubPlanos" cdkDragLockAxis="y" cdkDrag>
-            <app-item-lista [value]="plano"></app-item-lista>
-        </div>
+      <div *ngFor="let plano of subPlanos" cdkDragBoundary=".containerSubPlanos" cdkDragLockAxis="y" cdkDrag>
+        <app-item-lista [value]="plano"></app-item-lista>
+      </div>
     </div>
   </ng-template>
 </mat-expansion-panel>

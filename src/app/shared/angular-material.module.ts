@@ -22,7 +22,8 @@ import {
   MatPaginatorModule,
   MatSnackBarModule,
   MatProgressBarModule,
-  MatAutocompleteModule
+  MatAutocompleteModule,
+  MatToolbarModule
 } from '@angular/material';
 
 @NgModule({
@@ -50,7 +51,8 @@ import {
     MatPaginatorModule,
     MatSnackBarModule,
     MatProgressBarModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatToolbarModule
   ]
 })
 export class AngularMaterialModule { }
