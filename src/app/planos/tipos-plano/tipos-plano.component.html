@@ -6,10 +6,6 @@
   <mat-label>{{labelCampoNomeTipo}} <span class="requerido">*</span> </mat-label>
   <input type="hidden" formControlName="id">
   <input matInput placeholder="Nome do tipo" formControlName="desc" autofocus="false">
-  <button #btnCriar matSuffix class="btnCriarTipo" (click)="onSalvarTipo()">
-    <mat-icon>check</mat-icon>
-    SALVAR
-  </button>
   <mat-error>Este campo é obrigatório</mat-error>
 </mat-form-field>
 <mat-dialog-content>
@@ -40,5 +36,9 @@
   <button mat-button mat-dialog-close class="btnCancelar">
     <mat-icon>close</mat-icon>
     FECHAR
+  </button>
+  <button mat-button #btnCriar class="btnSalvar" (click)="onSalvarTipo()" [disabled]="desabilitarBotao">
+    <mat-icon>check</mat-icon>
+    SALVAR
   </button>
 </mat-dialog-actions>

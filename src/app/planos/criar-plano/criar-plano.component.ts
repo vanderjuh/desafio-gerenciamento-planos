@@ -134,7 +134,6 @@ export class CriarPlanoComponent implements OnInit {
         default:
           this.planosService.listaPlanos.forEach(p => {
             if (p.id === +this.editarResgistro.pertence) {
-              console.log('Achi...', p)
               p.ordemSubPlanos = p.ordemSubPlanos.filter(o => o !== plano.id);
               this.planosService.salvarPlano(p).subscribe()
               return;

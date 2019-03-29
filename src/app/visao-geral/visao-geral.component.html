@@ -3,7 +3,7 @@
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 </div>
 <div class="centerItemContainer">
-  <mat-expansion-panel [expanded]="!responsividadeService.responsividade">
+  <mat-expansion-panel [expanded]="true">
     <mat-expansion-panel-header>
       <div class="tituloContainer">
         <mat-icon>traffic</mat-icon>
@@ -51,7 +51,7 @@
   </mat-expansion-panel>
 </div>
 <div class="centerItemContainer">
-  <mat-expansion-panel [expanded]="!responsividadeService.responsividade">
+  <mat-expansion-panel [expanded]="true">
     <mat-expansion-panel-header>
       <div class="tituloContainer">
         <mat-icon>people</mat-icon>
@@ -67,8 +67,8 @@
         </td>
       </ng-container>
       <ng-container matColumnDef="responsaveis" sticky>
-        <th mat-header-cell *matHeaderCellDef> Responsável </th>
-        <td class="font-ss" mat-cell *matCellDef="let element">
+        <th class="hide-ss hide-ms" mat-header-cell *matHeaderCellDef> Responsável </th>
+        <td class="font-ss tdResponsavel hide-ss hide-ms" mat-cell *matCellDef="let element">
           {{element.nome}}
           <br>
           <a class="linkEmail" href="mailto:">{{element.email}}</a>

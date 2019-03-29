@@ -6,15 +6,6 @@ h2 {
     align-items: center;
 }
 
-.descTipo {
-    transition: all ease .3s;
-}
-
-.descTipo:hover {
-    color: rgba(47, 47, 255, 0.842);
-    cursor: pointer;
-}
-
 .tabelaTipos{
     width: 100%;
 }
@@ -25,22 +16,17 @@ h2 {
 }
 
 .btnRemoverTipo{
+    width: 50%;
+    min-width: 0 !important;
+    padding: 0;
     color: rgba(201, 0, 0, 0.438);
 }
 
 .btnEditarTipo{
+    width: 50%;
+    min-width: 0 !important;
+    padding: 0;
     color: rgba(17, 201, 0, 0.438);
-}
-
-.btnCriarTipo {
-    height: 100%;
-    background-color: rgba(0, 128, 0, 0.658);
-    color: white;
-    border:0;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .btnCancelar {

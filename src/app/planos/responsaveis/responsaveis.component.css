@@ -24,10 +24,16 @@ h2 {
 }
 
 .btnRemoverResponsavel{
+    width: 50%;
+    min-width: 0 !important;
+    padding: 0;
     color: rgba(201, 0, 0, 0.438);
 }
 
 .btnEditarResponsavel{
+    width: 50%;
+    min-width: 0 !important;
+    padding: 0;
     color: rgba(17, 201, 0, 0.438);
 }
 

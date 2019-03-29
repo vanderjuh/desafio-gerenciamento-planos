@@ -46,7 +46,7 @@
           <mat-form-field class="dataPlano">
             <input matInput maxlength="10" [matDatepicker]="dataInicioPicker" placeholder="Início"
               formControlName="dataInicio">
-            <mat-datepicker-toggle matSuffix [for]="dataInicioPicker"></mat-datepicker-toggle>
+            <mat-datepicker-toggle matPrefix [for]="dataInicioPicker"></mat-datepicker-toggle>
             <mat-datepicker #dataInicioPicker disabled="false"></mat-datepicker>
             <mat-hint>Data de início do plano</mat-hint>
             <mat-error *ngIf="this.formulario.get('dataInicio').hasError('matDatepickerParse')">Atenção, informe uma
@@ -56,7 +56,7 @@
           <mat-form-field class="dataPlano">
             <input matInput [(min)]="this.formulario.get('dataInicio').value" maxlength="10" [matDatepicker]="dataTerminoPicker"
               placeholder="Término" formControlName="dataTermino">
-            <mat-datepicker-toggle matSuffix [for]="dataTerminoPicker"></mat-datepicker-toggle>
+            <mat-datepicker-toggle matPrefix [for]="dataTerminoPicker"></mat-datepicker-toggle>
             <mat-datepicker #dataTerminoPicker disabled="false"></mat-datepicker>
             <mat-hint>Data de término do plano</mat-hint>
             <mat-error *ngIf="this.formulario.get('dataTermino').hasError('matDatepickerParse')">Atenção, informe uma

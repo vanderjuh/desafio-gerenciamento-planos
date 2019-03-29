@@ -22,6 +22,7 @@ export class TiposPlanoComponent implements OnInit {
   formulario: FormGroup;
 
   statusBarraCarregamento: boolean;
+  desabilitarBotao = false;
 
   constructor(
     private tiposPlanoService: TiposPlanoService,
@@ -52,9 +53,11 @@ export class TiposPlanoComponent implements OnInit {
   }
 
   getTiposPlanoFromServer(): void {
+    this.toggleBloquearFormulario();
     this.tiposPlanoService.getTiposPlano().subscribe(tiposPlano => {
         this.tiposPlanoService.listaTipos = tiposPlano;
         this.setTiposPlanoNaTabela();
+        this.toggleBloquearFormulario();
       }
     );
   }
@@ -62,11 +65,11 @@ export class TiposPlanoComponent implements OnInit {
   toggleBloquearFormulario(): void {
     if (this.formulario.enabled) {
       this.formulario.disable();
-      this.btnCriar.nativeElement.disabled = true;
+      this.desabilitarBotao = true;
     } else {
       this.formulario.enable();
       this.formulario.reset();
-      this.btnCriar.nativeElement.disabled = false;
+      this.desabilitarBotao = false;
     }
   }
 

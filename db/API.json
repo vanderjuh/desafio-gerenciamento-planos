@@ -34,8 +34,7 @@
       "descricao": null,
       "statusAndamento": 4,
       "ordemSubPlanos": [
-        1,
-        6
+        1
       ]
     },
     {
@@ -85,12 +84,12 @@
       "titulo": "Etapa 2",
       "tipo": "2",
       "responsavel": "2",
+      "dataInicio": "2019-3-27",
+      "dataTermino": "2019-3-28",
       "pertence": 2,
       "interessados": null,
       "custo": null,
       "descricao": null,
-      "dataInicio": "2019-3-27",
-      "dataTermino": "2019-3-28",
       "statusAndamento": 1,
       "ordemSubPlanos": []
     },
@@ -112,6 +111,20 @@
       "id": 8,
       "titulo": "Teste 5",
       "tipo": "2",
+      "responsavel": "2",
+      "dataInicio": "2019-3-28",
+      "dataTermino": "2019-3-31",
+      "pertence": null,
+      "interessados": null,
+      "custo": null,
+      "descricao": null,
+      "statusAndamento": null,
+      "ordemSubPlanos": []
+    },
+    {
+      "id": 9,
+      "titulo": "Teste de automação de processos da empresa",
+      "tipo": "1",
       "responsavel": "2",
       "dataInicio": "2019-3-28",
       "dataTermino": "2019-3-31",

@@ -10,6 +10,14 @@ mat-expansion-panel {
     width: 100%;
 }
 
+td {
+    text-align: center;
+}
+
+.tdResponsavel {
+    text-align: left;
+}
+
 .tituloContainer{
     width: 100%;
     margin: 0;
@@ -108,6 +116,10 @@ mat-expansion-panel {
     .itemSemaforo {
         width: calc(100% - 5.2px);
     }
+
+    .hide-ms {
+        display: none;
+    }
 }
 
 @media( max-width: 700px ) {
@@ -125,5 +137,15 @@ mat-expansion-panel {
 
     .font-ss{
         font-size: 12px;
+    }
+
+    .itemSemaforo {
+        grid-template-columns: 60% 40%;
+        height: auto;
+        padding: 10px;
+    }
+
+    .conteudoItemSemaforo{
+        height: 30px;
     }
 }
