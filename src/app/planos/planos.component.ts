@@ -67,17 +67,33 @@ export class PlanosComponent implements OnInit, OnDestroy {
 
   listaPlanosFiltrado(): void {
     if (this.planosService.listaPlanos) {
-      let listaPlanosTemp = this.planosService.listaPlanos.filter(p => p.pertence === null);
-      const listaOrdenada: Plano[] = [];
-      this.ordenacaoPlanosService.listaOrdenacao.planos.forEach(
-        (ordem: number) => {
-          listaOrdenada.push(listaPlanosTemp.filter(p => p.id === ordem)[0]);
-          listaPlanosTemp = listaPlanosTemp.filter(p => p.id !== ordem);
-        }
-      );
-      listaPlanosTemp.forEach(p => listaOrdenada.push(p));
-      this.listaPlanos = listaOrdenada;
+      if (this.ordenacaoPlanosService.listaOrdenacao) {
+        let listaPlanosTemp = this.planosService.listaPlanos.filter(p => p.pertence === null);
+        const listaOrdenada: Plano[] = [];
+        this.ordenacaoPlanosService.listaOrdenacao.planos.forEach(
+          (ordem: number) => {
+            listaOrdenada.push(listaPlanosTemp.filter(p => p.id === ordem)[0]);
+            listaPlanosTemp = listaPlanosTemp.filter(p => p.id !== ordem);
+          }
+        );
+        listaPlanosTemp.forEach(p => listaOrdenada.push(p));
+        this.listaPlanos = listaOrdenada;
+      } else {
+        this.getOrdenacaoFromServer();
+      }
     }
+  }
+
+  getOrdenacaoFromServer(): void {
+    this.toggleBarraCarregamento();
+    this.ordenacaoPlanosService.getOrdemPlanos().subscribe(
+      (ordem) => {
+        this.ordenacaoPlanosService.listaOrdenacao = ordem;
+        this.toggleBarraCarregamento();
+        this.listaPlanosFiltrado();
+      },
+      this.erroRequisicao.bind(this)
+    );
   }
 
   getPlanosFromServer(): void {
@@ -126,8 +142,8 @@ export class PlanosComponent implements OnInit, OnDestroy {
   abrirCriarPlanoDialog(plano: Plano = null) {
     const dialogRef = this.dialog.open(CriarPlanoComponent, { disableClose: true, data: { ...plano } });
     dialogRef.afterClosed().subscribe(result => {
+      this.toggleBarraCarregamento();
       if (!result) {
-        this.toggleBarraCarregamento();
         this.planosService.getPlanos().subscribe(planos => {
           this.planosService.listaPlanos = planos;
           this.listaPlanosFiltrado();
@@ -136,6 +152,7 @@ export class PlanosComponent implements OnInit, OnDestroy {
       } else {
         this.listaPlanosFiltrado();
         this.eventosService.emitirAtualizarListaPlanos.emit();
+        this.toggleBarraCarregamento();
       }
     });
   }

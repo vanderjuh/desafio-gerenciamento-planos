@@ -4,6 +4,7 @@ import { TiposPlanoService } from 'src/app/service/tipos-plano.service';
 import { TiposPlano } from '../../core/tipos-plano';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UtilService } from 'src/app/service/util.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-tipos-plano',
@@ -22,6 +23,8 @@ export class TiposPlanoComponent implements OnInit {
   formulario: FormGroup;
 
   statusBarraCarregamento: boolean;
+  erroRequisicaoTipos: boolean;
+
   desabilitarBotao = false;
 
   constructor(
@@ -47,6 +50,11 @@ export class TiposPlanoComponent implements OnInit {
     });
   }
 
+  erroRequisicao(error: HttpErrorResponse): void {
+    this.toggleBarraCarregamento();
+    this.erroRequisicaoTipos = true;
+  }
+
   setTiposPlanoNaTabela(): void {
     this.dataSource = new MatTableDataSource<TiposPlano>(this.tiposPlanoService.listaTipos);
     this.dataSource.paginator = this.paginator;
@@ -54,11 +62,15 @@ export class TiposPlanoComponent implements OnInit {
 
   getTiposPlanoFromServer(): void {
     this.toggleBloquearFormulario();
-    this.tiposPlanoService.getTiposPlano().subscribe(tiposPlano => {
+    this.toggleBarraCarregamento();
+    this.tiposPlanoService.getTiposPlano().subscribe(
+      (tiposPlano) => {
         this.tiposPlanoService.listaTipos = tiposPlano;
         this.setTiposPlanoNaTabela();
         this.toggleBloquearFormulario();
-      }
+        this.toggleBarraCarregamento();
+      },
+      this.erroRequisicao.bind(this)
     );
   }
 

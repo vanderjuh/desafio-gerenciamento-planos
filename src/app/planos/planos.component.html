@@ -1,10 +1,10 @@
-<div *ngIf="mesagemErroRequisicao" class="centerItemContainer">
+<div *ngIf="mesagemErroRequisicao && !listaPlanos" class="centerItemContainer">
     <mat-card class="mensagemErro">
         <mat-icon>warning</mat-icon>
         <h4>Houve um problema com a conexão</h4>
     </mat-card>
 </div>
-<div *ngIf="!mesagemErroRequisicao" class="centerItemContainer">
+<div class="centerItemContainer">
     <mat-card class="header">
         <h1>Planos</h1>
         <div class="btnAdd" mat-button (click)="abrirCriarPlanoDialog()">

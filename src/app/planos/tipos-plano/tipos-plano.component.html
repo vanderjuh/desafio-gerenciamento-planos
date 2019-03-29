@@ -6,6 +6,7 @@
   <mat-label>{{labelCampoNomeTipo}} <span class="requerido">*</span> </mat-label>
   <input type="hidden" formControlName="id">
   <input matInput placeholder="Nome do tipo" formControlName="desc" autofocus="false">
+  <mat-hint class="erro" *ngIf="erroRequisicaoTipos">Houve um problema com a conexão!</mat-hint>
   <mat-error>Este campo é obrigatório</mat-error>
 </mat-form-field>
 <mat-dialog-content>
@@ -30,7 +31,7 @@
   </table>
 </mat-dialog-content>
 <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
-<mat-progress-bar *ngIf="statusBarraCarregamento === true || tiposPlanoService.listaTipos === undefined"
+<mat-progress-bar *ngIf="statusBarraCarregamento === true"
   mode="indeterminate"></mat-progress-bar>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close class="btnCancelar">

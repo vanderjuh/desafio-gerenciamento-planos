@@ -4,6 +4,7 @@ import { ResponsavelService } from 'src/app/service/responsavel.service';
 import { Responsavel } from '../../core/responsavel';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UtilService } from 'src/app/service/util.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-responsaveis',
@@ -24,6 +25,7 @@ export class ResponsaveisComponent implements OnInit {
   @ViewChild('btnSalvarResponsavel') btnSalvarResponsavel: MatButton;
 
   statusBarraCarregamento: boolean;
+  erroRequisicaoResp: boolean;
 
   constructor(
     private responsavelService: ResponsavelService,
@@ -53,10 +55,23 @@ export class ResponsaveisComponent implements OnInit {
   }
 
   getResponsaveisFromServer(): void {
-    this.responsavelService.getResponsaveis().subscribe(responsaveis => {
-      this.responsavelService.listaResponsaveis = responsaveis;
-      this.setResponsaveisNaTabela();
-    });
+    this.toggleBarraCarregamento();
+    this.toggleBloquearFormulario();
+    this.responsavelService.getResponsaveis().subscribe(
+      (responsaveis) => {
+        this.responsavelService.listaResponsaveis = responsaveis;
+        this.setResponsaveisNaTabela();
+        this.toggleBarraCarregamento();
+        this.toggleBloquearFormulario();
+      },
+      this.erroRequisicao.bind(this)
+    );
+  }
+
+  erroRequisicao(error: HttpErrorResponse): void {
+    this.toggleBarraCarregamento();
+    this.erroRequisicaoResp = true;
+    this.utilService.abrirSnackBar('Houve um problema na conexão!', 5000);
   }
 
   onSalvarResponsavel(): void {

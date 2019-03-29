@@ -28,6 +28,7 @@ export class VisaoGeralComponent implements OnInit {
   constructor(
     private responsavelService: ResponsavelService,
     private planosService: PlanosService,
+    // private ordenacaoPlanoService: OrdenacaoPlanosService,
     private utilService: UtilService
   ) { }
 

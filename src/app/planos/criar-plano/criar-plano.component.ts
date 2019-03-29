@@ -27,6 +27,7 @@ export class CriarPlanoComponent implements OnInit {
   @ViewChild('btnSalvarPlano') btnSalvarPlano: MatButton;
 
   statusBarraCarregamento: boolean;
+  errosRequisicoes: boolean[] = [false, false, false];
 
   constructor(
     private tiposPlanoService: TiposPlanoService,
@@ -64,7 +65,9 @@ export class CriarPlanoComponent implements OnInit {
   }
 
   erroRequisicao(error: HttpErrorResponse): void {
-    this.utilService.abrirSnackBar('Houve um problema com a conexão!', 5000);
+    if (error.url.includes('/tipos')) { this.errosRequisicoes[0] = true; }
+    if (error.url.includes('/planos')) { this.errosRequisicoes[1] = true; }
+    if (error.url.includes('/responsaveis')) { this.errosRequisicoes[2] = true; }
   }
 
   verificarModo(): void {
@@ -197,8 +200,8 @@ export class CriarPlanoComponent implements OnInit {
     if (this.planosService.listaPlanos === undefined || this.planosService.listaPlanos.length === 0) {
       this.planosService.getPlanos().subscribe(
         (planos) => {
-        this.planosService.listaPlanos = planos;
-        this.listaPlanosFiltrado();
+          this.planosService.listaPlanos = planos;
+          this.listaPlanosFiltrado();
         },
         this.erroRequisicao.bind(this)
       );

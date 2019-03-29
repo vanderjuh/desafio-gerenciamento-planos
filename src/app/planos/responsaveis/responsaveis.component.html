@@ -65,7 +65,7 @@
     </mat-tab>
   </mat-tab-group>
 </mat-dialog-content>
-<mat-progress-bar *ngIf="statusBarraCarregamento == true || responsavelService.listaResponsaveis === undefined"mode="indeterminate"></mat-progress-bar>
+<mat-progress-bar *ngIf="statusBarraCarregamento === true"mode="indeterminate"></mat-progress-bar>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close class="btnCancelar">
     <mat-icon>close</mat-icon>
