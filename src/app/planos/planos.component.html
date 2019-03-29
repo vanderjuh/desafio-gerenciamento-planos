@@ -1,4 +1,10 @@
-<div class="centerItemContainer">
+<div *ngIf="mesagemErroRequisicao" class="centerItemContainer">
+    <mat-card class="mensagemErro">
+        <mat-icon>warning</mat-icon>
+        <h4>Houve um problema com a conexão</h4>
+    </mat-card>
+</div>
+<div *ngIf="!mesagemErroRequisicao" class="centerItemContainer">
     <mat-card class="header">
         <h1>Planos</h1>
         <div class="btnAdd" mat-button (click)="abrirCriarPlanoDialog()">
@@ -17,8 +23,7 @@
     </mat-card>
 </div>
 <div class="centerItemContainer">
-    <mat-progress-bar *ngIf="statusBarraCarregamento === true || planosService.listaPlanos === undefined"
-        mode="indeterminate"></mat-progress-bar>
+    <mat-progress-bar *ngIf="statusBarraCarregamento === true" mode="indeterminate"></mat-progress-bar>
 </div>
 <div class="centerItemContainer" cdkDropList (cdkDropListDropped)="drop($event)">
     <div class="itemListaPlanos" *ngFor="let plano of listaPlanos" cdkDragBoundary=".centerItemContainer"

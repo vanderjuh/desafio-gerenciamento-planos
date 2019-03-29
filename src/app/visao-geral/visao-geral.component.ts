@@ -5,6 +5,8 @@ import { Responsavel } from '../core/responsavel';
 import { PlanosService } from '../service/planos.service';
 import { OrdenacaoPlanosService } from '../service/ordenacao-planos.service';
 import { ResponsividadeService } from '../service/responsividade.service';
+import { UtilService } from '../service/util.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-visao-geral',
@@ -14,6 +16,7 @@ import { ResponsividadeService } from '../service/responsividade.service';
 export class VisaoGeralComponent implements OnInit {
 
   statusBarraCarregamento: boolean;
+  mesagemErroRequisicao: boolean;
 
   listaQtdPlanosPorStatus: object;
 
@@ -23,10 +26,9 @@ export class VisaoGeralComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
-    private ordenacaoPlanosService: OrdenacaoPlanosService,
     private responsavelService: ResponsavelService,
     private planosService: PlanosService,
-    private responsividadeService: ResponsividadeService
+    private utilService: UtilService
   ) { }
 
   ngOnInit() {
@@ -39,12 +41,15 @@ export class VisaoGeralComponent implements OnInit {
       || this.planosService.listaPlanos.length === 0
     ) {
       this.toggleBarraCarregamento();
-      this.planosService.getPlanos().subscribe(planos => {
-        this.planosService.listaPlanos = planos;
-        this.setQtdPlanosPorStatus();
-        this.toggleBarraCarregamento();
-        this.getResponsaveisFromServer();
-      });
+      this.planosService.getPlanos().subscribe(
+        (planos) => {
+          this.planosService.listaPlanos = planos;
+          this.setQtdPlanosPorStatus();
+          this.toggleBarraCarregamento();
+          this.getResponsaveisFromServer();
+        },
+        this.erroRequisicao.bind(this)
+      );
     } else {
       this.setQtdPlanosPorStatus();
       this.getResponsaveisFromServer();
@@ -57,14 +62,23 @@ export class VisaoGeralComponent implements OnInit {
       || this.responsavelService.listaResponsaveis.length === 0
     ) {
       this.toggleBarraCarregamento();
-      this.responsavelService.getResponsaveis().subscribe(responsaveis => {
-        this.responsavelService.listaResponsaveis = responsaveis;
-        this.setResponsaveisNaTabela();
-        this.toggleBarraCarregamento();
-      });
+      this.responsavelService.getResponsaveis().subscribe(
+        (responsaveis) => {
+          this.responsavelService.listaResponsaveis = responsaveis;
+          this.setResponsaveisNaTabela();
+          this.toggleBarraCarregamento();
+        },
+        this.erroRequisicao.bind(this)
+      );
     } else {
       this.setResponsaveisNaTabela();
     }
+  }
+
+  erroRequisicao(error: HttpErrorResponse): void {
+    this.toggleBarraCarregamento();
+    this.mesagemErroRequisicao = true;
+    this.utilService.abrirSnackBar('Houve um problema com a conexão!', 5000);
   }
 
   setResponsaveisNaTabela(): void {

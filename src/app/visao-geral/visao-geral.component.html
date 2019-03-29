@@ -1,8 +1,13 @@
-<div *ngIf="statusBarraCarregamento === true" class="centerItemContainer" cdkDropList
-  (cdkDropListDropped)="drop($event)">
+<div *ngIf="statusBarraCarregamento === true" class="centerItemContainer">
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 </div>
-<div class="centerItemContainer">
+<div *ngIf="mesagemErroRequisicao" class="centerItemContainer">
+  <mat-card class="mensagemErro">
+    <mat-icon>warning</mat-icon>
+    <h4>Houve um problema com a conexão</h4>
+  </mat-card>
+</div>
+<div *ngIf="!mesagemErroRequisicao" class="centerItemContainer">
   <mat-expansion-panel [expanded]="true">
     <mat-expansion-panel-header>
       <div class="tituloContainer">
@@ -17,7 +22,7 @@
           <h5>Planos em andamento</h5>
         </div>
         <div class="conteudoItemSemaforo">
-          {{listaQtdPlanosPorStatus ? listaQtdPlanosPorStatus.andamento : ''}}
+          {{listaQtdPlanosPorStatus ? listaQtdPlanosPorStatus.andamento : '...'}}
         </div>
       </li>
       <li class="itemSemaforo planosConcluidos">
@@ -26,7 +31,7 @@
           <h5>Planos concluídos</h5>
         </div>
         <div class="conteudoItemSemaforo">
-          {{listaQtdPlanosPorStatus ? listaQtdPlanosPorStatus.concluidos : ''}}
+          {{listaQtdPlanosPorStatus ? listaQtdPlanosPorStatus.concluidos : '...'}}
         </div>
       </li>
       <li class="itemSemaforo planosSuspensos">
@@ -35,7 +40,7 @@
           <h5>Planos suspensos</h5>
         </div>
         <div class="conteudoItemSemaforo">
-          {{listaQtdPlanosPorStatus ? listaQtdPlanosPorStatus.suspensos : ''}}
+          {{listaQtdPlanosPorStatus ? listaQtdPlanosPorStatus.suspensos : '...'}}
         </div>
       </li>
       <li class="itemSemaforo planosCancelados">
@@ -44,13 +49,13 @@
           <h5>Planos cancelados</h5>
         </div>
         <div class="conteudoItemSemaforo">
-          {{listaQtdPlanosPorStatus ? listaQtdPlanosPorStatus.cancelados : ''}}
+          {{listaQtdPlanosPorStatus ? listaQtdPlanosPorStatus.cancelados : '...'}}
         </div>
       </li>
     </ul>
   </mat-expansion-panel>
 </div>
-<div class="centerItemContainer">
+<div *ngIf="!mesagemErroRequisicao" class="centerItemContainer">
   <mat-expansion-panel [expanded]="true">
     <mat-expansion-panel-header>
       <div class="tituloContainer">
@@ -104,4 +109,4 @@
     <mat-paginator class="paginadorPlanoPorPessoas" [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
   </mat-expansion-panel>
 </div>
-<app-footer></app-footer>
+<app-footer *ngIf="!mesagemErroRequisicao"></app-footer>

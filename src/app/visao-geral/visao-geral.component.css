@@ -10,6 +10,19 @@ mat-expansion-panel {
     width: 100%;
 }
 
+.mensagemErro{
+    width: 100%;
+    background-color: rgba(255, 0, 0, 0.5);
+    color: white;
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+}
+
+.mensagemErro h4{
+    margin: 0;
+}
+
 td {
     text-align: center;
 }

@@ -7,6 +7,7 @@ import { MatButton, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Plano } from '../../core/plano';
 import { UtilService } from 'src/app/service/util.service';
 import { OrdenacaoPlanosService } from 'src/app/service/ordenacao-planos.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-criar-plano',
@@ -60,6 +61,10 @@ export class CriarPlanoComponent implements OnInit {
       custo: [null],
       descricao: [null]
     });
+  }
+
+  erroRequisicao(error: HttpErrorResponse): void {
+    this.utilService.abrirSnackBar('Houve um problema com a conexão!', 5000);
   }
 
   verificarModo(): void {
@@ -138,7 +143,7 @@ export class CriarPlanoComponent implements OnInit {
               this.planosService.salvarPlano(p).subscribe()
               return;
             }
-          })
+          });
       }
     }
   }
@@ -169,29 +174,34 @@ export class CriarPlanoComponent implements OnInit {
 
   getTiposPlanoFromServer(): void {
     this.tiposPlanoService.getTiposPlano().subscribe(
-      tiposPlano => {
+      (tiposPlano) => {
         this.tiposPlanoService.listaTipos = tiposPlano;
         this.formulario.get('tipo').enable();
-      }
+      },
+      this.erroRequisicao.bind(this)
     );
   }
 
   getResponsaveisFromServer(): void {
     this.responsavelService.getResponsaveis().subscribe(
-      responsaveis => {
+      (responsaveis) => {
         this.responsavelService.listaResponsaveis = responsaveis;
         this.formulario.get('responsavel').enable();
         this.formulario.get('interessados').enable();
-      }
+      },
+      this.erroRequisicao.bind(this)
     );
   }
 
   getPlanosFromServer(): void {
     if (this.planosService.listaPlanos === undefined || this.planosService.listaPlanos.length === 0) {
-      this.planosService.getPlanos().subscribe(planos => {
+      this.planosService.getPlanos().subscribe(
+        (planos) => {
         this.planosService.listaPlanos = planos;
         this.listaPlanosFiltrado();
-      });
+        },
+        this.erroRequisicao.bind(this)
+      );
       this.formulario.get('pertence').enable();
     }
   }
@@ -236,7 +246,9 @@ export class CriarPlanoComponent implements OnInit {
     this.labelDialogPlano = 'EDITAR PLANO';
     this.formulario.patchValue(plano);
     this.setPeriodo(plano);
-    this.listaPlanos = this.listaPlanos.filter(p => p.id !== plano.id);
+    if (this.listaPlanos) {
+      this.listaPlanos = this.listaPlanos.filter(p => p.id !== plano.id);
+    }
   }
 
   onModoOriginal(): void {

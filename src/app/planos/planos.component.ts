@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 import { EventosService } from '../service/eventos.service';
 import { OrdenacaoPlanosService } from '../service/ordenacao-planos.service';
 import { UtilService } from '../service/util.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-planos',
@@ -19,6 +20,7 @@ import { UtilService } from '../service/util.service';
 export class PlanosComponent implements OnInit, OnDestroy {
 
   statusBarraCarregamento: boolean;
+  mesagemErroRequisicao: boolean;
 
   listaPlanos: Plano[];
 
@@ -84,12 +86,34 @@ export class PlanosComponent implements OnInit, OnDestroy {
       || this.planosService.listaPlanos.length === 0
     ) {
       this.toggleBarraCarregamento();
-      this.planosService.getPlanos().subscribe(planos => {
-        this.planosService.listaPlanos = planos;
-        this.listaPlanosFiltrado();
-        this.toggleBarraCarregamento();
-      });
+      this.planosService.getPlanos().subscribe(
+        (planos) => {
+          this.planosService.listaPlanos = planos;
+          this.listaPlanosFiltrado();
+          this.toggleBarraCarregamento();
+        },
+        this.erroRequisicao.bind(this)
+      );
     }
+  }
+
+  ordenarPlanos(ordenacao: { planos: number[] }): void {
+    this.toggleBarraCarregamento();
+    this.ordenacaoPlanosService.ordenarPlanos(ordenacao)
+      .subscribe(
+        (resp) => {
+          this.ordenacaoPlanosService.listaOrdenacao = ordenacao;
+          this.toggleBarraCarregamento();
+          this.utilService.abrirSnackBar('Lista de planos reordenada com sucesso!', 2000);
+        },
+        this.erroRequisicao.bind(this)
+      );
+  }
+
+  erroRequisicao(error: HttpErrorResponse): void {
+    this.toggleBarraCarregamento();
+    this.mesagemErroRequisicao = true;
+    this.utilService.abrirSnackBar('Houve um problema com a conexão!', 5000);
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -97,16 +121,6 @@ export class PlanosComponent implements OnInit, OnDestroy {
       moveItemInArray(this.listaPlanos, event.previousIndex, event.currentIndex);
       this.ordenarPlanos({ planos: this.listaPlanos.map(p => p.id) });
     }
-  }
-
-  ordenarPlanos(ordenacao: { planos: number[] }): void {
-    this.toggleBarraCarregamento();
-    this.ordenacaoPlanosService.ordenarPlanos(ordenacao)
-      .subscribe(resp => {
-        this.ordenacaoPlanosService.listaOrdenacao = ordenacao;
-        this.toggleBarraCarregamento();
-        this.utilService.abrirSnackBar('Lista de planos reordenada com sucesso!', 2000);
-      });
   }
 
   abrirCriarPlanoDialog(plano: Plano = null) {
