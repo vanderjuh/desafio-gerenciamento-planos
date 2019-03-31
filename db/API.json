@@ -3,7 +3,9 @@
     "planos": [
       2,
       3,
-      4
+      4,
+      8,
+      9
     ]
   },
   "planos": [
@@ -34,7 +36,10 @@
       "descricao": null,
       "statusAndamento": 4,
       "ordemSubPlanos": [
-        1
+        1,
+        6,
+        3,
+        7
       ]
     },
     {

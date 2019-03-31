@@ -74,22 +74,48 @@ export class ItemListaComponent implements OnInit, OnDestroy {
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    console.log('Subplanos: ', this.subPlanos)
     if (confirm('Deseja realmente mudar o sub-plano de possição?')) {
       if (event.previousContainer === event.container) {
         moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+        this.ordenarSubPlanos();
       } else {
         transferArrayItem(event.previousContainer.data,
           event.container.data,
           event.previousIndex,
           event.currentIndex);
+        this.editarPertenceSubPlano();
       }
-      this.ordenarSubPlanos(this.subPlanos.map((p: any) => p.id));
     }
   }
 
+  editarPertenceSubPlano(): void {
+    let subPlano: Plano;
+    this.subPlanos.forEach(p => {
+      if (p !== undefined && p.pertence === null) {
+        p.pertence = this.value.id;
+        subPlano = p;
+      }
+    });
+    this.eventosService.emitirBarraCarregamento.emit(true);
+    this.planosService.salvarPlano(subPlano)
+      .subscribe(resp => {
+        this.eventosService.emitirBarraCarregamento.emit(true);
+        this.ordenarSubPlanos();
+      });
+  }
+
+  ordenarSubPlanos(): void {
+    this.eventosService.emitirBarraCarregamento.emit(true);
+    const planoTemp: Plano = { ...this.value, ordemSubPlanos: this.subPlanos.map((p: any) => p.id) };
+    this.planosService.salvarPlano(planoTemp)
+      .subscribe(resp => {
+        this.value = planoTemp;
+        this.eventosService.emitirBarraCarregamento.emit(false);
+        this.utilService.abrirSnackBar('Lista de sub-planos reordenada com sucesso', 2000);
+      });
+  }
+
   canDropPredicate(): (drag: CdkDrag<Element>, drop: CdkDropList<Element>) => boolean {
-    console.log('De dentro')
     const me = this;
     return (drag: CdkDrag<Element>, drop: CdkDropList<Element>): boolean => {
       const fromBounds = drag.dropContainer.element.nativeElement.getBoundingClientRect();
@@ -151,17 +177,6 @@ export class ItemListaComponent implements OnInit, OnDestroy {
     );
     subPlanosTemp.forEach(p => listaOrdenada.push(p));
     this.subPlanos = listaOrdenada;
-  }
-
-  ordenarSubPlanos(ordenacao: number[]): void {
-    this.eventosService.emitirBarraCarregamento.emit(true);
-    const planoTemp: Plano = { ...this.value, ordemSubPlanos: ordenacao };
-    this.planosService.salvarPlano(planoTemp)
-      .subscribe(resp => {
-        this.value = planoTemp;
-        this.eventosService.emitirBarraCarregamento.emit(false);
-        this.utilService.abrirSnackBar('Lista de sub-planos reordenada com sucesso', 2000);
-      });
   }
 
   onErrorAvatar(avatarImg: any): void {

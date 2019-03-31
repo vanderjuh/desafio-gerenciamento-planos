@@ -132,13 +132,14 @@ export class PlanosComponent implements OnInit, OnDestroy {
     if (confirm('Deseja realmente mudar o plano de possível?')) {
       if (event.previousContainer === event.container) {
         moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+        this.ordenarPlanos();
       } else {
         transferArrayItem(event.previousContainer.data,
           event.container.data,
           event.previousIndex,
           event.currentIndex);
+        this.editarPertencePlano();
       }
-      this.editarPertencePlano();
     }
   }
 
