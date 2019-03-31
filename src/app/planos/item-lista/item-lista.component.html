@@ -1,0 +1,105 @@
+<mat-expansion-panel hideToggle="true" class="itemListaPlanos" [ngStyle]="setSemaforo()" [disabled]="desabilitarSubPlano">
+  <mat-expansion-panel-header>
+    <mat-panel-description class="gridItemListaPlanos">
+      <div class="mudarOrdem">
+        <mat-icon>drag_indicator</mat-icon>
+      </div>
+      <div class="infoPlano">
+        <div class="tituloPlano">{{value.titulo}}</div>
+        <div class="statusPlano" [ngSwitch]="value.statusAndamento">
+          <mat-icon class="mat-iconStatus">history</mat-icon>
+          <span *ngSwitchCase="1">Iniciado</span>
+          <span class="semaforoVerde" *ngSwitchCase="2">Concluido</span>
+          <span class="semaforoLaranja" *ngSwitchCase="3">Suspendido</span>
+          <span class="semaforoVermelho" *ngSwitchCase="4">Cancelado</span>
+          <span *ngSwitchDefault>Aguardando início</span>
+        </div>
+        <div *ngIf="dataInicio && dataTermino" class="periodoPlano">
+          <mat-icon class="mat-iconPeriodo">date_range</mat-icon>
+          De {{dataInicio | date:'dd/MM/yyyy'}} até {{dataTermino | date:'dd/MM/yyyy'}}.
+        </div>
+        <div *ngIf="!dataInicio && !dataTermino" class="periodoPlano">
+          <mat-icon class="mat-iconPeriodo">date_range</mat-icon> Sem prazo definido.
+        </div>
+        <div *ngIf="dataInicio && !dataTermino" class="periodoPlano">
+          <mat-icon class="mat-iconPeriodo">date_range</mat-icon> Iniciar em {{dataInicio | date:'dd/MM/yyyy'}}.
+        </div>
+        <div *ngIf="!dataInicio && dataTermino" class="periodoPlano">
+          <mat-icon class="mat-iconPeriodo">date_range</mat-icon> Concluir até {{dataTermino | date:'dd/MM/yyyy'}}.
+        </div>
+      </div>
+      <div class="infoResponsavel">
+        <div class="info hide-ss">
+          <ul>
+            <li>{{responsavel === undefined ? 'Carregando dado...' : responsavel.nome}}</li>
+            <li><a
+                href="mailto:{{responsavel === undefined ? '#' : responsavel.email}}">{{responsavel === undefined ? 'Carregando dado...' : responsavel.email}}</a>
+            </li>
+          </ul>
+        </div>
+        <a href="mailto:{{responsavel === undefined ? '#' : responsavel.email}}">
+          <img #avatarResponsavel src="{{responsavel === undefined ? '#' : responsavel.avatar}}" alt="Colaborador"
+            (error)="onErrorAvatar(avatarResponsavel)">
+        </a>
+      </div>
+      <div class="acoesPlano">
+        <button mat-button [matMenuTriggerFor]="menuOpcoes">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+
+        <mat-menu #menuOpcoes="matMenu">
+          <button mat-menu-item (click)="onEditarPlano()">
+            <mat-icon class="btnEditar">edit</mat-icon>
+            Editar
+          </button>
+          <button mat-menu-item [matMenuTriggerFor]="menuStatus">
+            <mat-icon class="mat-iconStatus">history</mat-icon>
+            Mudar status:
+          </button>
+          <button mat-menu-item (click)="onRemoverPlano()">
+            <mat-icon class="btnRemover">delete</mat-icon>
+            Remover
+          </button>
+        </mat-menu>
+
+        <mat-menu #menuStatus="matMenu">
+          <button mat-menu-item (click)="onAlterarStatusPlano(1)">
+            <mat-icon>play_circle_outline</mat-icon>
+            Iníciar
+          </button>
+          <button mat-menu-item (click)="onAlterarStatusPlano(2)">
+            <mat-icon class="semaforoVerde">done</mat-icon>
+            Concluir
+          </button>
+          <button mat-menu-item (click)="onAlterarStatusPlano(3)">
+            <mat-icon class="semaforoLaranja">pause_circle_outline</mat-icon>
+            Suspender
+          </button>
+          <button mat-menu-item (click)="onAlterarStatusPlano(4)">
+            <mat-icon class="semaforoVermelho">cancel</mat-icon>
+            Cancelar
+          </button>
+        </mat-menu>
+
+      </div>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+
+  <ng-template matExpansionPanelContent>
+    <div class="containerSubPlanos" id="plano{{value.id}}"
+      cdkDropList
+      [cdkDropListData]="subPlanos"
+      (cdkDropListDropped)="drop($event)"
+      [cdkDropListConnectedTo]="connectedLists"
+      [cdkDropListEnterPredicate]="canDropPredicate()"
+    >
+      <div *ngFor="let plano of subPlanos" cdkDragLockAxis="y" cdkDrag>
+        <app-item-lista *ngIf="plano" [value]="plano" [desabilitarSubPlano]="true"></app-item-lista>
+        <div class="placeholderDragDrop" *cdkDragPlaceholder> Solte aqui... </div>
+      </div>
+      <div class="placeholderDragDrop2">
+        Arraste um plano para cá
+      </div>
+    </div>
+  </ng-template>
+</mat-expansion-panel>

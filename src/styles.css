@@ -1,0 +1,22 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+* {
+    box-sizing: border-box;
+    font-family: 'open-sans', sans-serif;
+}
+
+:root {
+    --menuSuperiorHeight: 50px;
+}
+
+html body {
+    margin: 0;
+    padding: 0;
+    min-width: 432px;
+}
+
+mat-dialog-container {
+    border-left: 5px #00adef solid !important;
+}

@@ -1,0 +1,11 @@
+.container{
+    height: calc(100vh - var(--menuSuperiorHeight));
+}
+
+.menuLateral{
+    width: 269px;
+}
+
+.conteudoPrincipal{
+    position: relative;
+}

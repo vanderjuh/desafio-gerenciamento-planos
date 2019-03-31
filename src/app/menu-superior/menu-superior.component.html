@@ -1,0 +1,31 @@
+<menu>
+  <ul class="menuItens">
+    <li class="btnMenu hover" (click)="onToggleMenuLateral()">
+      <mat-icon>menu</mat-icon>
+    </li>
+    <li class="menuQualiex hover" (click)="onToggleMostrarModulosQualiex()" [ngStyle]="onStyleModulosQualiexAberto()">
+      <img src="../../assets/img/logo_branco.png" alt="Qualiex">
+      <mat-icon>{{ onMostrarModulosQualiex ? 'arrow_drop_up' : 'arrow_drop_down'}}</mat-icon>
+    </li>
+    <li>
+      <div class="descModulo">
+        <h3>Planos</h3>
+        <p>Gestão de planos</p>
+      </div>
+    </li>
+    <li class="atualizacoes hover">
+      <mat-icon class="hide-ls">new_releases</mat-icon>
+      <span class="hide-ss">Atualizações</span>
+    </li>
+    <li class="infoUser hover">
+      <img src="../../assets/img/vanderley.jpg" alt="Colaborador" title="Vanderley Junior">
+      <span class="hide-ss">
+        <ul>
+          <li class="hide-ss">Vanderley Junior</li>
+          <li class="hide-ss">Forlogic</li>
+        </ul>
+      </span>
+    </li>
+  </ul>
+</menu>
+<app-lista-modulos *ngIf="onMostrarModulosQualiex"></app-lista-modulos>

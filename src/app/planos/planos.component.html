@@ -1,0 +1,43 @@
+<div *ngIf="mesagemErroRequisicao && !listaPlanos" class="centerItemContainer">
+    <mat-card class="mensagemErro">
+        <mat-icon>warning</mat-icon>
+        <h4>Houve um problema com a conexão</h4>
+    </mat-card>
+</div>
+<div class="centerItemContainer">
+    <mat-card class="header">
+        <h1>Planos</h1>
+        <div class="btnAdd" mat-button (click)="abrirCriarPlanoDialog()">
+            <mat-icon>add</mat-icon>
+        </div>
+        <mat-chip-list class="opcoesPlanos">
+            <mat-chip color="primary" selected="false" (click)="abrirTiposPlanoDialog()">
+                <mat-icon>list</mat-icon>
+                Tipos de plano
+            </mat-chip>
+            <mat-chip color="primary" selected="false" (click)="abrirResponsaveisDialog()">
+                <mat-icon>people</mat-icon>
+                Responsáveis
+            </mat-chip>
+        </mat-chip-list>
+    </mat-card>
+</div>
+<div class="centerItemContainer">
+    <mat-progress-bar *ngIf="statusBarraCarregamento === true" mode="indeterminate"></mat-progress-bar>
+</div>
+<div class="centerItemContainer" id="planosRoot"
+    cdkDropList 
+    [cdkDropListData]="listaPlanos"
+    (cdkDropListDropped)="drop($event)"
+    [cdkDropListConnectedTo]="connectedLists"
+    [cdkDropListEnterPredicate]="canDropPredicate()"
+>
+    <div class="itemListaPlanos" *ngFor="let plano of listaPlanos"
+        cdkDragLockAxis="y"
+        cdkDrag
+    >
+        <app-item-lista *ngIf="plano" [value]="plano" [connectedLists]="connectedLists"></app-item-lista>
+        <div class="placeholderDragDrop" *cdkDragPlaceholder> Solte aqui... </div>
+    </div>
+</div>
+<app-footer *ngIf="listaPlanos"></app-footer>

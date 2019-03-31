@@ -1,0 +1,131 @@
+<h2 mat-dialog-title>
+  <mat-icon>view_day</mat-icon>
+  {{labelDialogPlano}}
+</h2>
+<mat-dialog-content [formGroup]="formulario">
+  <mat-tab-group class="formCriarPlano">
+    <mat-tab label="GERAL">
+      <mat-grid-list cols="1" rowHeight="70px">
+        <mat-grid-tile>
+          <mat-form-field>
+            <mat-label>Título do plano (o que?) <span class="requirido">*</span></mat-label>
+            <input type="hidden" formControlName="id">
+            <input matInput formControlName="titulo">
+            <mat-hint>Obrigatório</mat-hint>
+            <mat-error>Atenção, o nome do plano é obrigatório!</mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field>
+            <mat-label>Tipo do plano <span class="requirido">*</span></mat-label>
+            <mat-select formControlName="tipo">
+              <mat-option *ngFor="let tipo of tiposPlanoService.listaTipos" value="{{tipo.id}}">{{tipo.desc}}
+              </mat-option>
+            </mat-select>
+            <mat-hint *ngIf="errosRequisicoes[1] === false">
+              {{tiposPlanoService.listaTipos === undefined ? 'Carregando dados do servidor. Aguarde...' : 'Apenas uma seleção é permitida | Obrigatório.'}}
+            </mat-hint>
+            <mat-hint class="erro" *ngIf="errosRequisicoes[1] === true">Houve um problema com a conexão!</mat-hint>
+            <mat-error>Atenção, o tipo do plano é obrigatório!</mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field>
+            <mat-label>Responsável (quem?) <span class="requirido">*</span></mat-label>
+            <mat-select formControlName="responsavel">
+              <mat-option *ngFor="let responsavel of responsavelService.listaResponsaveis" value="{{responsavel.id}}">
+                {{responsavel.nome}}</mat-option>
+            </mat-select>
+            <mat-hint *ngIf="errosRequisicoes[2] === false">
+              {{responsavelService.listaResponsaveis === undefined ? 'Carregando dados do servidor. Aguarde...' : 'Digite ou selecione apenas um responsável | Obrigatório'}}
+            </mat-hint>
+            <mat-hint class="erro" *ngIf="errosRequisicoes[2] === true">Houve um problema com a conexão!</mat-hint>
+            <mat-error>Atenção, é obrigatório selecionar um responsável para o plano!</mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+
+          <mat-form-field class="dataPlano">
+            <input matInput maxlength="10" [matDatepicker]="dataInicioPicker" placeholder="Início"
+              formControlName="dataInicio">
+            <mat-datepicker-toggle matPrefix [for]="dataInicioPicker"></mat-datepicker-toggle>
+            <mat-datepicker #dataInicioPicker disabled="false"></mat-datepicker>
+            <mat-hint>Data de início do plano</mat-hint>
+            <mat-error *ngIf="this.formulario.get('dataInicio').hasError('matDatepickerParse')">Atenção, informe uma
+              data válida!</mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="dataPlano">
+            <input matInput [(min)]="this.formulario.get('dataInicio').value" maxlength="10" [matDatepicker]="dataTerminoPicker"
+              placeholder="Término" formControlName="dataTermino">
+            <mat-datepicker-toggle matPrefix [for]="dataTerminoPicker"></mat-datepicker-toggle>
+            <mat-datepicker #dataTerminoPicker disabled="false"></mat-datepicker>
+            <mat-hint>Data de término do plano</mat-hint>
+            <mat-error *ngIf="this.formulario.get('dataTermino').hasError('matDatepickerParse')">Atenção, informe uma
+              data válida!</mat-error>
+          </mat-form-field>
+
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field>
+            <mat-label>Pertence ao plano</mat-label>
+            <mat-select formControlName="pertence">
+              <mat-option value="null">[Nenhum]</mat-option>
+              <mat-option *ngFor="let plano of listaPlanos" [value]="plano.id">{{plano.titulo}}</mat-option>
+            </mat-select>
+            <mat-hint *ngIf="errosRequisicoes[1] === false">
+              {{planosService.listaPlanos === undefined ? 'Carregando dados do servidor. Aguarde...' : 'Apenas uma seleção é permitida.'}}
+            </mat-hint>
+            <mat-hint class="erro" *ngIf="errosRequisicoes[1] === true">Houve um problema com a conexão!</mat-hint>
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-tab>
+    <mat-tab label="DETALHES">
+      <mat-grid-list cols="1" rowHeight="70px">
+        <mat-grid-tile>
+          <mat-form-field>
+            <mat-label>Pessoas interessadas</mat-label>
+            <mat-select multiple formControlName="interessados">
+              <mat-option *ngFor="let responsavel of responsavelService.listaResponsaveis" value="{{responsavel.id}}">
+                {{responsavel.nome}}</mat-option>
+            </mat-select>
+            <mat-hint *ngIf="errosRequisicoes[2] === false">
+              {{responsavelService.listaResponsaveis === undefined ? 'Carregando dados do servidor. Aguarde...' : 'Habilitado para seleção múltipla'}}
+            </mat-hint>
+            <mat-hint class="erro" *ngIf="errosRequisicoes[2] === true">Houve um problema com a conexão!</mat-hint>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field>
+            <mat-label>Custo estimado</mat-label>
+            <input matInput type="number" formControlName="custo">
+            <span matPrefix>$&nbsp;</span>
+            <span matSuffix>.00</span>
+            <mat-hint>Apenas números são permitidos.</mat-hint>
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
+      <mat-grid-list cols="1" rowHeight="200px">
+        <mat-grid-tile>
+          <mat-form-field>
+            <mat-label>Descrição</mat-label>
+            <textarea matInput formControlName="descricao"></textarea>
+            <mat-hint>Descreva em detalhes um pouco mais sobre o plano.</mat-hint>
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-tab>
+  </mat-tab-group>
+</mat-dialog-content>
+<mat-progress-bar *ngIf="statusBarraCarregamento === true" mode="indeterminate"></mat-progress-bar>
+<mat-dialog-actions align="end">
+  <button mat-button class="btnCancelar" (click)="onFecharModal()">
+    <mat-icon>close</mat-icon>
+    CANCELAR E FECHAR
+  </button>
+  <button #btnSalvarPlano mat-button class="btnSalvar" (click)="onSalvarPlano()" [disabled]="onDesativarBtnSalvar()">
+    <mat-icon>check</mat-icon>
+    SALVAR
+  </button>
+</mat-dialog-actions>

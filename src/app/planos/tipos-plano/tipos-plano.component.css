@@ -1,0 +1,46 @@
+h2 {
+    margin: 0;
+    padding: 0;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+}
+
+.tabelaTipos{
+    width: 100%;
+}
+
+.formCriarTipo{
+    width: 100%;
+    position: relative;
+}
+
+.btnRemoverTipo{
+    width: 50%;
+    min-width: 0 !important;
+    padding: 0;
+    color: rgba(201, 0, 0, 0.438);
+}
+
+.btnEditarTipo{
+    width: 50%;
+    min-width: 0 !important;
+    padding: 0;
+    color: rgba(17, 201, 0, 0.438);
+}
+
+.btnCancelar {
+    color: rgb(201, 0, 0);
+}
+
+.btnSalvar {
+    color: green;
+}
+
+.requerido {
+    color: red;
+}
+
+.erro {
+    color: red;
+}

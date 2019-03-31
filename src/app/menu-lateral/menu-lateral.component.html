@@ -1,0 +1,16 @@
+<mat-list>
+  <mat-list-item [routerLink]="['/visaogeral']" routerLinkActive="active" (click)="onFecharMenuLateral()">
+    <span class="itemMenuLateral">
+      <mat-icon>visibility</mat-icon>
+      Visão Geral
+    </span>
+  </mat-list-item>
+  <mat-divider></mat-divider>
+  <mat-list-item [routerLink]="['/planos']" routerLinkActive="active" (click)="onFecharMenuLateral()">
+    <span class="itemMenuLateral">
+      <mat-icon>view_day</mat-icon>
+      Planos
+    </span>
+  </mat-list-item>
+  <mat-divider></mat-divider>
+</mat-list>
