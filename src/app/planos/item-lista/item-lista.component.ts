@@ -106,7 +106,13 @@ export class ItemListaComponent implements OnInit, OnDestroy {
 
   ordenarSubPlanos(): void {
     this.eventosService.emitirBarraCarregamento.emit(true);
-    const planoTemp: Plano = { ...this.value, ordemSubPlanos: this.subPlanos.map((p: any) => p.id) };
+    const ids: number[] = [];
+    this.subPlanos.forEach((p: any) => {
+      if (p !== undefined) {
+        ids.push(p.id);
+      }
+    });
+    const planoTemp: Plano = { ...this.value, ordemSubPlanos: ids };
     this.planosService.salvarPlano(planoTemp)
       .subscribe(resp => {
         this.value = planoTemp;

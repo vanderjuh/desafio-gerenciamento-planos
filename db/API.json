@@ -2,8 +2,9 @@
   "ordenacao": {
     "planos": [
       2,
-      3,
+      7,
       4,
+      3,
       8,
       9
     ]
@@ -38,7 +39,7 @@
       "ordemSubPlanos": [
         1,
         6,
-        3,
+        4,
         7
       ]
     },
@@ -61,7 +62,7 @@
       "titulo": "Teste 4",
       "tipo": "2",
       "responsavel": "1",
-      "pertence": null,
+      "pertence": 2,
       "interessados": null,
       "custo": null,
       "descricao": null,

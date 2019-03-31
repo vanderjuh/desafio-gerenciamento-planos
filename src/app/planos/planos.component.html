@@ -37,6 +37,7 @@
         cdkDrag
     >
         <app-item-lista *ngIf="plano" [value]="plano" [connectedLists]="connectedLists"></app-item-lista>
+        <div class="placeholderDragDrop" *cdkDragPlaceholder> Solte aqui... </div>
     </div>
 </div>
 <app-footer *ngIf="listaPlanos"></app-footer>
