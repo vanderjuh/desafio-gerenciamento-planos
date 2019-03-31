@@ -18,7 +18,7 @@ export class ItemListaComponent implements OnInit, OnDestroy {
 
   @Input() value: Plano;
   @Input() connectedLists: string[];
-
+  @Input() desabilitarSubPlano = false;
   responsavel: Responsavel;
 
   subPlanos: Plano[];

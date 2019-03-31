@@ -146,7 +146,7 @@ export class PlanosComponent implements OnInit, OnDestroy {
   editarPertencePlano(): void {
     let plano: Plano;
     this.listaPlanos.forEach(p => {
-      if (p.pertence !== null) {
+      if (p !== undefined && p.pertence !== null) {
         p.pertence = null;
         plano = p;
         return;

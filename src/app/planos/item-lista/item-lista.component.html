@@ -1,4 +1,4 @@
-<mat-expansion-panel hideToggle="true" class="itemListaPlanos" [ngStyle]="setSemaforo()">
+<mat-expansion-panel hideToggle="true" class="itemListaPlanos" [ngStyle]="setSemaforo()" [disabled]="desabilitarSubPlano">
   <mat-expansion-panel-header>
     <mat-panel-description class="gridItemListaPlanos">
       <div class="mudarOrdem">
@@ -94,8 +94,11 @@
       [cdkDropListEnterPredicate]="canDropPredicate()"
     >
       <div *ngFor="let plano of subPlanos" cdkDragLockAxis="y" cdkDrag>
-        <app-item-lista *ngIf="plano" [value]="plano"></app-item-lista>
+        <app-item-lista *ngIf="plano" [value]="plano" [desabilitarSubPlano]="true"></app-item-lista>
         <div class="placeholderDragDrop" *cdkDragPlaceholder> Solte aqui... </div>
+      </div>
+      <div *ngIf="subPlanos.length === 0" class="placeholderDragDrop">
+        Arraste para cá
       </div>
     </div>
   </ng-template>

@@ -2,9 +2,9 @@
   "ordenacao": {
     "planos": [
       2,
-      7,
-      4,
+      5,
       3,
+      4,
       8,
       9
     ]
@@ -37,10 +37,8 @@
       "descricao": null,
       "statusAndamento": 4,
       "ordemSubPlanos": [
-        1,
         6,
-        4,
-        7
+        1
       ]
     },
     {
@@ -62,7 +60,7 @@
       "titulo": "Teste 4",
       "tipo": "2",
       "responsavel": "1",
-      "pertence": 2,
+      "pertence": null,
       "interessados": null,
       "custo": null,
       "descricao": null,
@@ -73,12 +71,12 @@
     },
     {
       "id": 5,
-      "titulo": "Etapa 1",
+      "titulo": "Teste 2",
       "tipo": "1",
       "responsavel": "1",
       "dataInicio": "2019-3-28",
       "dataTermino": "2019-3-30",
-      "pertence": 3,
+      "pertence": null,
       "interessados": null,
       "custo": null,
       "descricao": null,
@@ -100,41 +98,13 @@
       "ordemSubPlanos": []
     },
     {
-      "id": 7,
-      "titulo": "Etapa 3",
-      "tipo": "2",
-      "responsavel": "1",
-      "dataInicio": null,
-      "dataTermino": null,
-      "pertence": 2,
-      "interessados": null,
-      "custo": null,
-      "descricao": null,
-      "statusAndamento": 2,
-      "ordemSubPlanos": []
-    },
-    {
       "id": 8,
       "titulo": "Teste 5",
       "tipo": "2",
       "responsavel": "2",
       "dataInicio": "2019-3-28",
       "dataTermino": "2019-3-31",
-      "pertence": null,
-      "interessados": null,
-      "custo": null,
-      "descricao": null,
-      "statusAndamento": null,
-      "ordemSubPlanos": []
-    },
-    {
-      "id": 9,
-      "titulo": "Teste de automação de processos da empresa",
-      "tipo": "1",
-      "responsavel": "2",
-      "dataInicio": "2019-3-28",
-      "dataTermino": "2019-3-31",
-      "pertence": null,
+      "pertence": 9,
       "interessados": null,
       "custo": null,
       "descricao": null,
