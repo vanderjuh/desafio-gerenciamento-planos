@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, CdkDrag, CdkDropList, transferArrayItem } from '@angular/cdk/drag-drop';
 import { ResponsavelService } from 'src/app/service/responsavel.service';
 import { Responsavel } from '../../core/responsavel';
 import { Plano } from '../../core/plano';
@@ -17,6 +17,8 @@ import { UtilService } from 'src/app/service/util.service';
 export class ItemListaComponent implements OnInit, OnDestroy {
 
   @Input() value: Plano;
+  @Input() connectedLists: string[];
+
   responsavel: Responsavel;
 
   subPlanos: Plano[];
@@ -72,10 +74,70 @@ export class ItemListaComponent implements OnInit, OnDestroy {
   }
 
   drop(event: CdkDragDrop<string[]>) {
+    console.log('Subplanos: ', this.subPlanos)
     if (confirm('Deseja realmente mudar o sub-plano de possição?')) {
-      moveItemInArray(this.subPlanos, event.previousIndex, event.currentIndex);
-      this.ordenarSubPlanos(this.subPlanos.map(p => p.id));
+      if (event.previousContainer === event.container) {
+        moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      } else {
+        transferArrayItem(event.previousContainer.data,
+          event.container.data,
+          event.previousIndex,
+          event.currentIndex);
+      }
+      this.ordenarSubPlanos(this.subPlanos.map((p: any) => p.id));
     }
+  }
+
+  canDropPredicate(): (drag: CdkDrag<Element>, drop: CdkDropList<Element>) => boolean {
+    console.log('De dentro')
+    const me = this;
+    return (drag: CdkDrag<Element>, drop: CdkDropList<Element>): boolean => {
+      const fromBounds = drag.dropContainer.element.nativeElement.getBoundingClientRect();
+      const toBounds = drop.element.nativeElement.getBoundingClientRect();
+
+      if (!me.intersect(fromBounds, toBounds)) {
+        return true;
+      }
+
+      // This gross but allows us to access a private field for now.
+      const pointerPosition: any = drag['_dragRef']['_pointerPositionAtLastDirectionChange'];
+      // They Intersect with each other so we need to do some calculations here.
+      if (me.insideOf(fromBounds, toBounds)) {
+        return !me.pointInsideOf(pointerPosition, fromBounds);
+      }
+
+      if (me.insideOf(toBounds, fromBounds) && me.pointInsideOf(pointerPosition, toBounds)) {
+        return true;
+      }
+      return false;
+    };
+  }
+
+  intersect(r1: DOMRect | ClientRect, r2: DOMRect | ClientRect): boolean {
+    return !(r2.left > r1.right ||
+      r2.right < r1.left ||
+      r2.top > r1.bottom ||
+      r2.bottom < r1.top);
+  }
+
+  insideOf(innerRect: DOMRect | ClientRect, outerRect: DOMRect | ClientRect): boolean {
+    return innerRect.left >= outerRect.left &&
+      innerRect.right <= outerRect.right &&
+      innerRect.top >= outerRect.top &&
+      innerRect.bottom <= outerRect.bottom &&
+      !(
+        innerRect.left === outerRect.left &&
+        innerRect.right === outerRect.right &&
+        innerRect.top === outerRect.top &&
+        innerRect.bottom === outerRect.bottom
+      );
+  }
+
+  pointInsideOf(position: any, rect: DOMRect | ClientRect) {
+    return position.x >= rect.left &&
+      position.x <= rect.right &&
+      position.y >= rect.top &&
+      position.y <= rect.bottom;
   }
 
   getSubplanos(): void {

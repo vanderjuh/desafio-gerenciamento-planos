@@ -87,8 +87,14 @@
   </mat-expansion-panel-header>
 
   <ng-template matExpansionPanelContent>
-    <div class="containerSubPlanos" cdkDropList (cdkDropListDropped)="drop($event)">
-      <div *ngFor="let plano of subPlanos" cdkDragBoundary=".containerSubPlanos" cdkDragLockAxis="y" cdkDrag>
+    <div class="containerSubPlanos" id="plano{{value.id}}"
+      cdkDropList
+      [cdkDropListData]="subPlanos"
+      (cdkDropListDropped)="drop($event)"
+      [cdkDropListConnectedTo]="connectedLists"
+      [cdkDropListEnterPredicate]="canDropPredicate()"
+    >
+      <div *ngFor="let plano of subPlanos" cdkDragLockAxis="y" cdkDrag>
         <app-item-lista *ngIf="plano" [value]="plano"></app-item-lista>
       </div>
     </div>
