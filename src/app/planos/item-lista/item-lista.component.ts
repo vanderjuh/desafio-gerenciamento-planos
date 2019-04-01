@@ -79,23 +79,29 @@ export class ItemListaComponent implements OnInit, OnDestroy {
         moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
         this.ordenarSubPlanos();
       } else {
-        transferArrayItem(event.previousContainer.data,
-          event.container.data,
-          event.previousIndex,
-          event.currentIndex);
-        this.editarPertenceSubPlano();
+        const velhaListaSubPlanos = this.subPlanos.filter(p => p !== undefined && +p.pertence === this.value.id);
+        transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+        const novaListaSubPlanos = this.subPlanos.filter(p => p !== undefined);
+        let plano: Plano;
+        novaListaSubPlanos.forEach(p => {
+          if (velhaListaSubPlanos.indexOf(p) === -1) { plano = p; }
+        });
+        plano.pertence = this.value.id;
+        this.editarPertenceSubPlano(plano);
       }
     }
   }
 
-  editarPertenceSubPlano(): void {
+  editarPertenceSubPlano(subPlano2: Plano): void {
     let subPlano: Plano;
-    this.subPlanos.forEach(p => {
-      if (p !== undefined && p.pertence === null) {
-        p.pertence = this.value.id;
-        subPlano = p;
-      }
-    });
+    if (!subPlano2) {
+      this.subPlanos.forEach(p => {
+        if (p !== undefined && p.pertence === null) {
+          p.pertence = this.value.id;
+          subPlano = p;
+        }
+      });
+    } else { subPlano = subPlano2; }
     this.eventosService.emitirBarraCarregamento.emit(true);
     this.planosService.salvarPlano(subPlano)
       .subscribe(resp => {
