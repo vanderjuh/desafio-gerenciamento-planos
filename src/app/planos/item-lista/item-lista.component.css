@@ -35,7 +35,7 @@
     width: 100%;
     height: 84px;
     background-color: rgba(204, 204, 204, 0.26);
-    border: rgba(153, 153, 153, 0.247) dashed 5px;
+    border: rgba(153, 153, 153, 0.247) dashed 3px;
     border-radius: 5px;
     display: flex;
     align-items: center;
@@ -45,11 +45,11 @@
     font-size: 20px;
 }
 
-.placeholderDragDrop2 {
+.areaDrop {
     width: 100%;
-    height: 100px;
+    height: 150px;
     background-color: rgba(204, 204, 204, 0.062);
-    border: rgba(153, 153, 153, 0.041) dashed 2px;
+    border: rgba(153, 153, 153, 0.247) dashed 3px;
     border-radius: 5px;
     display: flex;
     align-items: center;

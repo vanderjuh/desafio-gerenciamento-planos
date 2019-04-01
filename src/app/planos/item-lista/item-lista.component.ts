@@ -40,6 +40,7 @@ export class ItemListaComponent implements OnInit, OnDestroy {
     this.getSubplanos();
     this.setPeriodo();
     this.inscricaoAtualizarLista();
+    this.corrigirListaSubPlanos();
   }
 
   ngOnDestroy() {
@@ -50,6 +51,10 @@ export class ItemListaComponent implements OnInit, OnDestroy {
     this.inscriAtualizarLista = this.eventosService.emitirAtualizarListaPlanos.subscribe(() => {
       this.getSubplanos();
     });
+  }
+
+  corrigirListaSubPlanos(): void {
+    this.subPlanos = this.subPlanos.filter(p => p !== undefined);
   }
 
   setPeriodo(): void {
@@ -79,23 +84,29 @@ export class ItemListaComponent implements OnInit, OnDestroy {
         moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
         this.ordenarSubPlanos();
       } else {
-        transferArrayItem(event.previousContainer.data,
-          event.container.data,
-          event.previousIndex,
-          event.currentIndex);
-        this.editarPertenceSubPlano();
+        const velhaListaSubPlanos = this.subPlanos.filter(p => p !== undefined && +p.pertence === this.value.id);
+        transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+        const novaListaSubPlanos = this.subPlanos.filter(p => p !== undefined);
+        let plano: Plano;
+        novaListaSubPlanos.forEach(p => {
+          if (velhaListaSubPlanos.indexOf(p) === -1) { plano = p; }
+        });
+        plano.pertence = this.value.id;
+        this.editarPertenceSubPlano(plano);
       }
     }
   }
 
-  editarPertenceSubPlano(): void {
+  editarPertenceSubPlano(subPlano2: Plano): void {
     let subPlano: Plano;
-    this.subPlanos.forEach(p => {
-      if (p !== undefined && p.pertence === null) {
-        p.pertence = this.value.id;
-        subPlano = p;
-      }
-    });
+    if (!subPlano2) {
+      this.subPlanos.forEach(p => {
+        if (p !== undefined && p.pertence === null) {
+          p.pertence = this.value.id;
+          subPlano = p;
+        }
+      });
+    } else { subPlano = subPlano2; }
     this.eventosService.emitirBarraCarregamento.emit(true);
     this.planosService.salvarPlano(subPlano)
       .subscribe(resp => {
@@ -118,51 +129,8 @@ export class ItemListaComponent implements OnInit, OnDestroy {
         this.value = planoTemp;
         this.eventosService.emitirBarraCarregamento.emit(false);
         this.utilService.abrirSnackBar('Lista de sub-planos reordenada com sucesso', 2000);
+        this.corrigirListaSubPlanos();
       });
-  }
-
-  canDropPredicate(): (drag: CdkDrag<Element>, drop: CdkDropList<Element>) => boolean {
-    const me = this;
-    return (drag: CdkDrag<Element>, drop: CdkDropList<Element>): boolean => {
-      const fromBounds = drag.dropContainer.element.nativeElement.getBoundingClientRect();
-      const toBounds = drop.element.nativeElement.getBoundingClientRect();
-
-      if (!me.intersect(fromBounds, toBounds)) {
-        return true;
-      }
-
-      // This gross but allows us to access a private field for now.
-      const pointerPosition: any = drag['_dragRef']['_pointerPositionAtLastDirectionChange'];
-      // They Intersect with each other so we need to do some calculations here.
-      if (me.insideOf(fromBounds, toBounds)) {
-        return !me.pointInsideOf(pointerPosition, fromBounds);
-      }
-
-      if (me.insideOf(toBounds, fromBounds) && me.pointInsideOf(pointerPosition, toBounds)) {
-        return true;
-      }
-      return false;
-    };
-  }
-
-  intersect(r1: DOMRect | ClientRect, r2: DOMRect | ClientRect): boolean {
-    return !(r2.left > r1.right ||
-      r2.right < r1.left ||
-      r2.top > r1.bottom ||
-      r2.bottom < r1.top);
-  }
-
-  insideOf(innerRect: DOMRect | ClientRect, outerRect: DOMRect | ClientRect): boolean {
-    return innerRect.left >= outerRect.left &&
-      innerRect.right <= outerRect.right &&
-      innerRect.top >= outerRect.top &&
-      innerRect.bottom <= outerRect.bottom &&
-      !(
-        innerRect.left === outerRect.left &&
-        innerRect.right === outerRect.right &&
-        innerRect.top === outerRect.top &&
-        innerRect.bottom === outerRect.bottom
-      );
   }
 
   pointInsideOf(position: any, rect: DOMRect | ClientRect) {
