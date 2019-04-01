@@ -119,7 +119,7 @@ export class PlanosComponent implements OnInit, OnDestroy {
         },
         this.erroRequisicao.bind(this)
       );
-    }
+    } else { this.setConnectedLists(); }
   }
 
   erroRequisicao(error: HttpErrorResponse): void {

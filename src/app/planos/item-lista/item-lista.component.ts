@@ -40,6 +40,7 @@ export class ItemListaComponent implements OnInit, OnDestroy {
     this.getSubplanos();
     this.setPeriodo();
     this.inscricaoAtualizarLista();
+    this.corrigirListaSubPlanos();
   }
 
   ngOnDestroy() {
@@ -50,6 +51,10 @@ export class ItemListaComponent implements OnInit, OnDestroy {
     this.inscriAtualizarLista = this.eventosService.emitirAtualizarListaPlanos.subscribe(() => {
       this.getSubplanos();
     });
+  }
+
+  corrigirListaSubPlanos(): void {
+    this.subPlanos = this.subPlanos.filter(p => p !== undefined);
   }
 
   setPeriodo(): void {
@@ -124,6 +129,7 @@ export class ItemListaComponent implements OnInit, OnDestroy {
         this.value = planoTemp;
         this.eventosService.emitirBarraCarregamento.emit(false);
         this.utilService.abrirSnackBar('Lista de sub-planos reordenada com sucesso', 2000);
+        this.corrigirListaSubPlanos();
       });
   }
 
