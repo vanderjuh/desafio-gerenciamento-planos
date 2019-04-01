@@ -91,7 +91,6 @@
       [cdkDropListData]="subPlanos"
       (cdkDropListDropped)="drop($event)"
       [cdkDropListConnectedTo]="connectedLists"
-      [cdkDropListEnterPredicate]="canDropPredicate()"
     >
       <div *ngFor="let plano of subPlanos" cdkDragLockAxis="y" cdkDragBoundary=".centerItemContainer" cdkDrag>
         <app-item-lista *ngIf="plano" [value]="plano" [desabilitarSubPlano]="true"></app-item-lista>

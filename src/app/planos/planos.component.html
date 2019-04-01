@@ -30,7 +30,6 @@
     [cdkDropListData]="listaPlanos"
     (cdkDropListDropped)="drop($event)"
     [cdkDropListConnectedTo]="connectedLists"
-    [cdkDropListEnterPredicate]="canDropPredicate()"
 >
     <div class="itemListaPlanos" *ngFor="let plano of listaPlanos"
         cdkDragBoundary=".centerItemContainer"

@@ -2,9 +2,8 @@
   "ordenacao": {
     "planos": [
       1,
-      3,
-      2,
-      4
+      4,
+      2
     ]
   },
   "planos": [
@@ -24,7 +23,7 @@
       "descricao": "Teste de bla bla bla",
       "statusAndamento": null,
       "ordemSubPlanos": [
-        2
+        4
       ]
     },
     {
@@ -65,7 +64,7 @@
       "responsavel": "2",
       "dataInicio": null,
       "dataTermino": "2019-3-29",
-      "pertence": 2,
+      "pertence": null,
       "interessados": null,
       "custo": null,
       "descricao": null,
