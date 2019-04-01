@@ -64,7 +64,7 @@
       "responsavel": "2",
       "dataInicio": null,
       "dataTermino": "2019-3-29",
-      "pertence": null,
+      "pertence": 2,
       "interessados": null,
       "custo": null,
       "descricao": null,

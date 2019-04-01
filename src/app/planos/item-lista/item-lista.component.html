@@ -96,7 +96,7 @@
         <app-item-lista *ngIf="plano" [value]="plano" [desabilitarSubPlano]="true"></app-item-lista>
         <div class="placeholderDragDrop" *cdkDragPlaceholder> Solte aqui... </div>
       </div>
-      <div *ngIf="subPlanos === undefined || subPlanos.length === 0" class="placeholderDragDrop2"> Arraste um plano aqui dentro </div>
+      <div *ngIf="subPlanos === undefined || subPlanos.length === 0" class="areaDrop"> Arraste um plano aqui dentro </div>
     </div>
   </ng-template>
 </mat-expansion-panel>
